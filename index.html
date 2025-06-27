@@ -1,628 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-15PF9F9ZV8"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        
-        gtag('config', 'G-15PF9F9ZV8');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamic Multi-Video Player</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom styles for the Inter font and overall body */
+        /* Base styles and theme */
         body {
+            background-color: #353E43;
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Light gray background */
-            display: flex;
-            justify-content: center; /* Centered content again */
-            align-items: center; /* Vertically center overall content if it's less than 100vh */
-            min-height: 100vh;
-            padding: 1rem; /* Re-added body padding */
-            box-sizing: border-box;
         }
-
-        /* Responsive iframe container for maintaining aspect ratio */
-        .video-responsive {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-            border-radius: 0.5rem; /* Rounded corners for the video area */
+        .main-container {
+            background-color: #5A6F7B;
         }
-
-        .video-responsive iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0; /* Remove iframe border */
-            border-radius: 0.5rem; /* Rounded corners for the iframe */
-        }
-
-        /* Button styling for load and close buttons */
-        .control-button {
-            @apply px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-200;
-            @apply shadow-md active:bg-blue-700 active:shadow-inner transform active:scale-95;
-            @apply font-medium text-sm;
-        }
-        .control-button:disabled {
-            @apply bg-gray-400 cursor-not-allowed shadow-none active:scale-100;
-        }
-
-        /* Close button specific styling */
-        .close-button {
-            @apply bg-red-500 text-white rounded-md px-3 py-1 flex items-center justify-center text-xs font-bold cursor-pointer;
-            @apply hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-200;
-            z-index: 10;
-        }
-
-        /* Drag handle specific styling */
-        .drag-handle {
-            @apply bg-gray-300 text-gray-800 rounded-md h-6 w-6 flex items-center justify-center text-xs font-bold cursor-grab;
-            @apply hover:bg-gray-400 transition-colors duration-200;
-            z-index: 10;
-            line-height: 1; /* For vertical centering of dots */
-        }
-        /* Style for when an element is being dragged */
-        .video-window.dragging {
-            opacity: 0.5; /* Make dragged item semi-transparent */
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* More prominent shadow */
-            transform: scale(1.01); /* Slight lift effect */
-            /* Do NOT use transition on transform during drag if you want immediate visual feedback */
-        }
-        .video-window.dragging .drag-handle {
-            cursor: grabbing;
-        }
-
-        /* Dynamic video window styling - now always 1 column by default */
         .video-window {
-            @apply bg-gray-100 p-4 rounded-lg shadow-md flex-shrink-0 relative;
-            flex-basis: 100%; /* Default: full width for single column */
-            max-width: 100%;
-            margin: 0; /* Remove fixed margin, use gap on parent */
-            cursor: auto; /* Default cursor for the window itself */
-            transition: transform 0.1s ease-out; /* Smooth movement after drop */
-            touch-action: none; /* Prevent browser scrolling during drag on touch devices */
+            background-color: #4a5e62;
         }
 
-        /* Responsive styling for two columns at >600px */
-        @media (min-width: 600px) {
-            .video-window {
-                flex-basis: calc(50% - 0.75rem); /* 50% width minus half of horizontal gap (6 corresponds to 1.5rem) */
-                max-width: calc(50% - 0.75rem);
-            }
+        /* macOS-like window styling */
+        .title-bar {
+            background-image: linear-gradient(to bottom, #ececec, #dcdcdc);
+            box-shadow: inset 0px 1px 0px rgba(255,255,255,0.7), 0px 1px 1px rgba(0,0,0,0.1);
         }
-
-        /* New class for the top control row within video-window */
-        .video-controls-row {
-            @apply flex justify-between items-center mb-2; /* Pushes content below down */
-            width: 100%; /* Ensure it spans full width inside video-window padding */
-        }
-
-        /* Collapsible content styling */
-        .collapsible-content {
+        
+        /* Smooth transition for collapsible input section */
+        #inputSection {
+            max-height: 0;
             overflow: hidden;
-            max-height: 0; /* Initially hidden */
-            opacity: 0;
-            visibility: hidden;
-            transition: max-height 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;
+            transition: max-height 0.4s ease-out;
         }
-        .collapsible-content.expanded {
-            max-height: 500px; /* Needs to be larger than content, adjust if content overflows */
-            opacity: 1;
-            visibility: visible;
+        #inputSection.expanded {
+            max-height: 500px; /* Adjust if content becomes taller */
+            transition: max-height 0.4s ease-in;
+        }
+
+        /* Dynamic Grid Layout */
+        #videoPlayersContainer {
+            display: grid;
+            gap: 1.5rem; /* Equivalent to Tailwind's gap-6 */
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+
+        .video-window {
+            max-height: 720px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-window.maximized {
+            grid-column: 1 / -1; /* Span all columns */
+            max-height: none; /* Remove height constraint when maximized */
         }
     </style>
-    <!-- Google Fonts - Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="selection:bg-blue-200 selection:text-blue-800">
-    <div class="container mx-auto p-4 bg-white shadow-lg rounded-xl max-w-6xl w-full">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Dynamic Multi-Video Player</h1>
+<body class="text-white">
 
-        <!-- Toggle Button for Collapsible Input -->
-        <div class="text-center mb-4">
-            <button id="toggle-input-btn" class="control-button px-6 py-2">
-                Show Video Input <!-- Initial text will be updated by JS -->
-            </button>
-        </div>
-
-        <!-- Initial input box to kick off the video adding process -->
-        <!-- This container is now always visible but its content is collapsible -->
-        <div id="initial-input-container" class="mb-6 bg-gray-100 p-4 rounded-lg shadow-md max-w-md mx-auto collapsible-content">
-            <textarea id="initial-video-url-input" placeholder="Paste YouTube Video URL(s) here, one per line" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 h-24 resize-y"></textarea>
-            <button id="initial-load-video-btn" class="control-button w-full mt-4">Load Video(s)</button>
-        </div>
-
-        <!-- Container for dynamically added video windows -->
-        <!-- Added gap utilities for spacing in flex-wrap layout -->
-        <div id="video-players-container" class="flex flex-wrap justify-center items-stretch gap-y-3 gap-x-6">
-            <!-- Video windows will be dynamically added here by JavaScript -->
-        </div>
-
-        <!-- List of Pasted Videos -->
-        <div id="loaded-videos-list" class="mt-8 p-4 bg-gray-100 rounded-lg shadow-md hidden">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Loaded Videos</h2>
-            <ul id="video-urls-ul" class="list-disc list-inside space-y-2">
-                <!-- URLs will be dynamically inserted here -->
-            </ul>
-            <div class="text-center mt-4">
-                <button id="copy-all-urls-btn" class="control-button px-6 py-2">Copy All URLs</button>
-                <span id="copy-confirmation" class="ml-3 text-sm text-green-600 opacity-0 transition-opacity duration-300">Copied!</span>
+    <div class="main-container w-full min-h-screen">
+    
+        <!-- Header with Video Wall Background Image -->
+        <div class="relative bg-gray-900">
+            <div aria-hidden="true" class="absolute inset-0 overflow-hidden">
+                <img src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="A wall of glowing screens" class="w-full h-full object-cover object-center">
             </div>
+            <div aria-hidden="true" class="absolute inset-0 bg-gray-900 opacity-60"></div>
+            <div class="relative mx-auto flex max-w-3xl flex-col items-center py-24 text-center">
+                <h1 class="text-4xl font-bold tracking-tight text-white lg:text-5xl">Dynamic Multi-Video Player</h1>
+                <p class="mt-4 text-xl text-gray-300">Your central hub for multistream news and content.</p>
+            </div>
+        </div>
+
+        <!-- Main content area with padding -->
+        <div class="p-4 md:p-6 lg:p-8">
+            <!-- Collapsible Input Section -->
+            <div class="mb-6">
+                <button id="toggleInputBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                    Show Video Input
+                </button>
+                <div id="inputSection" class="bg-gray-800 rounded-lg shadow-lg">
+                    <div class="p-4">
+                        <label for="videoUrls" class="block mb-2 text-sm font-medium text-gray-300">Paste YouTube Video URL(s) here, one per line:</label>
+                        <textarea id="videoUrls" rows="6" class="w-full p-2.5 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500" placeholder="https://www.youtube.com/watch?v=..."></textarea>
+                        <button id="loadVideosBtn" class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                            Load Video(s)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Players Container -->
+            <div id="videoPlayersContainer">
+                <!-- Video windows will be dynamically inserted here -->
+            </div>
+
+            <!-- Loaded Videos List Section -->
+            <div id="loadedVideosSection" class="hidden mt-8 p-4 bg-gray-800 rounded-lg shadow-lg">
+                <h2 class="text-xl font-bold mb-3">Loaded Videos</h2>
+                <ul id="loadedVideosList" class="list-disc list-inside mb-4 text-gray-300 space-y-1 break-all">
+                    <!-- URLs will be dynamically inserted here -->
+                </ul>
+                <button id="copyUrlsBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 relative">
+                    Copy All URLs
+                    <span id="copyConfirmation" class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-xs font-semibold px-2 py-1 rounded-md opacity-0 transition-opacity duration-300 pointer-events-none">Copied!</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal -->
+    <div id="customModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
+        <div class="bg-gray-800 rounded-lg shadow-2xl p-6 w-full max-w-sm text-center">
+            <p id="modalMessage" class="mb-4 text-lg">Modal Message</p>
+            <button id="closeModalBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full">Close</button>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const videoPlayersContainer = document.getElementById('video-players-container');
-            const initialInputContainer = document.getElementById('initial-input-container');
-            const initialUrlInput = document.getElementById('initial-video-url-input');
-            const initialLoadBtn = document.getElementById('initial-load-video-btn');
-            const loadedVideosListContainer = document.getElementById('loaded-videos-list');
-            const videoUrlsUl = document.getElementById('video-urls-ul');
-            const toggleInputBtn = document.getElementById('toggle-input-btn');
-            const copyAllUrlsBtn = document.getElementById('copy-all-urls-btn'); // New button
-            const copyConfirmationSpan = document.getElementById('copy-confirmation'); // New confirmation span
+            // --- DOM Element Selection ---
+            const toggleInputBtn = document.getElementById('toggleInputBtn');
+            const inputSection = document.getElementById('inputSection');
+            const videoUrlsInput = document.getElementById('videoUrls');
+            const loadVideosBtn = document.getElementById('loadVideosBtn');
+            const videoPlayersContainer = document.getElementById('videoPlayersContainer');
+            
+            const loadedVideosSection = document.getElementById('loadedVideosSection');
+            const loadedVideosList = document.getElementById('loadedVideosList');
+            const copyUrlsBtn = document.getElementById('copyUrlsBtn');
+            const copyConfirmation = document.getElementById('copyConfirmation');
 
-            // Array to store unique loaded video URLs - Initialize from localStorage
-            let loadedVideoUrls = JSON.parse(localStorage.getItem('loadedVideoUrls')) || [];
+            const customModal = document.getElementById('customModal');
+            const modalMessage = document.getElementById('modalMessage');
+            const closeModalBtn = document.getElementById('closeModalBtn');
 
-            let draggedElement = null;
-            let placeholder = null; // Visual placeholder for insertion point
-            let dragOffsetX = 0; // Offset for mouse/touch X relative to element's top-left
-            let dragOffsetY = 0; // Offset for mouse/touch Y relative to element's top-left
-
-            // Function to save URLs to localStorage
-            const saveUrlsToLocalStorage = () => {
-                localStorage.setItem('loadedVideoUrls', JSON.stringify(loadedVideoUrls));
-            };
-
-            // Function to extract YouTube video ID from a URL
-            const getYouTubeVideoId = (url) => {
-                const regExp = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([\w-]{11})(?:\S+)?/i;
-                const match = url.match(regExp);
-                return (match && match[1]) ? match[1] : null;
-            };
-
-            // Function to update the displayed list of loaded URLs
-            const updateLoadedUrlsList = () => {
-                videoUrlsUl.innerHTML = ''; // Clear existing list
-                if (loadedVideoUrls.length > 0) {
-                    loadedVideosListContainer.classList.remove('hidden');
-                    loadedVideoUrls.forEach(url => {
-                        const listItem = document.createElement('li');
-                        listItem.className = 'text-gray-700 break-all';
-                        listItem.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">${url}</a>`;
-                        videoUrlsUl.appendChild(listItem);
-                    });
-                } else {
-                    loadedVideosListContainer.classList.add('hidden');
+            // --- LOCAL STORAGE & INITIALIZATION ---
+            function getUrlsFromStorage() {
+                return JSON.parse(localStorage.getItem('youtubeVideoUrls')) || [];
+            }
+            
+            function saveUrlsToStorage() {
+                const urls = Array.from(videoPlayersContainer.querySelectorAll('.video-window')).map(win => win.dataset.url);
+                localStorage.setItem('youtubeVideoUrls', JSON.stringify(urls));
+                updateLoadedVideosList(urls);
+            }
+            
+            function loadInitialVideos() {
+                const savedUrls = getUrlsFromStorage();
+                if (savedUrls.length > 0) {
+                    savedUrls.forEach(url => addVideo(url, false));
                 }
-            };
+                updateLoadedVideosList(savedUrls);
+            }
 
-            // Global drag and drop handlers (defined in outer scope)
-            const doDrag = (e) => {
-                e.preventDefault(); // Prevent default browser actions during drag (like scrolling on touch)
-                if (!draggedElement) return;
-
-                const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : undefined);
-                const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : undefined);
-
-                if (clientX === undefined || clientY === undefined) return;
-
-                // Update position of the dragged element (for visual feedback)
-                draggedElement.style.position = 'absolute';
-                draggedElement.style.left = `${clientX - dragOffsetX}px`;
-                draggedElement.style.top = `${clientY - dragOffsetY}px`;
-
-                // Logic for showing placeholder
-                const currentElements = Array.from(videoPlayersContainer.children).filter(child =>
-                    child.classList.contains('video-window') && child !== draggedElement
-                );
-
-                let newInsertionPoint = null;
-
-                for (let i = 0; i < currentElements.length; i++) {
-                    const otherElement = currentElements[i];
-                    const rect = otherElement.getBoundingClientRect();
-                    // Determine if the dragged element's center is above the current element's center
-                    if (clientY < rect.top + rect.height / 2) {
-                        newInsertionPoint = otherElement;
-                        break;
-                    }
-                }
-
-                if (!placeholder) {
-                    placeholder = document.createElement('div');
-                    placeholder.className = 'w-full h-24 border-2 border-dashed border-blue-400 bg-blue-100 rounded-md my-3';
-                    placeholder.style.minHeight = (draggedElement ? draggedElement.offsetHeight : 100) + 'px';
-                }
-
-                if (!videoPlayersContainer.contains(placeholder)) {
-                    if (newInsertionPoint) {
-                        videoPlayersContainer.insertBefore(placeholder, newInsertionPoint);
-                    } else if (currentElements.length > 0) {
-                        // If no specific insertion point found (dragging to the end)
-                        videoPlayersContainer.appendChild(placeholder);
-                    } else {
-                        // Container is empty
-                        videoPlayersContainer.appendChild(placeholder);
-                    }
-                } else {
-                    // Placeholder exists, ensure it's in the correct position
-                    if (newInsertionPoint && placeholder.nextSibling !== newInsertionPoint) {
-                        videoPlayersContainer.insertBefore(placeholder, newInsertionPoint);
-                    } else if (!newInsertionPoint && placeholder !== videoPlayersContainer.lastChild) {
-                        videoPlayersContainer.appendChild(placeholder);
-                    }
-                }
-            };
-
-            const endDrag = (e) => {
-                if (!draggedElement) return;
-
-                draggedElement.classList.remove('dragging');
-                draggedElement.style.position = ''; // Clear absolute positioning
-                draggedElement.style.left = '';
-                draggedElement.style.top = '';
-
-                // Perform the actual DOM reordering based on placeholder position
-                if (placeholder && placeholder.parentNode === videoPlayersContainer) {
-                    videoPlayersContainer.insertBefore(draggedElement, placeholder);
-                    placeholder.remove();
-                    placeholder = null;
-                } else {
-                    // If no valid drop target or placeholder, it means it was dropped outside
-                    // or on an invalid target. Just return it to its previous flow position
-                    // by clearing absolute styles.
-                }
-
-                // After reordering, update the loadedVideoUrls array to reflect new order
-                const currentOrderUrls = Array.from(videoPlayersContainer.children)
-                                            .filter(el => el.classList.contains('video-window') && el.dataset.type === 'filled')
-                                            .map(el => el.dataset.videoUrl);
-                loadedVideoUrls.splice(0, loadedVideoUrls.length, ...currentOrderUrls); // Replace content of array
-                saveUrlsToLocalStorage(); // Save new order
-                updateLoadedUrlsList(); // Update the displayed list
-
-                draggedElement = null; // Clear dragged element reference
-
-                // Remove global listeners
-                document.removeEventListener('mousemove', doDrag);
-                document.removeEventListener('mouseup', endDrag);
-                document.removeEventListener('touchmove', doDrag);
-                document.removeEventListener('touchend', endDrag);
-                document.removeEventListener('dragover', doDrag);
-                document.removeEventListener('drop', endDrag);
-                document.removeEventListener('dragend', endDrag);
-            };
-
-
-            // Function to set up drag handlers on a given element
-            const setupDragHandlers = (elementToDrag, handleElement) => {
-                const handleStart = (e) => {
-                    // Prevent dragging if the event target is an input or a button
-                    if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.classList.contains('close-button')) {
-                        return; // Do not start drag
-                    }
-
-                    // Only allow dragging of 'filled' video windows
-                    if (elementToDrag.dataset.type !== 'filled') {
-                        return;
-                    }
-
-                    // For touch events, prevent default to avoid scrolling/zooming while dragging
-                    if (e.type === 'touchstart') {
-                         e.preventDefault();
-                    }
-
-
-                    draggedElement = elementToDrag;
-                    draggedElement.classList.add('dragging');
-
-                    const rect = draggedElement.getBoundingClientRect();
-                    const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : undefined);
-                    const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : undefined);
-
-                    if (clientX === undefined || clientY === undefined) {
-                        return; // Not a valid mouse/touch event
-                    }
-
-                    dragOffsetX = clientX - rect.left;
-                    dragOffsetY = clientY - rect.top;
-
-                    // If it's an HTML5 dragstart event (not touchstart), set dataTransfer
-                    if (e.type === 'dragstart') {
-                        e.dataTransfer.effectAllowed = 'move';
-                        e.dataTransfer.setData('text/plain', draggedElement.dataset.videoUrl || draggedElement.id); // Use id for initial container, or URL for videos
-
-                        // Create a custom drag image for HTML5 drag
-                        const dragImage = draggedElement.cloneNode(true);
-                        dragImage.style.position = 'absolute';
-                        dragImage.style.top = '-1000px';
-                        dragImage.style.width = draggedElement.offsetWidth + 'px';
-                        document.body.appendChild(dragImage);
-                        e.dataTransfer.setDragImage(dragImage, e.offsetX, e.offsetY);
-                        setTimeout(() => { dragImage.remove(); }, 0); // Clean up immediately after browser uses it
-                    }
-
-                    // Add global listeners for dragging movement and end
-                    document.addEventListener('mousemove', doDrag);
-                    document.addEventListener('mouseup', endDrag);
-                    document.addEventListener('touchmove', doDrag, { passive: false }); // Passive: false to allow preventDefault
-                    document.addEventListener('touchend', endDrag);
-                };
-
-                // Attach mouse/touch start events to the handle element (or the element itself if no handle)
-                if (handleElement) {
-                    handleElement.addEventListener('mousedown', handleStart);
-                    handleElement.addEventListener('touchstart', handleStart, { passive: false });
-                    handleElement.addEventListener('dragstart', handleStart); // Attach dragstart to handle only
-                } else {
-                    // If no specific handle, the entire window can be dragged (though in this specific app, only filled has handles)
-                    elementToDrag.addEventListener('mousedown', handleStart);
-                    elementToDrag.addEventListener('touchstart', handleStart, { passive: false });
-                    elementToDrag.addEventListener('dragstart', handleStart);
-                }
-            };
-
-
-            // Function to create and append a new video window
-            // `data` object: { url: null, type: 'empty' } is for the input slot
-            // `{ url: '...', type: 'filled' }` is for a video player
-            const addVideoWindow = (prepend = false, data) => {
-                const videoWindowDiv = document.createElement('div');
-                videoWindowDiv.className = 'video-window';
-                videoWindowDiv.dataset.videoUrl = data.url || ''; // Store URL for tracking
-                videoWindowDiv.dataset.type = data.type; // Store type for drag logic
-
-                videoWindowDiv.draggable = false; // Dragging is via handle, not whole window
-
-                let contentHtml = '';
-                let urlInput = null;
-                let loadBtn = null;
-
-                if (data.type === 'filled') {
-                    contentHtml = `
-                        <div class="video-controls-row">
-                            <div class="drag-handle" title="Drag to reorder">⋮⋮⋮</div>
-                            <button class="close-button">[Close]</button>
-                        </div>
-                        <div class="video-responsive">
-                            <iframe class="video-iframe" allow="encrypted-media; fullscreen" allowfullscreen></iframe>
-                        </div>
-                    `;
-                } else { // type is 'empty'
-                    contentHtml = `
-                        <div class="mb-4">
-                            <input type="text" placeholder="Paste URL here" class="video-url-input w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-                        <button class="load-video-btn control-button w-full mb-4">Load Video</button>
-                    `;
-                }
-
-                videoWindowDiv.innerHTML = contentHtml;
-
-                // Append the video window to the container
-                if (prepend && videoPlayersContainer.firstChild) {
-                    videoPlayersContainer.insertBefore(videoWindowDiv, videoPlayersContainer.firstChild);
-                } else {
-                    videoPlayersContainer.appendChild(videoWindowDiv);
-                }
-
-                const closeBtn = videoWindowDiv.querySelector('.close-button');
-                const dragHandle = videoWindowDiv.querySelector('.drag-handle');
-
-                if (data.type === 'empty') {
-                    urlInput = videoWindowDiv.querySelector('.video-url-input');
-                    loadBtn = videoWindowDiv.querySelector('.load-video-btn');
-                }
-                let videoIframe = videoWindowDiv.querySelector('.video-iframe');
-
-                // Load video for filled types
-                if (data.type === 'filled' && data.url) {
-                    if (videoIframe) {
-                        const videoId = getYouTubeVideoId(data.url);
-                        if (videoId) {
-                            // Add autoplay and mute parameters
-                            const embedUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=1&origin=${window.location.origin}`;
-                            videoIframe.src = embedUrl;
-                        }
-                    }
-                }
-
-                // Attach close button listener
-                if (closeBtn) {
-                    closeBtn.addEventListener('click', () => {
-                        const videoUrlToRemove = videoWindowDiv.dataset.videoUrl;
-                        const indexToRemove = loadedVideoUrls.indexOf(videoUrlToRemove);
-                        if (indexToRemove > -1) {
-                            loadedVideoUrls.splice(indexToRemove, 1);
-                            saveUrlsToLocalStorage(); // Save changes
-                            updateLoadedUrlsList();
-                        }
-                        videoWindowDiv.remove();
-                    });
-                }
-
-                // Attach load button listener for empty slots
-                if (loadBtn && urlInput) {
-                    loadBtn.addEventListener('click', () => {
-                        const videoUrl = urlInput.value.trim();
-                        const videoId = getYouTubeVideoId(videoUrl);
-
-                        if (loadedVideoUrls.includes(videoUrl)) {
-                            customAlert('This video URL has already been added.');
-                            return;
-                        }
-
-                        if (videoId) {
-                            // Convert current empty window to a filled one
-                            videoWindowDiv.innerHTML = `
-                                <div class="video-controls-row">
-                                    <div class="drag-handle" title="Drag to reorder">⋮⋮⋮</div>
-                                    <button class="close-button">[Close]</button>
-                                </div>
-                                <div class="video-responsive">
-                                    <iframe class="video-iframe" allow="encrypted-media; fullscreen" allowfullscreen></iframe>
-                                </div>
-                            `;
-                            videoWindowDiv.dataset.videoUrl = videoUrl;
-                            videoWindowDiv.dataset.type = 'filled';
-                            videoWindowDiv.draggable = false; // Still via handle
-
-                            loadedVideoUrls.push(videoUrl);
-                            saveUrlsToLocalStorage(); // Save changes
-                            updateLoadedUrlsList();
-
-                            const newCloseBtn = videoWindowDiv.querySelector('.close-button');
-                            const newVideoIframe = videoWindowDiv.querySelector('.video-iframe');
-                            const newDragHandle = videoWindowDiv.querySelector('.drag-handle');
-
-                            if (newCloseBtn) {
-                                newCloseBtn.addEventListener('click', () => {
-                                    const url = videoWindowDiv.dataset.videoUrl;
-                                    const idx = loadedVideoUrls.indexOf(url);
-                                    if (idx > -1) { loadedVideoUrls.splice(idx, 1); saveUrlsToLocalStorage(); updateLoadedUrlsList(); }
-                                    videoWindowDiv.remove();
-                                });
-                            }
-
-                            setupDragHandlers(videoWindowDiv, newDragHandle);
-
-                            // Add autoplay and mute parameters
-                            const embedUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=1&origin=${window.location.origin}`;
-                            newVideoIframe.src = embedUrl;
-
-                        } else {
-                            customAlert('Please enter a valid YouTube video URL.');
-                        }
-                    });
-                }
-
-                // Setup drag handlers for this video window
-                setupDragHandlers(videoWindowDiv, dragHandle);
-            };
-
-            // Toggle functionality for the main input container
-            toggleInputBtn.addEventListener('click', () => {
-                initialInputContainer.classList.toggle('expanded');
-                toggleInputBtn.textContent = initialInputContainer.classList.contains('expanded') ? 'Hide Video Input' : 'Show Video Input';
-            });
-
-            // Initial state: input area is collapsed
-            toggleInputBtn.textContent = 'Show Video Input'; // Set initial button text
-
-            // Event listener for the main "Load Video(s)" button
-            initialLoadBtn.addEventListener('click', () => {
-                const rawInput = initialUrlInput.value.trim();
-                const urls = rawInput.split('\n').map(line => line.trim()).filter(line => line !== '');
-
+            function updateLoadedVideosList(urls) {
+                loadedVideosList.innerHTML = '';
                 if (urls.length === 0) {
-                    customAlert('Please enter at least one YouTube video URL.');
+                    loadedVideosSection.classList.add('hidden');
                     return;
                 }
-
-                let videosAddedCount = 0;
-                urls.forEach(videoUrl => {
-                    const videoId = getYouTubeVideoId(videoUrl);
-
-                    if (loadedVideoUrls.includes(videoUrl)) {
-                        customAlert(`Skipping duplicate URL: ${videoUrl}`);
-                        return;
-                    }
-
-                    if (videoId) {
-                        addVideoWindow(true, { url: videoUrl, type: 'filled' });
-                        loadedVideoUrls.push(videoUrl);
-                        videosAddedCount++;
-                    } else {
-                        customAlert(`Invalid URL skipped: ${videoUrl}`);
-                    }
+                
+                urls.forEach(url => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.textContent = url;
+                    a.target = "_blank";
+                    a.rel = "noopener noreferrer";
+                    a.className = "hover:underline text-blue-400";
+                    li.appendChild(a);
+                    loadedVideosList.appendChild(li);
                 });
+                loadedVideosSection.classList.remove('hidden');
+            }
+            
+            // --- UI TOGGLES & MODAL ---
+            toggleInputBtn.addEventListener('click', () => {
+                const isExpanded = inputSection.classList.toggle('expanded');
+                toggleInputBtn.textContent = isExpanded ? 'Hide Video Input' : 'Show Video Input';
+            });
+            
+            function showModal(message) {
+                modalMessage.textContent = message;
+                customModal.classList.remove('hidden');
+            }
 
-                if (videosAddedCount > 0) {
-                    initialUrlInput.value = ''; // Clear input after processing
-                    saveUrlsToLocalStorage(); // Save changes
-                    updateLoadedUrlsList(); // Update the displayed list
-                } else if (videosAddedCount === 0 && urls.length > 0) {
-                    customAlert('No valid new video URLs were added from your input.');
-                }
+            closeModalBtn.addEventListener('click', () => customModal.classList.add('hidden'));
+            customModal.addEventListener('click', (e) => {
+                if(e.target === customModal) customModal.classList.add('hidden');
             });
 
-            // Add Copy All URLs button functionality
-            copyAllUrlsBtn.addEventListener('click', () => {
-                if (loadedVideoUrls.length > 0) {
-                    const allUrlsText = loadedVideoUrls.join('\n');
-                    const tempTextArea = document.createElement('textarea');
-                    tempTextArea.value = allUrlsText;
-                    document.body.appendChild(tempTextArea);
-                    tempTextArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(tempTextArea);
+            // --- VIDEO MANAGEMENT ---
+            function getYouTubeVideoId(url) {
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                const match = url.match(regExp);
+                return (match && match[2].length === 11) ? match[2] : null;
+            }
 
-                    // Show confirmation
-                    copyConfirmationSpan.style.opacity = '1';
-                    setTimeout(() => {
-                        copyConfirmationSpan.style.opacity = '0';
-                    }, 2000);
+            function addVideo(url, shouldSave = true) {
+                const videoId = getYouTubeVideoId(url);
+                if (!videoId) {
+                    showModal(`Invalid YouTube URL: ${url}`);
+                    return false;
+                }
+                
+                const currentUrls = Array.from(videoPlayersContainer.querySelectorAll('.video-window')).map(win => win.dataset.url);
+                if (currentUrls.includes(url)) {
+                    return false;
+                }
+
+                createVideoWindow(url, videoId);
+                
+                if (shouldSave) {
+                    saveUrlsToStorage();
+                }
+                return true;
+            }
+            
+            loadVideosBtn.addEventListener('click', () => {
+                const urls = videoUrlsInput.value.split('\n').map(u => u.trim()).filter(u => u !== '');
+                if (urls.length > 0) {
+                    let videosAdded = 0;
+                    const uniqueUrls = new Set(urls);
+                    uniqueUrls.forEach(url => {
+                        if(addVideo(url, false)) {
+                            videosAdded++;
+                        }
+                    });
+                    if(videosAdded > 0) {
+                        videoUrlsInput.value = '';
+                        saveUrlsToStorage();
+                        // --- NEW: Auto-close the input panel ---
+                        inputSection.classList.remove('expanded');
+                        toggleInputBtn.textContent = 'Show Video Input';
+                    }
                 } else {
-                    customAlert('No URLs to copy yet!');
+                    showModal('Please paste at least one YouTube URL.');
                 }
             });
 
+            function createVideoWindow(url, videoId) {
+                const videoWindow = document.createElement('div');
+                videoWindow.className = 'video-window rounded-lg shadow-lg overflow-hidden';
+                videoWindow.dataset.url = url;
 
-            // Custom alert function
-            function customAlert(message) {
-                const existingAlert = document.getElementById('custom-alert');
-                if (existingAlert) {
-                    existingAlert.remove();
-                }
-
-                const alertDiv = document.createElement('div');
-                alertDiv.id = 'custom-alert';
-                alertDiv.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-                alertDiv.innerHTML = `
-                    <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
-                        <p class="text-lg font-semibold text-gray-800 mb-4">${message}</p>
-                        <button id="alert-ok-btn" class="control-button">OK</button>
+                videoWindow.innerHTML = `
+                    <div class="title-bar h-7 flex items-center px-3 flex-shrink-0 relative">
+                        <div class="traffic-lights flex space-x-2 z-10">
+                            <button data-action="close" class="h-4 w-4 bg-[#ff5f56] rounded-full border border-red-700 hover:bg-red-600 transition-colors"></button>
+                            <button data-action="minimize" class="h-4 w-4 bg-[#ffbd2e] rounded-full border border-yellow-700 hover:bg-yellow-500 transition-colors"></button>
+                            <button data-action="maximize" class="h-4 w-4 bg-[#27c93f] rounded-full border border-green-700 hover:bg-green-500 transition-colors"></button>
+                        </div>
+                        <div class="text-gray-600 text-sm font-medium"></div>
+                    </div>
+                    <div class="video-content-wrapper flex-grow relative bg-black" style="padding-top: 56.25%;">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 `;
-                document.body.appendChild(alertDiv);
-
-                const okButton = alertDiv.querySelector('#alert-ok-btn');
-                if (okButton) {
-                    okButton.addEventListener('click', () => {
-                        alertDiv.remove();
-                    });
-                }
+                
+                videoPlayersContainer.appendChild(videoWindow);
+                addWindowEventListeners(videoWindow);
             }
+            
+            // --- EVENT LISTENERS ---
+            function addWindowEventListeners(videoWindow) {
+                videoWindow.addEventListener('click', (e) => {
+                    const action = e.target.dataset.action;
+                    if (!action) return;
 
-            // --- Initial Load from localStorage ---
-            // Load videos from localStorage on page load
-            if (loadedVideoUrls.length > 0) {
-                // Initial creation of video windows from stored URLs
-                loadedVideoUrls.forEach(url => {
-                    addVideoWindow(false, { url: url, type: 'filled' }); // Add to end, not prepend
+                    const content = videoWindow.querySelector('.video-content-wrapper');
+                    if (action === 'close') {
+                        videoWindow.remove();
+                        saveUrlsToStorage();
+                    } else if (action === 'minimize') {
+                        content.classList.toggle('hidden');
+                    } else if (action === 'maximize') {
+                        const isNowMaximized = videoWindow.classList.toggle('maximized');
+                        if (isNowMaximized) {
+                            videoPlayersContainer.prepend(videoWindow);
+                            saveUrlsToStorage();
+                        }
+                    }
                 });
-                updateLoadedUrlsList();
-                // Ensure input is collapsed if videos are loaded from storage
-                initialInputContainer.classList.remove('expanded');
-                toggleInputBtn.textContent = 'Show Video Input';
-            } else {
-                // If no URLs in local storage, start with the input section expanded
-                initialInputContainer.classList.add('expanded');
-                toggleInputBtn.textContent = 'Hide Video Input';
             }
+
+            // --- COPY URLS ---
+            copyUrlsBtn.addEventListener('click', () => {
+                const urlsText = getUrlsFromStorage().join('\n');
+                if (!urlsText) {
+                    showModal("There are no URLs to copy.");
+                    return;
+                }
+                navigator.clipboard.writeText(urlsText).then(() => {
+                    copyConfirmation.style.opacity = '1';
+                    setTimeout(() => { copyConfirmation.style.opacity = '0'; }, 2000);
+                }).catch(err => {
+                    showModal('Failed to copy URLs to clipboard.');
+                    console.error('Copy failed:', err);
+                });
+            });
+
+            // --- Initial App Load ---
+            loadInitialVideos();
         });
     </script>
 </body>
