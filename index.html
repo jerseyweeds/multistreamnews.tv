@@ -78,9 +78,9 @@
             <!-- Collapsible Input Section -->
             <div class="mb-6">
                 <button id="toggleInputBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                    Show Video Input
+                    Hide Video Input
                 </button>
-                <div id="inputSection" class="bg-gray-800 rounded-lg shadow-lg">
+                <div id="inputSection" class="bg-gray-800 rounded-lg shadow-lg expanded">
                     <div class="p-4">
                         <label for="videoUrls" class="block mb-2 text-sm font-medium text-gray-300">Paste YouTube Video URL(s) here, one per line:</label>
                         <textarea id="videoUrls" rows="6" class="w-full p-2.5 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500" placeholder="https://www.youtube.com/watch?v=..."></textarea>
@@ -148,10 +148,19 @@
             }
             
             function loadInitialVideos() {
-                const savedUrls = getUrlsFromStorage();
-                if (savedUrls.length > 0) {
-                    savedUrls.forEach(url => addVideo(url, false));
+                let savedUrls = getUrlsFromStorage();
+                if (savedUrls.length === 0) {
+                    // If local storage is empty, load default videos
+                    savedUrls = [
+                        'https://www.youtube.com/watch?v=YDvsBbKfLPA',
+                        'https://www.youtube.com/watch?v=DfwpCn9347w'
+                    ];
+                    // Save these defaults for the next session
+                    localStorage.setItem('youtubeVideoUrls', JSON.stringify(savedUrls));
                 }
+                
+                // Load whatever is in savedUrls (either from storage or the new defaults)
+                savedUrls.forEach(url => addVideo(url, false));
                 updateLoadedVideosList(savedUrls);
             }
 
@@ -232,7 +241,7 @@
                     if(videosAdded > 0) {
                         videoUrlsInput.value = '';
                         saveUrlsToStorage();
-                        // --- NEW: Auto-close the input panel ---
+                        // Auto-close the input panel
                         inputSection.classList.remove('expanded');
                         toggleInputBtn.textContent = 'Show Video Input';
                     }
