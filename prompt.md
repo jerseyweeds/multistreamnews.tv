@@ -27,6 +27,13 @@ The web application features a modern, responsive design with video wall header,
   - Section should be expanded by default on page load
   - Smooth 0.4-second CSS transitions for expand/collapse animations
 
+* **Dynamic Source Management:**
+  - Include a small toggle button to switch between "Networks.txt" and "Built-in" sources
+  - Primary method: Load channels from Networks.txt file (live database)
+  - Backup method: Use built-in JavaScript array when Networks.txt unavailable
+  - Graceful fallback with user notification when source switching fails
+  - Smart retry logic that prevents unnecessary reload attempts
+
 * **News Channel Buttons:**
   - Create an array of news channels with labels and YouTube video URLs
   - Include major outlets: Sky, NBC, ABC, CBS, CNN, Fox News, BBC, MSNBC, C-SPAN, DW, France 24, Bloomberg, Al Jazeera, Reuters, CNBC, Euronews, Global News, NASA, PBS NewsHour, CTV News, CBC News, Channel 4 News, 9 News Australia, ABC News Australia, Times Now, WION, GB News, TalkTV, 6abc
@@ -205,7 +212,8 @@ The web application features a modern, responsive design with video wall header,
 * **Modal System:**
   - Custom modal for error messages and confirmations
   - Click outside modal or close button to dismiss
-  - Auto-hide option for temporary messages
+  - Auto-hide option with 5-second display duration for temporary messages
+  - Improved user feedback for CORS/file access issues
 
 * **Color Scheme:**
   - Dark theme: body `#353E43`, main container `#5A6F7B`
@@ -283,6 +291,9 @@ const newsChannels = [
 * Invalid URL detection and user feedback
 * Network error handling for embed failures
 * Clipboard API error handling with fallback messages
+* Smart CORS/file access restriction detection and user notification
+* Improved error message duration (5 seconds) for better user experience
+* Robust toggle logic with failure state tracking to prevent unnecessary retries
 
 ### PART B: MAINTENANCE SYSTEM IMPLEMENTATION
 

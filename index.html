@@ -336,20 +336,19 @@
                 useNetworksFile = !useNetworksFile;
                 toggleSourceBtn.textContent = useNetworksFile ? 'Networks.txt' : 'Built-in';
                 
-                if (useNetworksFile && networksData.length === 0 && !networksLoadFailed) {
-                    // Try to load Networks.txt if not already loaded and not previously failed
+                if (useNetworksFile && networksData.length === 0) {
+                    // Always try to load Networks.txt if we don't have data yet
                     const loaded = await loadNetworksFromFile();
                     if (!loaded) {
                         // Fall back to built-in if loading fails
                         useNetworksFile = false;
                         toggleSourceBtn.textContent = 'Built-in';
-                        showModal('Failed to load Networks.txt, using built-in channels', true);
+                        if (networksLoadFailed) {
+                            showModal('Networks.txt not available (CORS or file access restriction)', true);
+                        } else {
+                            showModal('Failed to load Networks.txt, using built-in channels', true);
+                        }
                     }
-                } else if (useNetworksFile && networksLoadFailed) {
-                    // If Networks.txt loading previously failed, don't try again
-                    useNetworksFile = false;
-                    toggleSourceBtn.textContent = 'Built-in';
-                    showModal('Networks.txt not available (CORS or file access restriction)', true);
                 }
                 
                 // Regenerate buttons with new source
@@ -360,11 +359,11 @@
                 modalMessage.textContent = message;
                 customModal.classList.remove('hidden');
                 
-                // Auto-hide after 1000ms if autoHide is true
+                // Auto-hide after 5000ms if autoHide is true
                 if (autoHide) {
                     setTimeout(() => {
                         customModal.classList.add('hidden');
-                    }, 1000);
+                    }, 5000);
                 }
             }
 

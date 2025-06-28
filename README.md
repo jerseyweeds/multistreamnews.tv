@@ -13,6 +13,7 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
 * **Smart Duplicate Prevention**: The application intelligently ignores duplicate URLs, preventing the same video from being added more than once.
 
 ### Quick Add News Channels
+* **Dynamic Source Management**: Choose between Networks.txt (live database) or built-in channels with a toggle button
 * **One-Click News Access**: A collapsible section with colorful quick-add buttons for major news outlets including:
   - Sky News, NBC, ABC, CBS, BBC, CNN, Fox News, MSNBC, C-SPAN
   - International: DW, France 24, Al Jazeera, Bloomberg, Reuters
@@ -21,6 +22,7 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
   - Regional: 6abc, NASA, and more
 * **Color-Coded Buttons**: Each news channel button has a unique color from a 12-color palette for easy visual identification
 * **Expandable Interface**: The news channels section can be collapsed to save space when not needed
+* **Smart Fallback**: Automatically falls back to built-in channels if Networks.txt cannot be loaded
 
 ### Window Management
 * **macOS-style Window Controls**: Each video player is housed in a clean, macOS-inspired window with familiar traffic light controls:
@@ -33,7 +35,9 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
 * **Collapsible Sections**: Both the news channels and video input sections can be shown or hidden with toggle buttons
 * **Clean Interface**: Input areas automatically close after successfully adding videos to keep the interface uncluttered  
 * **Visual Feedback**: Smooth animations and hover effects provide clear user feedback
+* **Error Handling**: User-friendly error messages with 5-second auto-dismiss for temporary notifications
 * **Mobile Responsive**: The interface adapts to different screen sizes and devices
+* **Source Toggle**: Switch between Networks.txt and built-in channel sources with a small toggle button
 
 ### Data Persistence
 * **Persistent Sessions**: Your video layout is automatically saved to your browser's local storage
@@ -45,8 +49,9 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
 
 ### Adding Videos via Quick Add Buttons
 1. **Access News Channels**: The colorful quick-add buttons are visible by default at the top of the page
-2. **Click to Add**: Simply click any news channel button to instantly add that stream to your video wall
-3. **Collapse if Needed**: Use the "[Hide] Quick Add News Channels" button to minimize this section
+2. **Choose Source**: Use the small toggle button to switch between "Networks.txt" (live database) and "Built-in" (static list)
+3. **Click to Add**: Simply click any news channel button to instantly add that stream to your video wall
+4. **Collapse if Needed**: Use the "[Hide] Quick Add News Channels" button to minimize this section
 
 ### Adding Videos via URL Input
 1. **Show the Input**: Click the "[Show] Video Input" button to expand the input panel
