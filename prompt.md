@@ -1,8 +1,8 @@
-# Comprehensive Prompt: Recreate the Dynamic Multi-Video Player
+# Comprehensive Prompt: Recreate the MultiStreamNews.TV
 
 ## 1. High-Level Objective
 
-Create a single-page interactive web application (SPA) named "Dynamic Multi-Video Player." The application allows users to dynamically add, manage, and view multiple embedded YouTube videos on a single page. It must feature a professional, modern design with a header, responsive video grid, macOS-style window controls, and persistent data storage.
+Create a single-page interactive web application (SPA) named "MultiStreamNews.TV." The application allows users to dynamically add, manage, and view multiple embedded YouTube videos on a single page. It must feature a professional, modern design with a header, responsive video grid, macOS-style window controls, and persistent data storage.
 
 ## 2. Core Functional Requirements
 
