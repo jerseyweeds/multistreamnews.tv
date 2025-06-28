@@ -2,9 +2,16 @@
 
 ## 1. High-Level Objective
 
-Create a single-page interactive web application (SPA) named "MultiStreamNews.TV." The application allows users to dynamically add, manage, and view multiple embedded YouTube videos simultaneously on a single page. It must feature a professional, modern design with a video wall header, collapsible sections, quick-add news channel buttons, macOS-style window controls, video title display, and persistent data storage.
+Create a comprehensive multi-streaming news platform consisting of:
+1. **Single-page web application (SPA)** named "MultiStreamNews.TV" for viewing multiple YouTube videos simultaneously
+2. **Automated live stream maintenance system** for managing a database of currently live YouTube news streams
+3. **Professional deployment-ready package** with documentation and automation scripts
+
+The web application features a modern, responsive design with video wall header, collapsible sections, quick-add news channel buttons, macOS-style window controls, video title display, and persistent data storage. The maintenance system ensures the live stream database stays current and accurate.
 
 ## 2. Core Functional Requirements
+
+### PART A: WEB APPLICATION FEATURES
 
 ### 2.1. Header Design
 * **Hero Section:** Create a prominent header with a background image using this URL: `https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`
@@ -118,6 +125,81 @@ Create a single-page interactive web application (SPA) named "MultiStreamNews.TV
   - "Copy All URLs" button with clipboard functionality
   - Visual confirmation ("Copied!") that fades after 2 seconds
 
+### PART B: LIVE STREAM MAINTENANCE SYSTEM
+
+### 2.9. Networks.txt Database
+
+* **File Structure:**
+  - Tab-delimited text file with columns: Network, Channel, YouTube URL, Status, Viewers
+  - Contains verified live YouTube streams from major English-speaking news networks
+  - Example format:
+    ```
+    Network	Channel	YouTube URL	Status	Viewers
+    Sky News	Sky News	https://www.youtube.com/watch?v=YDvsBbKfLPA	LIVE	3.9K watching
+    NBC News NOW	NBC News	https://www.youtube.com/watch?v=DfwpCn9347w	LIVE	1.2K watching
+    ```
+
+* **Content Requirements:**
+  - Include 15+ major news networks
+  - Cover US, UK, Australian, Canadian, and international outlets
+  - Only include streams that are currently live and broadcasting
+  - Real-time viewer count information
+
+### 2.10. Python Maintenance Script (maintain_networks.py)
+
+* **Core Functionality:**
+  - **Stream Verification:** Check if each YouTube URL is currently live
+  - **Viewer Count Updates:** Extract and update current viewer counts
+  - **Dead Stream Removal:** Remove streams that are no longer live
+  - **New Stream Discovery:** Search known channels for new live streams
+  - **Report Generation:** Provide detailed statistics on maintenance operations
+
+* **Technical Requirements:**
+  - Python 3.7+ compatibility
+  - Async HTTP requests with proper error handling
+  - Rate limiting to avoid YouTube blocking (2-second delays)
+  - User-Agent spoofing for reliable access
+  - Command-line arguments: `--check-only`, `--add-new`, `--verbose`
+
+* **Stream Detection Logic:**
+  - Parse YouTube video pages for live indicators
+  - Extract viewer counts using multiple regex patterns
+  - Handle various viewer count formats (1.2K, 1,234, etc.)
+  - Graceful handling of network errors and API limitations
+
+* **Known Channels Array:**
+  - Predefined list of 20+ major news channels with handles
+  - Include: Sky News, BBC, CNN, Fox News, NBC, ABC, CBS, Reuters, etc.
+  - Support both @channel and channel ID formats
+  - Easy configuration for adding new channels
+
+### 2.11. Shell Automation Script (update_networks.sh)
+
+* **Operation Modes:**
+  - **Quick Mode:** Update existing streams only (default, fastest)
+  - **Full Mode:** Update existing streams + search for new ones
+  - **Check Mode:** Verify status without making file changes
+
+* **Advanced Features:**
+  - **Automatic Backups:** Create timestamped backups before changes
+  - **Backup Rotation:** Keep 5 most recent backups, delete older ones
+  - **Comprehensive Logging:** All operations logged to `networks_update.log`
+  - **Log Rotation:** Automatic log file rotation when size exceeds 1MB
+  - **Dependency Checking:** Verify Python version and install requirements
+  - **Error Handling:** Graceful failure handling with detailed error messages
+
+* **Command Examples:**
+  ```bash
+  ./update_networks.sh quick    # Quick update (default)
+  ./update_networks.sh full     # Full update with discovery
+  ./update_networks.sh check    # Check only, no changes
+  ```
+
+* **Cron Integration:**
+  - Ready for crontab scheduling
+  - Example cron entries provided in documentation
+  - Supports both quick (frequent) and full (periodic) updates
+
 ### 2.8. User Interface & UX
 
 * **Modal System:**
@@ -136,6 +218,8 @@ Create a single-page interactive web application (SPA) named "MultiStreamNews.TV
   - Flexible grid that adapts to screen size
 
 ## 3. Technical Implementation Requirements
+
+### PART A: WEB APPLICATION IMPLEMENTATION
 
 ### 3.1. File Structure & Dependencies
 * **Single HTML File:** Entire application in one HTML file
@@ -200,6 +284,69 @@ const newsChannels = [
 * Network error handling for embed failures
 * Clipboard API error handling with fallback messages
 
+### PART B: MAINTENANCE SYSTEM IMPLEMENTATION
+
+### 3.6. Python Dependencies & Requirements
+
+* **Dependencies (requirements.txt):**
+  ```
+  requests>=2.28.0
+  beautifulsoup4>=4.11.0
+  lxml>=4.9.0
+  ```
+
+* **Python Script Structure:**
+  - `NetworkMaintainer` class with modular methods
+  - Session management with proper headers
+  - Configurable constants (delays, user agents, etc.)
+  - Comprehensive error logging and reporting
+
+### 3.7. Key Python Functions
+
+* **Core Methods:**
+  - `extract_video_id(url)` - Extract YouTube video ID from various URL formats
+  - `check_stream_status(url)` - Verify if stream is live and get viewer count
+  - `load_networks()` / `save_networks()` - CSV/TSV file handling
+  - `update_networks()` - Main update logic with statistics
+  - `search_channel_for_live_streams()` - Discover new streams
+  - `generate_report()` - Format and display operation results
+
+* **Error Handling:**
+  - Network timeouts and connection errors
+  - YouTube page parsing failures
+  - File I/O errors and permission issues
+  - Rate limiting and service blocking detection
+
+### 3.8. Shell Script Implementation
+
+* **Script Structure:**
+  - Bash script with proper error handling (`set -e`)
+  - Color-coded output for better UX
+  - Modular functions for each operation
+  - Comprehensive logging with timestamps
+
+* **Key Shell Functions:**
+  - `check_python()` - Verify Python version and availability
+  - `install_dependencies()` - Handle pip installation
+  - `backup_networks()` - Create and manage backups
+  - `run_maintenance()` - Execute Python script with appropriate arguments
+  - `rotate_log()` - Manage log file sizes
+
+### 3.9. File Structure & Organization
+
+```
+multistreamnews.tv/
+├── index.html                 # Main web application
+├── Networks.txt               # Live stream database
+├── maintain_networks.py       # Python maintenance script  
+├── update_networks.sh         # Shell automation script
+├── requirements.txt           # Python dependencies
+├── README.md                  # Main documentation
+├── prompt.md                  # This comprehensive build guide
+├── NETWORKS_README.md         # Maintenance system documentation
+└── networks_update.log        # Auto-generated operation logs
+```
+
 ## 4. Advanced Features & Polish
 
 ### 4.1. Performance Considerations
@@ -218,7 +365,9 @@ const newsChannels = [
 * Fallbacks for older browsers where reasonable
 * Responsive design for mobile devices
 
-## 5. Expected User Workflow
+## 5. Expected User Workflows
+
+### 5.1. Web Application Usage
 
 1. **Page Load:** User sees header, expanded quick-add buttons, and expanded input section
 2. **Quick Add:** User clicks colorful news channel buttons to instantly add streams
@@ -228,12 +377,63 @@ const newsChannels = [
 6. **Session Persistence:** User's video selection automatically saves and restores
 7. **URL Management:** User can copy all current URLs for sharing or backup
 
-## 6. Quality Standards
+### 5.2. Maintenance System Workflows
 
+#### Developer/Administrator Workflow:
+1. **Initial Setup:** Install Python dependencies with `pip3 install -r requirements.txt`
+2. **Test Run:** Execute `./update_networks.sh check` to verify system functionality
+3. **Regular Updates:** Set up cron job for automatic updates every 30 minutes
+4. **Monitor Logs:** Check `networks_update.log` for any issues or statistics
+5. **Manual Intervention:** Run `./update_networks.sh full` when major news events occur
+
+#### Automated System Workflow:
+1. **Scheduled Execution:** Cron triggers maintenance script at regular intervals
+2. **Stream Verification:** Script checks each stream's live status and viewer count
+3. **Database Update:** Updates Networks.txt with current information
+4. **Backup Creation:** Creates timestamped backup before making changes
+5. **New Stream Discovery:** Searches known channels for new live streams (full mode)
+6. **Report Generation:** Logs statistics and any issues encountered
+7. **Error Handling:** Gracefully handles network issues and service limitations
+
+## 6. Quality Standards & Deliverables
+
+### 6.1. Web Application Standards
 * **Clean Code:** Well-organized, commented JavaScript with logical separation
 * **Modern CSS:** Efficient use of Tailwind utilities with custom CSS where needed
 * **User Experience:** Intuitive interface with clear visual feedback
 * **Performance:** Fast loading and smooth interactions
 * **Reliability:** Robust error handling and graceful degradation
 
-This comprehensive prompt should enable recreation of the complete MultiStreamNews.TV application with all current features and functionality.
+### 6.2. Maintenance System Standards
+* **Production Ready:** Robust error handling, logging, and backup systems
+* **Documentation:** Comprehensive README files with usage examples
+* **Automation:** Ready for cron scheduling with minimal configuration
+* **Monitoring:** Detailed logging and reporting for system health
+* **Extensibility:** Easy to add new channels and modify configurations
+
+### 6.3. Complete Deliverables Package
+
+#### Core Application Files:
+- `index.html` - Complete single-page web application
+- `Networks.txt` - Initial database of 18+ verified live streams
+
+#### Maintenance System:
+- `maintain_networks.py` - Full-featured Python maintenance script
+- `update_networks.sh` - Shell automation script with three operation modes
+- `requirements.txt` - Python dependencies specification
+
+#### Documentation:
+- `README.md` - Complete user and deployment documentation
+- `prompt.md` - This comprehensive build specification
+- `NETWORKS_README.md` - Detailed maintenance system documentation
+
+#### Features Integration:
+- Automatic backup system with rotation
+- Comprehensive logging with auto-rotation
+- Cron-ready automation scripts
+- Error handling and recovery
+- Real-time stream verification
+- New stream discovery
+- Professional reporting and statistics
+
+This comprehensive system provides both immediate usability (web app) and long-term maintainability (automation system) for a complete professional news streaming platform.

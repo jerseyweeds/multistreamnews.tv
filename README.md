@@ -76,6 +76,45 @@ The quick-add section includes buttons for these major news outlets:
 - **Australian**: ABC News Australia, 9 News Australia
 - **Regional/Other**: 6abc Philadelphia, NASA
 
+## Live Stream Database
+
+MultiStreamNews.TV includes an automated system for maintaining a database of currently live YouTube news streams:
+
+### Networks.txt File
+* **Live Stream Database**: `Networks.txt` contains verified live YouTube streams from major English-speaking news networks
+* **Real-time Updates**: Stream status and viewer counts are automatically verified and updated
+* **18+ Major Networks**: Includes Sky News, NBC, ABC, CNN, Fox News, BBC, Al Jazeera, Bloomberg, DW News, and more
+* **Tab-delimited Format**: Easy to read and integrate with other applications
+
+### Maintenance System
+* **Automated Verification**: Python script (`maintain_networks.py`) checks stream status and updates viewer counts
+* **Smart Discovery**: Automatically finds new live streams from known news channels
+* **Dead Stream Removal**: Offline streams are automatically removed from the database
+* **Backup System**: Creates timestamped backups before making changes
+* **Comprehensive Logging**: Detailed logs of all maintenance operations
+
+### Automation Scripts
+* **`update_networks.sh`**: Shell script for easy automation with three modes:
+  - **Quick**: Update existing streams only (recommended for frequent runs)
+  - **Full**: Update existing streams and search for new ones
+  - **Check**: Verify status without making changes
+* **Cron Integration**: Ready for scheduling with crontab for automatic updates
+* **Error Handling**: Robust error handling and rate limiting to avoid service blocks
+
+### Usage
+```bash
+# Quick update (recommended for regular use)
+./update_networks.sh quick
+
+# Full update with new stream discovery
+./update_networks.sh full
+
+# Check status without making changes
+./update_networks.sh check
+```
+
+For detailed documentation, see `NETWORKS_README.md`.
+
 ## Technical Details
 
 * **Frontend**: Built entirely with vanilla HTML, CSS, and JavaScript
@@ -84,6 +123,53 @@ The quick-add section includes buttons for these major news outlets:
 * **Persistence**: Leverages browser `localStorage` to save and retrieve video URLs between sessions
 * **Performance**: Lightweight single-file application with no external frameworks
 * **Analytics**: Includes Google Analytics integration for usage tracking
+* **Stream Maintenance**: Python-based automation system for maintaining live stream database
+
+## Installation & Setup
+
+### Basic Usage (Web App Only)
+Simply download and open `index.html` in any modern web browser. No additional setup required!
+
+### Advanced Setup (With Stream Maintenance)
+For automated live stream database maintenance:
+
+1. **Install Python Dependencies**:
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+
+2. **Test the Maintenance System**:
+   ```bash
+   # Check current stream status
+   ./update_networks.sh check
+   
+   # Update existing streams
+   ./update_networks.sh quick
+   ```
+
+3. **Set Up Automation** (Optional):
+   ```bash
+   # Edit crontab for automatic updates
+   crontab -e
+   
+   # Add this line for updates every 30 minutes:
+   */30 * * * * cd /path/to/multistreamnews.tv && ./update_networks.sh quick >> networks_update.log 2>&1
+   ```
+
+## File Structure
+
+```
+multistreamnews.tv/
+├── index.html              # Main web application
+├── Networks.txt            # Live stream database (tab-delimited)
+├── maintain_networks.py    # Python maintenance script
+├── update_networks.sh      # Shell automation script
+├── requirements.txt        # Python dependencies
+├── README.md              # This documentation
+├── prompt.md              # Development prompt/specifications
+├── NETWORKS_README.md     # Detailed maintenance system docs
+└── networks_update.log    # Maintenance operation logs (created automatically)
+```
 
 ## Customization
 

@@ -101,6 +101,12 @@
                 </button>
                 <div id="newsChannelsSection" class="bg-gray-800 rounded-lg shadow-lg expanded">
                     <div class="p-4">
+                        <div class="mb-3 flex justify-between items-center">
+                            <span class="text-sm text-gray-300">Source:</span>
+                            <button id="toggleSourceBtn" class="bg-gray-600 hover:bg-gray-500 text-white text-xs font-medium py-1 px-3 rounded transition-colors duration-300">
+                                Networks.txt
+                            </button>
+                        </div>
                         <div id="newsChannelButtons" class="flex flex-wrap justify-center gap-3">
                             <!-- News channel buttons will be dynamically generated here -->
                         </div>
@@ -155,7 +161,7 @@
         // =====================================================
         // NEWS CHANNELS CONFIGURATION
         // =====================================================
-        // Add or modify news channels here for easy management
+        // Backup method: Add or modify news channels here for easy management
         const newsChannels = [
             {
                 label: 'Sky',
@@ -204,12 +210,18 @@
              
         ];
 
+        // Global variables for source management
+        let useNetworksFile = true; // Primary method: use Networks.txt
+        let networksData = []; // Cache for Networks.txt data
+        let networksLoadFailed = false; // Track if Networks.txt loading failed
+
         document.addEventListener('DOMContentLoaded', () => {
             // --- DOM Element Selection ---
             const toggleInputBtn = document.getElementById('toggleInputBtn');
             const inputSection = document.getElementById('inputSection');
             const toggleNewsChannelsBtn = document.getElementById('toggleNewsChannelsBtn');
             const newsChannelsSection = document.getElementById('newsChannelsSection');
+            const toggleSourceBtn = document.getElementById('toggleSourceBtn');
             const videoUrlsInput = document.getElementById('videoUrls');
             const loadVideosBtn = document.getElementById('loadVideosBtn');
             const videoPlayersContainer = document.getElementById('videoPlayersContainer');
@@ -274,6 +286,41 @@
                 loadedVideosSection.classList.remove('hidden');
             }
             
+            // --- NETWORKS.TXT PARSING ---
+            async function loadNetworksFromFile() {
+                try {
+                    const response = await fetch('./Networks.txt');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const text = await response.text();
+                    const lines = text.split('\n').filter(line => line.trim() !== '');
+                    
+                    // Skip header line (first line)
+                    const dataLines = lines.slice(1);
+                    
+                    networksData = dataLines.map(line => {
+                        const columns = line.split('\t');
+                        if (columns.length >= 3) {
+                            return {
+                                label: columns[0].trim(), // Network name (first column)
+                                url: columns[2].trim()    // YouTube URL (third column)
+                            };
+                        }
+                        return null;
+                    }).filter(item => item !== null);
+                    
+                    console.log(`Loaded ${networksData.length} networks from Networks.txt`);
+                    networksLoadFailed = false; // Reset failure flag on success
+                    return true;
+                } catch (error) {
+                    console.error('Failed to load Networks.txt:', error);
+                    networksData = [];
+                    networksLoadFailed = true; // Set failure flag
+                    return false;
+                }
+            }
+
             // --- UI TOGGLES & MODAL ---
             toggleInputBtn.addEventListener('click', () => {
                 const isExpanded = inputSection.classList.toggle('expanded');
@@ -283,6 +330,30 @@
             toggleNewsChannelsBtn.addEventListener('click', () => {
                 const isExpanded = newsChannelsSection.classList.toggle('expanded');
                 toggleNewsChannelsBtn.textContent = isExpanded ? '[Hide] Quick Add News Channels' : '[Show] Quick Add News Channels';
+            });
+
+            toggleSourceBtn.addEventListener('click', async () => {
+                useNetworksFile = !useNetworksFile;
+                toggleSourceBtn.textContent = useNetworksFile ? 'Networks.txt' : 'Built-in';
+                
+                if (useNetworksFile && networksData.length === 0 && !networksLoadFailed) {
+                    // Try to load Networks.txt if not already loaded and not previously failed
+                    const loaded = await loadNetworksFromFile();
+                    if (!loaded) {
+                        // Fall back to built-in if loading fails
+                        useNetworksFile = false;
+                        toggleSourceBtn.textContent = 'Built-in';
+                        showModal('Failed to load Networks.txt, using built-in channels', true);
+                    }
+                } else if (useNetworksFile && networksLoadFailed) {
+                    // If Networks.txt loading previously failed, don't try again
+                    useNetworksFile = false;
+                    toggleSourceBtn.textContent = 'Built-in';
+                    showModal('Networks.txt not available (CORS or file access restriction)', true);
+                }
+                
+                // Regenerate buttons with new source
+                createNewsChannelButtons();
             });
             
             function showModal(message, autoHide = false) {
@@ -466,6 +537,12 @@
             function createNewsChannelButtons() {
                 const newsChannelButtonsContainer = document.getElementById('newsChannelButtons');
                 
+                // Clear existing buttons
+                newsChannelButtonsContainer.innerHTML = '';
+                
+                // Determine which data source to use
+                const channelData = useNetworksFile && networksData.length > 0 ? networksData : newsChannels;
+                
                 // Color palette for news channel buttons
                 const colorPalette = [
                     'bg-blue-600 hover:bg-blue-700',      // Blue
@@ -482,7 +559,7 @@
                     'bg-pink-600 hover:bg-pink-700'        // Pink
                 ];
                 
-                newsChannels.forEach((channel, index) => {
+                channelData.forEach((channel, index) => {
                     const button = document.createElement('button');
                     const colorClass = colorPalette[index % colorPalette.length];
                     button.className = `${colorClass} text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg`;
@@ -496,11 +573,33 @@
                     
                     newsChannelButtonsContainer.appendChild(button);
                 });
+                
+                console.log(`Generated ${channelData.length} buttons from ${useNetworksFile ? 'Networks.txt' : 'built-in channels'}`);
             }
 
             // --- Initial App Load ---
-            createNewsChannelButtons();
-            loadInitialVideos();
+            async function initializeApp() {
+                // Try to load Networks.txt first (primary method)
+                const networksLoaded = await loadNetworksFromFile();
+                if (!networksLoaded) {
+                    // Fall back to built-in channels
+                    useNetworksFile = false;
+                    toggleSourceBtn.textContent = 'Built-in';
+                    console.log('Using built-in channels as fallback');
+                } else {
+                    // Successfully loaded Networks.txt
+                    toggleSourceBtn.textContent = 'Networks.txt';
+                }
+                
+                // Create buttons based on available data source
+                createNewsChannelButtons();
+                
+                // Load initial videos
+                await loadInitialVideos();
+            }
+            
+            // Start the app
+            initializeApp();
         });
     </script>
 </body>
