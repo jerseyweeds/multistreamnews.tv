@@ -46,10 +46,10 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
 ### Adding Videos via Quick Add Buttons
 1. **Access News Channels**: The colorful quick-add buttons are visible by default at the top of the page
 2. **Click to Add**: Simply click any news channel button to instantly add that stream to your video wall
-3. **Collapse if Needed**: Use the "Hide Quick Add News Channels" button to minimize this section
+3. **Collapse if Needed**: Use the "[Hide] Quick Add News Channels" button to minimize this section
 
 ### Adding Videos via URL Input
-1. **Show the Input**: Click the "Show Video Input" button to expand the input panel
+1. **Show the Input**: Click the "[Show] Video Input" button to expand the input panel
 2. **Add Videos**: Paste one or more YouTube video URLs into the text area (one URL per line)
 3. **Load Videos**: Click the "Load Video(s)" button - videos will appear in the grid and the input panel will automatically close
 

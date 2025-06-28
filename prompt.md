@@ -15,8 +15,8 @@ Create a single-page interactive web application (SPA) named "MultiStreamNews.TV
 ### 2.2. Quick Add News Channels Section
 
 * **Collapsible Interface:**
-  - Create a collapsible section with a purple toggle button labeled "Hide Quick Add News Channels" when expanded
-  - When collapsed, the button should read "Show Quick Add News Channels"
+  - Create a collapsible section with a purple toggle button labeled "[Hide] Quick Add News Channels" when expanded
+  - When collapsed, the button should read "[Show] Quick Add News Channels"
   - Section should be expanded by default on page load
   - Smooth 0.4-second CSS transitions for expand/collapse animations
 
@@ -42,7 +42,7 @@ Create a single-page interactive web application (SPA) named "MultiStreamNews.TV
 ### 2.3. Manual Video Input Section
 
 * **Collapsible Input Interface:**
-  - Blue toggle button with text "Hide Video Input" when expanded, "Show Video Input" when collapsed
+  - Blue toggle button with text "[Hide] Video Input" when expanded, "[Show] Video Input" when collapsed
   - Section expanded by default on page load
   - Smooth CSS transitions matching the news channels section
 

@@ -97,7 +97,7 @@
             <!-- News Channels Section -->
             <div class="mb-6">
                 <button id="toggleNewsChannelsBtn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                    Hide Quick Add News Channels
+                    [Hide] Quick Add News Channels
                 </button>
                 <div id="newsChannelsSection" class="bg-gray-800 rounded-lg shadow-lg expanded">
                     <div class="p-4">
@@ -111,7 +111,7 @@
             <!-- Collapsible Input Section -->
             <div class="mb-6">
                 <button id="toggleInputBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                    Hide Video Input
+                    [Hide] Video Input
                 </button>
                 <div id="inputSection" class="bg-gray-800 rounded-lg shadow-lg expanded">
                     <div class="p-4">
@@ -277,12 +277,12 @@
             // --- UI TOGGLES & MODAL ---
             toggleInputBtn.addEventListener('click', () => {
                 const isExpanded = inputSection.classList.toggle('expanded');
-                toggleInputBtn.textContent = isExpanded ? 'Hide Video Input' : 'Show Video Input';
+                toggleInputBtn.textContent = isExpanded ? '[Hide] Video Input' : '[Show] Video Input';
             });
 
             toggleNewsChannelsBtn.addEventListener('click', () => {
                 const isExpanded = newsChannelsSection.classList.toggle('expanded');
-                toggleNewsChannelsBtn.textContent = isExpanded ? 'Hide Quick Add News Channels' : 'Show Quick Add News Channels';
+                toggleNewsChannelsBtn.textContent = isExpanded ? '[Hide] Quick Add News Channels' : '[Show] Quick Add News Channels';
             });
             
             function showModal(message, autoHide = false) {
@@ -378,7 +378,7 @@
                         saveUrlsToStorage();
                         // Auto-close the input panel
                         inputSection.classList.remove('expanded');
-                        toggleInputBtn.textContent = 'Show Video Input';
+                        toggleInputBtn.textContent = '[Show] Video Input';
                     }
                 } else {
                     showModal('Please paste at least one YouTube URL.');
