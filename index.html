@@ -403,7 +403,7 @@
         ];
 
         // Global variables for source management
-        let useNetworksFile = true; // Primary method: use Networks.txt
+        let useNetworksFile = false; // Primary method: use Built-in (changed from true)
         let networksData = []; // Cache for Networks.txt data
         let networksLoadFailed = false; // Track if Networks.txt loading failed
 
@@ -529,7 +529,7 @@
                 toggleSourceBtn.textContent = useNetworksFile ? 'Networks.txt' : 'Built-in';
                 
                 if (useNetworksFile && networksData.length === 0) {
-                    // Always try to load Networks.txt if we don't have data yet
+                    // Try to load Networks.txt if we don't have data yet
                     const loaded = await loadNetworksFromFile();
                     if (!loaded) {
                         // Fall back to built-in if loading fails
@@ -770,19 +770,21 @@
 
             // --- Initial App Load ---
             async function initializeApp() {
-                // Try to load Networks.txt first (primary method)
-                const networksLoaded = await loadNetworksFromFile();
-                if (!networksLoaded) {
-                    // Fall back to built-in channels
-                    useNetworksFile = false;
-                    toggleSourceBtn.textContent = 'Built-in';
-                    console.log('Using built-in channels as fallback');
-                } else {
-                    // Successfully loaded Networks.txt
-                    toggleSourceBtn.textContent = 'Networks.txt';
-                }
+                // Use built-in channels as default (primary method)
+                toggleSourceBtn.textContent = 'Built-in';
+                console.log('Using built-in channels as default');
                 
-                // Create buttons based on available data source
+                // Optionally load Networks.txt in the background for toggle functionality
+                // This doesn't block the UI and is only used when user switches sources
+                loadNetworksFromFile().then(networksLoaded => {
+                    if (networksLoaded) {
+                        console.log('Networks.txt loaded successfully and available via toggle');
+                    } else {
+                        console.log('Networks.txt not available - only built-in channels will be accessible');
+                    }
+                });
+                
+                // Create buttons using built-in channels (fast loading)
                 createNewsChannelButtons();
                 
                 // Load initial videos

@@ -1,6 +1,6 @@
 # Networks.txt Maintenance System
 
-This directory contains scripts to automatically maintain the `Networks.txt` file, which contains live YouTube news streams for the MultiStreamNews.TV application.
+This directory contains scripts to automatically maintain the `Networks.txt` file, which provides an optional live stream database for the MultiStreamNews.TV application. The application uses built-in channels by default for reliability and speed, with Networks.txt available as an enhanced option via toggle button.
 
 ## Files
 
@@ -292,22 +292,25 @@ tail -f networks_update.log
 
 ## Integration with MultiStreamNews.TV
 
-The maintenance system works seamlessly with the main application:
+The maintenance system works as an optional enhancement to the main application:
 
-1. **Real-time Updates** - Streams are verified and updated regularly
-2. **Clean Data** - Dead streams are removed automatically  
-3. **Fresh Content** - New live streams are discovered and added
-4. **Reliable Sources** - Only verified live streams are included
+1. **Default Operation** - App uses built-in channels for instant, reliable loading
+2. **Enhanced Mode** - Networks.txt provides live stream data when toggled by user
+3. **Background Loading** - Networks.txt loads silently without blocking the UI
+4. **Seamless Toggle** - Users can switch between built-in and live data sources
+5. **Clean Data** - Dead streams are removed automatically when Networks.txt is used
+6. **Fresh Content** - New live streams are discovered and added regularly
 
-The web application will automatically use the updated Networks.txt file without requiring any changes to the code.
+The web application will automatically use the updated Networks.txt file when the user toggles to it, without requiring any changes to the code.
 
 ## Best Practices
 
-1. **Regular Updates** - Run updates every 30-60 minutes during peak hours
+1. **Regular Updates** - Run updates every 30-60 minutes during peak hours for optimal live data
 2. **Monitor Logs** - Check logs regularly for errors or issues
 3. **Backup Strategy** - Keep backups of working Networks.txt files
 4. **Rate Limiting** - Don't make requests too frequently to avoid blocking
 5. **Testing** - Use `--check-only` mode to test before making changes
+6. **Optional Usage** - Remember that the main app works perfectly with built-in channels when Networks.txt is unavailable
 
 ## Support
 

@@ -13,7 +13,7 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
 * **Smart Duplicate Prevention**: The application intelligently ignores duplicate URLs, preventing the same video from being added more than once.
 
 ### Quick Add News Channels
-* **Dynamic Source Management**: Choose between Networks.txt (live database) or built-in channels with a toggle button
+* **Dynamic Source Management**: Choose between Built-in (default) or Networks.txt (live database) with a toggle button
 * **One-Click News Access**: A collapsible section with colorful quick-add buttons for major news outlets including:
   - Sky News, NBC, ABC, CBS, BBC, CNN, Fox News, MSNBC, C-SPAN
   - International: DW, France 24, Al Jazeera, Bloomberg, Reuters
@@ -22,7 +22,8 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
   - Regional: 6abc, NASA, and more
 * **Color-Coded Buttons**: Each news channel button has a unique color from a 12-color palette for easy visual identification
 * **Expandable Interface**: The news channels section can be collapsed to save space when not needed
-* **Smart Fallback**: Automatically falls back to built-in channels if Networks.txt cannot be loaded
+* **Reliable Default**: Uses built-in channels for instant loading, with Networks.txt available via toggle
+* **Smart Fallback**: Networks.txt loads in background and is available when toggle is switched
 
 ### Window Management
 * **macOS-style Window Controls**: Each video player is housed in a clean, macOS-inspired window with familiar traffic light controls:
@@ -45,7 +46,7 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
   - Progressive multi-column grid on larger screens (350px minimum on tablets, 400px on desktop)
   - Responsive breakpoints at 640px, 768px, 1024px, and 1280px screen widths
   - Video windows maintain 16:9 aspect ratio at all screen sizes
-* **Source Toggle**: Switch between Networks.txt and built-in channel sources with a small toggle button
+* **Source Toggle**: Switch between Built-in (default) and Networks.txt sources with a small toggle button
 * **Donation Support**: "Buy me a coffee" dropdown in the header with PayPal and Venmo options
   - PayPal and Venmo branded SVG icons for professional appearance
   - QR code modal displays when donation option is selected
@@ -69,7 +70,7 @@ The page includes a "Buy me a coffee" donation feature in the header:
 
 ### Adding Videos via Quick Add Buttons
 1. **Access News Channels**: The colorful quick-add buttons are visible by default at the top of the page
-2. **Choose Source**: Use the small toggle button to switch between "Networks.txt" (live database) and "Built-in" (static list)
+2. **Choose Source**: Use the small toggle button to switch between "Built-in" (default) and "Networks.txt" (live database)
 3. **Click to Add**: Simply click any news channel button to instantly add that stream to your video wall
 4. **Collapse if Needed**: Use the "[Hide] Quick Add News Channels" button to minimize this section
 
@@ -107,6 +108,7 @@ MultiStreamNews.TV includes an automated system for maintaining a database of cu
 
 ### Networks.txt File
 * **Live Stream Database**: `Networks.txt` contains verified live YouTube streams from major English-speaking news networks
+* **Optional Enhancement**: Available via toggle button - built-in channels are used by default for reliability
 * **Real-time Updates**: Stream status, viewer counts, and live duration are automatically verified and updated
 * **Duration Tracking**: Includes live duration column (e.g., "2d", "5h", "45m") for each stream
 * **Quality Filtering**: Only includes streams that have been live for 24+ hours to ensure stability

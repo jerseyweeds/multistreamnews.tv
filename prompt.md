@@ -33,10 +33,11 @@ The web application features a modern, responsive design with video wall header,
   - Smooth 0.4-second CSS transitions for expand/collapse animations
 
 * **Dynamic Source Management:**
-  - Include a small toggle button to switch between "Networks.txt" and "Built-in" sources
-  - Primary method: Load channels from Networks.txt file (live database)
-  - Backup method: Use built-in JavaScript array when Networks.txt unavailable
-  - Graceful fallback with user notification when source switching fails
+  - Include a small toggle button to switch between "Built-in" (default) and "Networks.txt" sources
+  - Primary method: Use built-in JavaScript array for instant loading and reliability
+  - Secondary method: Load channels from Networks.txt file (live database) when toggled
+  - Networks.txt loads in background for seamless toggle functionality
+  - Graceful fallback with user notification when Networks.txt switching fails
   - Smart retry logic that prevents unnecessary reload attempts
 
 * **News Channel Buttons:**
@@ -163,6 +164,7 @@ The web application features a modern, responsive design with video wall header,
   - Contains verified live YouTube streams from major English-speaking news networks
   - Only includes streams that have been live for 24+ hours to ensure stability
   - Automatically deduplicated to prevent duplicate entries
+  - **Optional Enhancement**: Available via toggle - built-in channels used by default
   - Example format:
     ```
     Network	Channel	YouTube URL	Status	Viewers	Duration
@@ -176,6 +178,7 @@ The web application features a modern, responsive design with video wall header,
   - Only include streams that are currently live and broadcasting for 24+ hours
   - Real-time viewer count and duration information
   - Automatic deduplication to maintain database integrity
+  - **Usage**: Secondary source accessed via toggle button for live stream data
 
 ### 2.9.1. network_list.txt Channel Database
 
@@ -551,14 +554,15 @@ multistreamnews.tv/
 
 ### 5.1. Web Application Usage
 
-1. **Page Load:** User sees header with donation option, expanded quick-add buttons, and expanded input section
-2. **Quick Add:** User clicks colorful news channel buttons to instantly add streams
-3. **Manual Add:** User pastes YouTube URLs in textarea and clicks "Load Video(s)"
-4. **Video Management:** User controls videos with macOS-style window buttons
-5. **Maximize for Audio:** User clicks green button to maximize and unmute a video
-6. **Session Persistence:** User's video selection automatically saves and restores
-7. **URL Management:** User can copy all current URLs for sharing or backup
-8. **Support Project:** User can hover over "Buy me a coffee" and select PayPal or Venmo to see QR code for donations
+1. **Page Load:** User sees header with donation option, expanded quick-add buttons (built-in channels), and expanded input section
+2. **Quick Add:** User clicks colorful news channel buttons to instantly add streams using built-in channels
+3. **Toggle Source:** User can switch to Networks.txt via toggle button for live stream database
+4. **Manual Add:** User pastes YouTube URLs in textarea and clicks "Load Video(s)"
+5. **Video Management:** User controls videos with macOS-style window buttons
+6. **Maximize for Audio:** User clicks green button to maximize and unmute a video
+7. **Session Persistence:** User's video selection automatically saves and restores
+8. **URL Management:** User can copy all current URLs for sharing or backup
+9. **Support Project:** User can hover over "Buy me a coffee" and select PayPal or Venmo to see QR code for donations
 
 ### 5.2. Maintenance System Workflows
 
