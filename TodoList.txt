@@ -1,0 +1,3 @@
+# MultiStreamNews.TV Todo List
+
+- [ ] Add link below QR pop for PayPal and Venmo
