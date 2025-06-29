@@ -342,6 +342,9 @@
             </div>
             <p id="qrModalDescription" class="text-gray-300 text-sm mt-4"></p>
             <div class="mt-4">
+                <a id="qrModalLink" href="#" target="_blank" rel="noopener noreferrer" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 mr-2">
+                    Open Link
+                </a>
                 <button onclick="closeQRModal()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg transition-colors duration-300">
                     Close
                 </button>
@@ -801,17 +804,22 @@
             const qrModalTitle = document.getElementById('qrModalTitle');
             const qrCodeImage = document.getElementById('qrCodeImage');
             const qrModalDescription = document.getElementById('qrModalDescription');
+            const qrModalLink = document.getElementById('qrModalLink');
             
             if (type === 'paypal') {
                 qrModalTitle.textContent = 'PayPal - $5 Donation';
                 // Generate QR code for PayPal using a QR code API
                 qrCodeImage.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent('https://paypal.me/jwiedmayer/5');
                 qrModalDescription.textContent = 'Scan this QR code with your phone camera to donate $5 via PayPal';
+                qrModalLink.href = 'https://paypal.me/jwiedmayer/5';
+                qrModalLink.textContent = 'Open PayPal Link';
             } else if (type === 'venmo') {
                 qrModalTitle.textContent = 'Venmo - $5 Donation';
                 // Generate QR code for Venmo using a QR code API
                 qrCodeImage.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent('https://venmo.com/u/jerseyweeds');
                 qrModalDescription.textContent = 'Scan this QR code with your Venmo app to send $5';
+                qrModalLink.href = 'https://venmo.com/u/jerseyweeds';
+                qrModalLink.textContent = 'Open Venmo Link';
             }
             
             qrModal.classList.remove('hidden');
