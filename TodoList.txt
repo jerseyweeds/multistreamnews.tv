@@ -1,0 +1,3 @@
+- [ ] Brainstorm new features for the project
+- [ ] Identify key bugs and issues to address
+- [ ] Plan out a roadmap for the next release
