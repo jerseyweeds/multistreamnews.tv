@@ -148,6 +148,12 @@ The web application features a modern, responsive design with video wall header,
   - "Copy All URLs" button with clipboard functionality
   - Visual confirmation ("Copied!") that fades after 2 seconds
 
+* **Footer with Last Updated Timestamp:**
+  - Display last updated date and time at bottom of page
+  - Shows when the application was last committed/updated
+  - Helps users know how current their version is
+  - Format: "Last Updated: [Date] at [Time] [Timezone]"
+
 ### PART B: LIVE STREAM MAINTENANCE SYSTEM
 
 ### 2.9. Networks.txt Database
