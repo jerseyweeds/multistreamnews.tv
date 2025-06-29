@@ -60,19 +60,164 @@
         /* Dynamic Grid Layout */
         #videoPlayersContainer {
             display: grid;
-            gap: 1.5rem; /* Equivalent to Tailwind's gap-6 */
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1rem; /* Slightly smaller gap for mobile */
+            /* Mobile-first: single column with padding for margins */
+            grid-template-columns: 1fr;
+            padding: 0 4px; /* Small margins on mobile */
         }
 
         .video-window {
             max-height: 720px;
             display: flex;
             flex-direction: column;
+            /* Ensure video windows don't overflow on mobile */
+            min-width: 0;
+            width: 100%;
+            /* Prevent horizontal overflow */
+            max-width: 100%;
+            overflow: hidden;
+        }            /* Ensure iframe is responsive */
+        .video-content-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+        }
+
+        /* Coffee dropdown styles */
+        .coffee-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .coffee-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: #374151;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            border-radius: 0.5rem;
+            z-index: 1000;
+            /* Removed margin-top to eliminate gap between button and dropdown */
+        }
+
+        .coffee-dropdown:hover .coffee-dropdown-content {
+            display: block;
+        }
+
+        .coffee-dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+            transition: background-color 0.3s;
+        }
+
+        .coffee-dropdown-content a:hover {
+            background-color: #4B5563;
+        }
+
+        .coffee-dropdown-content a:first-child {
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+
+        .coffee-dropdown-content a:last-child {
+            border-radius: 0 0 0.5rem 0.5rem;
+        }
+
+        /* QR Code Modal styles */
+        .qr-modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 1rem;
+        }
+
+        .qr-modal-content {
+            background-color: #374151;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .qr-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #6B7280;
+            border: none;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 1.25rem;
+            transition: background-color 0.3s;
+        }
+
+        .qr-modal-close:hover {
+            background-color: #4B5563;
+        }
+
+        .qr-code-container {
+            margin: 1rem 0;
+        }
+
+        .qr-code-container img {
+            max-width: 200px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            border-radius: 0.5rem;
         }
 
         .video-window.maximized {
             grid-column: 1 / -1; /* Span all columns */
             max-height: none; /* Remove height constraint when maximized */
+        }
+
+        /* Responsive breakpoints */
+        @media (min-width: 640px) {
+            #videoPlayersContainer {
+                gap: 1.25rem;
+                padding: 0 8px; /* Slightly larger margins on tablets */
+            }
+        }
+
+        @media (min-width: 768px) {
+            #videoPlayersContainer {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                gap: 1.5rem;
+                padding: 0 12px; /* Medium margins on desktop */
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #videoPlayersContainer {
+                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+                gap: 1.5rem;
+                padding: 0 16px; /* Larger margins on large screens */
+            }
+        }
+
+        @media (min-width: 1280px) {
+            #videoPlayersContainer {
+                padding: 0 20px; /* Maximum margins on very large screens */
+            }
         }
     </style>
 </head>
@@ -86,14 +231,44 @@
                 <img src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="A wall of glowing screens" class="w-full h-full object-cover object-center">
             </div>
             <div aria-hidden="true" class="absolute inset-0 bg-gray-900 opacity-60"></div>
+            
+            <!-- Buy me a coffee dropdown - Top right corner -->
+            <div class="absolute top-4 right-4 z-20">
+                <div class="coffee-dropdown">
+                    <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 rounded-lg shadow-lg transition-colors duration-300 hover:shadow-xl">
+                        <span class="mr-1">☕</span>
+                        <span class="hidden sm:inline">Like this? Buy me a coffee ;-)</span>
+                        <span class="sm:hidden">Coffee? ;-)</span>
+                        <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="coffee-dropdown-content">
+                        <a href="#" onclick="showQRModal('paypal'); return false;">
+                            <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="#0070ba">
+                                <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 1.562C5.034.717 5.72 0 6.567 0h7.019c1.917 0 3.581.451 4.807 1.305 1.22.85 1.848 2.118 1.848 3.653 0 3.222-2.251 5.665-5.632 5.665h-2.87c-.378 0-.7.275-.76.649l-1.903 12.064c-.05.316-.315.565-.635.565z"/>
+                                <path d="M18.904 5.354c-.535 3.402-2.813 5.665-6.194 5.665H9.84c-.378 0-.7.275-.76.649L7.076 21.337c-.05.316-.315.565-.635.565H2.47a.641.641 0 0 1-.633-.74l3.108-19.035c.09-.845.776-1.562 1.623-1.562h7.019c1.917 0 3.581.451 4.807 1.305.535.372.976.847 1.305 1.413.18.312.329.644.447.991.113.336.197.687.247 1.052.048.353.065.717.047 1.09z"/>
+                            </svg>
+                            PayPal ($5)
+                        </a>
+                        <a href="#" onclick="showQRModal('venmo'); return false;">
+                            <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="#3d95ce">
+                                <path d="M19.739 4.836c.906 1.123 1.359 2.606 1.359 4.45 0 4.065-2.216 7.866-3.881 10.403L12.074 24l-8.619-.001L7.097.002h4.69l-.872 15.073c.914-1.296 2.065-3.438 2.065-5.848 0-1.33-.279-2.295-.832-2.871L19.739 4.836z"/>
+                            </svg>
+                            Venmo ($5)
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
             <div class="relative mx-auto flex max-w-3xl flex-col items-center py-24 text-center">
                 <h1 class="text-4xl font-bold tracking-tight text-white lg:text-5xl">MultiStreamNews.TV</h1>
                 <p class="mt-4 text-xl text-gray-300">Your central hub for multistream news and content.</p>
             </div>
         </div>
 
-        <!-- Main content area with padding -->
-        <div class="p-4 md:p-6 lg:p-8">
+        <!-- Main content area with responsive padding -->
+        <div class="p-2 sm:p-4 md:p-6 lg:p-8">
             <!-- News Channels Section -->
             <div class="mb-6">
                 <button id="toggleNewsChannelsBtn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
@@ -107,7 +282,7 @@
                                 Networks.txt
                             </button>
                         </div>
-                        <div id="newsChannelButtons" class="flex flex-wrap justify-center gap-3">
+                        <div id="newsChannelButtons" class="flex flex-wrap justify-center gap-2 sm:gap-3">
                             <!-- News channel buttons will be dynamically generated here -->
                         </div>
                     </div>
@@ -154,6 +329,23 @@
         <div class="bg-gray-800 rounded-lg shadow-2xl p-6 w-full max-w-sm text-center">
             <p id="modalMessage" class="mb-4 text-lg">Modal Message</p>
             <button id="closeModalBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full">Close</button>
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="qr-modal hidden">
+        <div class="qr-modal-content">
+            <button class="qr-modal-close" onclick="closeQRModal()">&times;</button>
+            <h3 id="qrModalTitle" class="text-xl font-bold text-white mb-4">Scan to Pay</h3>
+            <div class="qr-code-container">
+                <img id="qrCodeImage" src="" alt="QR Code" />
+            </div>
+            <p id="qrModalDescription" class="text-gray-300 text-sm mt-4"></p>
+            <div class="mt-4">
+                <button onclick="closeQRModal()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg transition-colors duration-300">
+                    Close
+                </button>
+            </div>
         </div>
     </div>
 
@@ -599,6 +791,41 @@
             
             // Start the app
             initializeApp();
+        });
+
+        // --- QR CODE MODAL FUNCTIONS ---
+        function showQRModal(type) {
+            const qrModal = document.getElementById('qrModal');
+            const qrModalTitle = document.getElementById('qrModalTitle');
+            const qrCodeImage = document.getElementById('qrCodeImage');
+            const qrModalDescription = document.getElementById('qrModalDescription');
+            
+            if (type === 'paypal') {
+                qrModalTitle.textContent = 'PayPal - $5 Donation';
+                // Generate QR code for PayPal using a QR code API
+                qrCodeImage.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent('https://paypal.me/jwiedmayer/5');
+                qrModalDescription.textContent = 'Scan this QR code with your phone camera to donate $5 via PayPal';
+            } else if (type === 'venmo') {
+                qrModalTitle.textContent = 'Venmo - $5 Donation';
+                // Generate QR code for Venmo using a QR code API
+                qrCodeImage.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent('https://venmo.com/u/jerseyweeds');
+                qrModalDescription.textContent = 'Scan this QR code with your Venmo app to send $5';
+            }
+            
+            qrModal.classList.remove('hidden');
+        }
+
+        function closeQRModal() {
+            const qrModal = document.getElementById('qrModal');
+            qrModal.classList.add('hidden');
+        }
+
+        // Close QR modal when clicking outside of it
+        document.addEventListener('click', function(e) {
+            const qrModal = document.getElementById('qrModal');
+            if (e.target === qrModal) {
+                closeQRModal();
+            }
         });
     </script>
 </body>

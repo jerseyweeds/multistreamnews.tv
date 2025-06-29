@@ -29,15 +29,28 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
   - **Red Button (Close)**: Instantly removes the video window from the player
   - **Yellow Button (Minimize)**: Collapses the video content, leaving only the title bar visible to save space
   - **Green Button (Maximize)**: Expands the video to the full width of the container and moves it to the top of the grid for focused viewing
-* **Responsive Grid Layout**: Video windows are arranged in a smart grid that automatically adjusts to your screen size, adding more columns as you widen your browser window
+* **Responsive Grid Layout**: Video windows are arranged in a smart grid that automatically adjusts to your screen size:
+  - **Mobile**: Single column with small side margins to prevent edge-to-edge display
+  - **Tablet**: Multi-column layout with 350px minimum width per video
+  - **Desktop**: Multi-column layout with 400px minimum width per video
+  - **Large screens**: Additional spacing and margins for optimal viewing
 
 ### User Interface
 * **Collapsible Sections**: Both the news channels and video input sections can be shown or hidden with toggle buttons
 * **Clean Interface**: Input areas automatically close after successfully adding videos to keep the interface uncluttered  
 * **Visual Feedback**: Smooth animations and hover effects provide clear user feedback
 * **Error Handling**: User-friendly error messages with 5-second auto-dismiss for temporary notifications
-* **Mobile Responsive**: The interface adapts to different screen sizes and devices
+* **Mobile Responsive**: Fully responsive design with mobile-optimized video windows
+  - Single-column layout on mobile devices with appropriate side margins (4px)
+  - Progressive multi-column grid on larger screens (350px minimum on tablets, 400px on desktop)
+  - Responsive breakpoints at 640px, 768px, 1024px, and 1280px screen widths
+  - Video windows maintain 16:9 aspect ratio at all screen sizes
 * **Source Toggle**: Switch between Networks.txt and built-in channel sources with a small toggle button
+* **Donation Support**: "Buy me a coffee" dropdown in the header with PayPal and Venmo options
+  - PayPal and Venmo branded SVG icons for professional appearance
+  - QR code modal displays when donation option is selected
+  - Modal remains open until user closes it for easy scanning
+  - Seamless hover-to-select dropdown with no gap issues
 
 ### Data Persistence
 * **Persistent Sessions**: Your video layout is automatically saved to your browser's local storage
@@ -46,6 +59,13 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
 * **One-Click Copy**: Copy all currently loaded video URLs to your clipboard with a single button click
 
 ## How to Use
+
+### Supporting the Project
+The page includes a "Buy me a coffee" donation feature in the header:
+1. **Access Donations**: Hover over the "Like this? Buy me a coffee" button to see PayPal and Venmo options
+2. **Choose Payment Method**: Click either PayPal or Venmo to open a QR code modal
+3. **Scan QR Code**: Use your mobile device to scan the displayed QR code for easy payment
+4. **Close Modal**: Click the X button or outside the modal to close it
 
 ### Adding Videos via Quick Add Buttons
 1. **Access News Channels**: The colorful quick-add buttons are visible by default at the top of the page
@@ -87,24 +107,34 @@ MultiStreamNews.TV includes an automated system for maintaining a database of cu
 
 ### Networks.txt File
 * **Live Stream Database**: `Networks.txt` contains verified live YouTube streams from major English-speaking news networks
-* **Real-time Updates**: Stream status and viewer counts are automatically verified and updated
+* **Real-time Updates**: Stream status, viewer counts, and live duration are automatically verified and updated
+* **Duration Tracking**: Includes live duration column (e.g., "2d", "5h", "45m") for each stream
+* **Quality Filtering**: Only includes streams that have been live for 24+ hours to ensure stability
 * **18+ Major Networks**: Includes Sky News, NBC, ABC, CNN, Fox News, BBC, Al Jazeera, Bloomberg, DW News, and more
-* **Tab-delimited Format**: Easy to read and integrate with other applications
+* **Tab-delimited Format**: Easy to read and integrate with other applications with columns: Network, Channel, YouTube URL, Status, Viewers, Duration
+* **Deduplication**: Automatically removes duplicate streams to maintain database integrity
 
 ### Maintenance System
-* **Automated Verification**: Python script (`maintain_networks.py`) checks stream status and updates viewer counts
-* **Smart Discovery**: Automatically finds new live streams from known news channels
-* **Dead Stream Removal**: Offline streams are automatically removed from the database
+* **Automated Verification**: Python script (`maintain_networks.py`) checks stream status, updates viewer counts, and tracks live duration
+* **Smart Discovery**: Automatically finds new live streams from known news channels using `network_list.txt`
+* **Quality Filtering**: Removes streams live for less than 24 hours and filters out offline streams
+* **Deduplication**: Ensures no duplicate streams in the database
+* **Test & Production Modes**: Configurable URL limits for testing (10 URLs) vs production (50 URLs per channel)
 * **Backup System**: Creates timestamped backups before making changes
 * **Comprehensive Logging**: Detailed logs of all maintenance operations
 
 ### Automation Scripts
-* **`update_networks.sh`**: Shell script for easy automation with three modes:
+* **`update_networks.sh`**: Shell script for easy automation with multiple modes:
   - **Quick**: Update existing streams only (recommended for frequent runs)
-  - **Full**: Update existing streams and search for new ones
+  - **Full**: Update existing streams and search for new ones from network_list.txt
+  - **Refresh**: Complete rebuild of Networks.txt from network_list.txt
   - **Check**: Verify status without making changes
+  - **Test Mode**: Use `--test-mode` flag to limit processing for development/testing
+* **Network List Management**: Uses `network_list.txt` for discovering live streams from known channel pages
 * **Cron Integration**: Ready for scheduling with crontab for automatic updates
 * **Error Handling**: Robust error handling and rate limiting to avoid service blocks
+* **Duration Tracking**: Extracts and tracks how long each stream has been live
+* **Quality Control**: Automatically filters out short-duration streams (< 24 hours)
 
 ### Usage
 ```bash
@@ -114,8 +144,15 @@ MultiStreamNews.TV includes an automated system for maintaining a database of cu
 # Full update with new stream discovery
 ./update_networks.sh full
 
+# Complete rebuild from network_list.txt
+./update_networks.sh refresh
+
 # Check status without making changes
 ./update_networks.sh check
+
+# Test mode with limited processing (for development)
+./update_networks.sh quick --test-mode
+./update_networks.sh full --test-mode
 ```
 
 For detailed documentation, see `NETWORKS_README.md`.
@@ -124,11 +161,17 @@ For detailed documentation, see `NETWORKS_README.md`.
 
 * **Frontend**: Built entirely with vanilla HTML, CSS, and JavaScript
 * **Styling**: Utilizes **Tailwind CSS** (via CDN) for modern, responsive design with a custom color palette
+* **Responsive Design**: Mobile-first approach with progressive enhancement:
+  - CSS Grid with responsive breakpoints (640px, 768px, 1024px, 1280px)
+  - Mobile-optimized single-column layout with appropriate margins
+  - Progressive multi-column layout for tablets and desktop
+  - Maintains video aspect ratios across all device sizes
 * **APIs**: Uses YouTube's oEmbed API to fetch video titles
 * **Persistence**: Leverages browser `localStorage` to save and retrieve video URLs between sessions
 * **Performance**: Lightweight single-file application with no external frameworks
 * **Analytics**: Includes Google Analytics integration for usage tracking
 * **Stream Maintenance**: Python-based automation system for maintaining live stream database
+* **User Support**: Integrated donation system with PayPal and Venmo QR code modals
 
 ## Installation & Setup
 
@@ -166,9 +209,10 @@ For automated live stream database maintenance:
 ```
 multistreamnews.tv/
 ├── index.html              # Main web application
-├── Networks.txt            # Live stream database (tab-delimited)
-├── maintain_networks.py    # Python maintenance script
-├── update_networks.sh      # Shell automation script
+├── Networks.txt            # Live stream database (tab-delimited with Duration column)
+├── network_list.txt        # Channel list for stream discovery (tab-delimited)
+├── maintain_networks.py    # Python maintenance script with duration tracking
+├── update_networks.sh      # Shell automation script with multiple modes
 ├── requirements.txt        # Python dependencies
 ├── README.md              # This documentation
 ├── prompt.md              # Development prompt/specifications

@@ -17,6 +17,11 @@ The web application features a modern, responsive design with video wall header,
 * **Hero Section:** Create a prominent header with a background image using this URL: `https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`
 * **Overlay:** Add a dark overlay (`bg-gray-900 opacity-60`) to ensure text readability
 * **Title & Subtitle:** Display "MultiStreamNews.TV" as the main title and "Your central hub for multistream news and content." as the subtitle
+* **Donation Feature:** Include a "Buy me a coffee" dropdown in the header with PayPal and Venmo options
+  - Professional branded SVG icons for PayPal and Venmo
+  - Hover-activated dropdown with seamless interaction (no gap between button and menu)
+  - QR code modal displays when donation option is selected
+  - Modal remains open until user closes it for easy mobile scanning
 * **Responsive Design:** Ensure the header looks good on all screen sizes
 
 ### 2.2. Quick Add News Channels Section
@@ -113,10 +118,21 @@ The web application features a modern, responsive design with video wall header,
 ### 2.6. Responsive Grid Layout
 
 * **CSS Grid Implementation:**
-  - Use CSS Grid for video container: `grid-template-columns: repeat(auto-fit, minmax(400px, 1fr))`
-  - 1.5rem gap between video windows
+  - Mobile-first responsive design with progressive enhancement
+  - Mobile (default): Single column layout with small side margins (4px)
+  - Small screens (640px+): Single column with increased margins (8px)
+  - Medium screens (768px+): Multi-column grid with `minmax(350px, 1fr)`, 12px margins
+  - Large screens (1024px+): Multi-column grid with `minmax(400px, 1fr)`, 16px margins
+  - Extra large (1280px+): Maximum margins (20px) for optimal viewing
+  - Responsive gap spacing: 1rem on mobile, scaling to 1.5rem on desktop
   - Videos have max-height of 720px (removed when maximized)
   - Maximized videos span full width: `grid-column: 1 / -1`
+
+* **Mobile Optimization:**
+  - Prevent horizontal overflow with `min-width: 0` and `max-width: 100%`
+  - Maintain 16:9 aspect ratio across all screen sizes
+  - Touch-friendly button spacing with responsive gaps
+  - Container padding scales from 8px (mobile) to 32px (desktop)
 
 ### 2.7. Data Persistence & URL Management
 
@@ -137,28 +153,56 @@ The web application features a modern, responsive design with video wall header,
 ### 2.9. Networks.txt Database
 
 * **File Structure:**
-  - Tab-delimited text file with columns: Network, Channel, YouTube URL, Status, Viewers
+  - Tab-delimited text file with columns: Network, Channel, YouTube URL, Status, Viewers, Duration
   - Contains verified live YouTube streams from major English-speaking news networks
+  - Only includes streams that have been live for 24+ hours to ensure stability
+  - Automatically deduplicated to prevent duplicate entries
   - Example format:
     ```
-    Network	Channel	YouTube URL	Status	Viewers
-    Sky News	Sky News	https://www.youtube.com/watch?v=YDvsBbKfLPA	LIVE	3.9K watching
-    NBC News NOW	NBC News	https://www.youtube.com/watch?v=DfwpCn9347w	LIVE	1.2K watching
+    Network	Channel	YouTube URL	Status	Viewers	Duration
+    Sky News	Sky News	https://www.youtube.com/watch?v=YDvsBbKfLPA	LIVE	3.9K watching	2d
+    NBC News NOW	NBC News	https://www.youtube.com/watch?v=DfwpCn9347w	LIVE	1.2K watching	5h
     ```
 
 * **Content Requirements:**
   - Include 15+ major news networks
   - Cover US, UK, Australian, Canadian, and international outlets
-  - Only include streams that are currently live and broadcasting
-  - Real-time viewer count information
+  - Only include streams that are currently live and broadcasting for 24+ hours
+  - Real-time viewer count and duration information
+  - Automatic deduplication to maintain database integrity
+
+### 2.9.1. network_list.txt Channel Database
+
+* **Purpose:** Master list of news channel pages for automated stream discovery
+* **File Structure:**
+  - Tab-delimited text file with columns: Network Name, Channel Handle/ID
+  - Contains main YouTube channel pages (not individual videos)
+  - Used by maintenance scripts to discover live streams
+  - Example format:
+    ```
+    Network Name	Channel Handle/ID
+    Sky News	@SkyNews
+    NBC News	@NBCNews
+    BBC News	@BBCNews
+    CNN	@CNN
+    ```
+
+* **Integration:**
+  - Used by maintain_networks.py with --add-new or --refresh modes
+  - Scripts automatically search these channels for live streams
+  - Enables dynamic discovery of new streams without manual URL updates
+  - Supports both @handle and channel ID formats
 
 ### 2.10. Python Maintenance Script (maintain_networks.py)
 
 * **Core Functionality:**
   - **Stream Verification:** Check if each YouTube URL is currently live
   - **Viewer Count Updates:** Extract and update current viewer counts
+  - **Duration Tracking:** Extract and track how long each stream has been live
+  - **Quality Filtering:** Remove streams that have been live for less than 24 hours
   - **Dead Stream Removal:** Remove streams that are no longer live
-  - **New Stream Discovery:** Search known channels for new live streams
+  - **New Stream Discovery:** Search known channels from network_list.txt for new live streams
+  - **Deduplication:** Ensure no duplicate URLs in the database
   - **Report Generation:** Provide detailed statistics on maintenance operations
 
 * **Technical Requirements:**
@@ -166,26 +210,32 @@ The web application features a modern, responsive design with video wall header,
   - Async HTTP requests with proper error handling
   - Rate limiting to avoid YouTube blocking (2-second delays)
   - User-Agent spoofing for reliable access
-  - Command-line arguments: `--check-only`, `--add-new`, `--verbose`
+  - Command-line arguments: `--check-only`, `--add-new`, `--verbose`, `--test-mode`, `--refresh`
+  - Test mode: Process max 10 URLs per channel (for development/testing)
+  - Production mode: Process max 50 URLs per channel (default)
 
 * **Stream Detection Logic:**
   - Parse YouTube video pages for live indicators
   - Extract viewer counts using multiple regex patterns
+  - Extract live duration from stream metadata
   - Handle various viewer count formats (1.2K, 1,234, etc.)
+  - Parse duration formats (minutes, hours, days)
   - Graceful handling of network errors and API limitations
 
-* **Known Channels Array:**
-  - Predefined list of 20+ major news channels with handles
-  - Include: Sky News, BBC, CNN, Fox News, NBC, ABC, CBS, Reuters, etc.
-  - Support both @channel and channel ID formats
+* **Network List Integration:**
+  - Uses network_list.txt as source for channel discovery
+  - Tab-delimited format: Network Name, Channel Handle/ID
+  - Supports both @channel and channel ID formats
   - Easy configuration for adding new channels
 
 ### 2.11. Shell Automation Script (update_networks.sh)
 
 * **Operation Modes:**
   - **Quick Mode:** Update existing streams only (default, fastest)
-  - **Full Mode:** Update existing streams + search for new ones
+  - **Full Mode:** Update existing streams + search for new ones from network_list.txt
+  - **Refresh Mode:** Complete rebuild of Networks.txt from network_list.txt
   - **Check Mode:** Verify status without making file changes
+  - **Test Mode:** Use --test-mode flag to limit processing (10 URLs per channel for development)
 
 * **Advanced Features:**
   - **Automatic Backups:** Create timestamped backups before changes
@@ -194,12 +244,16 @@ The web application features a modern, responsive design with video wall header,
   - **Log Rotation:** Automatic log file rotation when size exceeds 1MB
   - **Dependency Checking:** Verify Python version and install requirements
   - **Error Handling:** Graceful failure handling with detailed error messages
+  - **Duration Tracking:** Extracts and tracks live stream duration
+  - **Quality Control:** Filters out streams live for less than 24 hours
 
 * **Command Examples:**
   ```bash
-  ./update_networks.sh quick    # Quick update (default)
-  ./update_networks.sh full     # Full update with discovery
-  ./update_networks.sh check    # Check only, no changes
+  ./update_networks.sh quick       # Quick update (default)
+  ./update_networks.sh full        # Full update with discovery
+  ./update_networks.sh refresh     # Complete rebuild
+  ./update_networks.sh check       # Check only, no changes
+  ./update_networks.sh quick --test-mode  # Test mode with limited processing
   ```
 
 * **Cron Integration:**
@@ -214,6 +268,16 @@ The web application features a modern, responsive design with video wall header,
   - Click outside modal or close button to dismiss
   - Auto-hide option with 5-second display duration for temporary messages
   - Improved user feedback for CORS/file access issues
+  - QR code modal for donation system with PayPal and Venmo QR codes
+  - Modal remains open until user closes it for easy mobile device scanning
+
+* **Donation System:**
+  - "Buy me a coffee" dropdown in header with hover activation
+  - PayPal and Venmo options with professional branded SVG icons
+  - Seamless dropdown interaction with no gap between button and menu
+  - QR code modal displays payment-specific QR codes
+  - Mobile-optimized for easy scanning and payment processing
+  - Clean, professional styling that matches the overall design
 
 * **Color Scheme:**
   - Dark theme: body `#353E43`, main container `#5A6F7B`
@@ -221,9 +285,14 @@ The web application features a modern, responsive design with video wall header,
   - Use Tailwind CSS gray-800/700 for UI components
 
 * **Responsive Design:**
-  - Mobile-friendly interface with proper padding/margins
+  - Mobile-friendly interface with responsive grid layout
+  - Progressive enhancement from mobile-first single column to desktop multi-column
+  - Responsive breakpoints at 640px, 768px, 1024px, and 1280px
+  - Video windows maintain aspect ratio and prevent horizontal overflow
+  - Touch-friendly button and control sizing
+  - Appropriate margins and padding for different screen sizes
   - Collapsible sections to save space on smaller screens
-  - Flexible grid that adapts to screen size
+  - Flexible grid that adapts to screen size with appropriate minimum widths
 
 ## 3. Technical Implementation Requirements
 
@@ -256,8 +325,58 @@ const newsChannels = [
   - `createNewsChannelButtons()` - Generate colored news channel buttons
   - `saveUrlsToStorage()` / `getUrlsFromStorage()` - localStorage management
   - `loadInitialVideos()` - Async function to restore saved videos on page load
+  - `showQRModal(service)` - Display QR code modal for PayPal or Venmo donations
+  - `closeQRModal()` - Close the QR code modal
 
 ### 3.3. CSS Requirements
+
+* **Responsive Grid System:**
+```css
+#videoPlayersContainer {
+    display: grid;
+    gap: 1rem; /* Mobile: smaller gap */
+    grid-template-columns: 1fr; /* Mobile: single column */
+    padding: 0 4px; /* Mobile: small margins */
+}
+
+@media (min-width: 640px) {
+    #videoPlayersContainer {
+        gap: 1.25rem;
+        padding: 0 8px;
+    }
+}
+
+@media (min-width: 768px) {
+    #videoPlayersContainer {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 1.5rem;
+        padding: 0 12px;
+    }
+}
+
+@media (min-width: 1024px) {
+    #videoPlayersContainer {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        padding: 0 16px;
+    }
+}
+```
+
+* **Mobile-Optimized Video Windows:**
+```css
+.video-window {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.video-content-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+}
+```
 
 * **Collapsible Sections:**
 ```css
@@ -277,6 +396,45 @@ const newsChannels = [
 .title-bar {
     background-image: linear-gradient(to bottom, #ececec, #dcdcdc);
     box-shadow: inset 0px 1px 0px rgba(255,255,255,0.7), 0px 1px 1px rgba(0,0,0,0.1);
+}
+```
+
+* **Donation Dropdown Styling:**
+```css
+.coffee-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.coffee-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #374151;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 0.5rem;
+    z-index: 1000;
+    /* No margin-top to eliminate gap */
+}
+
+.coffee-dropdown:hover .coffee-dropdown-content {
+    display: block;
+}
+```
+
+* **QR Modal Styling:**
+```css
+.qr-modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 1rem;
 }
 ```
 
@@ -348,9 +506,10 @@ const newsChannels = [
 ```
 multistreamnews.tv/
 ├── index.html                 # Main web application
-├── Networks.txt               # Live stream database
-├── maintain_networks.py       # Python maintenance script  
-├── update_networks.sh         # Shell automation script
+├── Networks.txt               # Live stream database (with Duration column)
+├── network_list.txt           # Channel list for stream discovery
+├── maintain_networks.py       # Python maintenance script with duration tracking
+├── update_networks.sh         # Shell automation script with multiple modes
 ├── requirements.txt           # Python dependencies
 ├── README.md                  # Main documentation
 ├── prompt.md                  # This comprehensive build guide
@@ -371,22 +530,29 @@ multistreamnews.tv/
 * Screen reader friendly structure
 * High contrast for text readability
 
-### 4.3. Cross-Browser Compatibility
+### 4.3. Cross-Browser Compatibility & Mobile Support
 * Modern browser support (Chrome, Firefox, Safari, Edge)
 * Fallbacks for older browsers where reasonable
-* Responsive design for mobile devices
+* Fully responsive design optimized for mobile devices:
+  - Touch-friendly interface with appropriate button sizes
+  - Single-column layout on mobile with proper margins
+  - Progressive enhancement for tablets and desktop
+  - Maintains video quality and functionality across all screen sizes
+  - Prevents horizontal scrolling on any device
+  - Optimized for both portrait and landscape orientations
 
 ## 5. Expected User Workflows
 
 ### 5.1. Web Application Usage
 
-1. **Page Load:** User sees header, expanded quick-add buttons, and expanded input section
+1. **Page Load:** User sees header with donation option, expanded quick-add buttons, and expanded input section
 2. **Quick Add:** User clicks colorful news channel buttons to instantly add streams
 3. **Manual Add:** User pastes YouTube URLs in textarea and clicks "Load Video(s)"
 4. **Video Management:** User controls videos with macOS-style window buttons
 5. **Maximize for Audio:** User clicks green button to maximize and unmute a video
 6. **Session Persistence:** User's video selection automatically saves and restores
 7. **URL Management:** User can copy all current URLs for sharing or backup
+8. **Support Project:** User can hover over "Buy me a coffee" and select PayPal or Venmo to see QR code for donations
 
 ### 5.2. Maintenance System Workflows
 
@@ -411,9 +577,10 @@ multistreamnews.tv/
 ### 6.1. Web Application Standards
 * **Clean Code:** Well-organized, commented JavaScript with logical separation
 * **Modern CSS:** Efficient use of Tailwind utilities with custom CSS where needed
-* **User Experience:** Intuitive interface with clear visual feedback
+* **User Experience:** Intuitive interface with clear visual feedback and seamless donation system
 * **Performance:** Fast loading and smooth interactions
 * **Reliability:** Robust error handling and graceful degradation
+* **Mobile Optimization:** Fully responsive design with mobile-friendly donation QR codes
 
 ### 6.2. Maintenance System Standards
 * **Production Ready:** Robust error handling, logging, and backup systems
@@ -446,5 +613,7 @@ multistreamnews.tv/
 - Real-time stream verification
 - New stream discovery
 - Professional reporting and statistics
+- User-friendly donation system with PayPal and Venmo QR codes
+- Mobile-optimized interface with seamless donation experience
 
 This comprehensive system provides both immediate usability (web app) and long-term maintainability (automation system) for a complete professional news streaming platform.

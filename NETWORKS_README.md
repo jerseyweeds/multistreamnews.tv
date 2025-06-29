@@ -5,10 +5,18 @@ This directory contains scripts to automatically maintain the `Networks.txt` fil
 ## Files
 
 - **`Networks.txt`** - Main database of live news streams (tab-delimited)
+- **`network_list.txt`** - List of YouTube channels for stream discovery
 - **`maintain_networks.py`** - Python script for checking and updating streams
 - **`update_networks.sh`** - Shell script for automation and scheduling
 - **`requirements.txt`** - Python dependencies
 - **`NETWORKS_README.md`** - This documentation file
+
+## Stream Filtering
+
+The maintenance system now includes **24-hour filtering**:
+- Only streams that have been live for **over 24 hours** are included
+- Short-lived streams (under 24 hours) are automatically filtered out
+- This ensures only stable, continuous news streams are displayed
 
 ## Quick Start
 
@@ -27,20 +35,22 @@ This directory contains scripts to automatically maintain the `Networks.txt` fil
    ./update_networks.sh quick
    ```
 
-4. **Full update with new stream search:**
+4. **Full refresh from channel list:**
    ```bash
-   ./update_networks.sh full
+   ./update_networks.sh refresh
    ```
 
 ## Usage
 
 ### Shell Script (Recommended)
 
-The `update_networks.sh` script provides three modes:
+The `update_networks.sh` script provides five modes:
 
-- **`quick`** (default) - Updates existing streams only
-- **`full`** - Updates existing streams and searches for new ones
+- **`quick`** (default) - Updates existing streams, applies 24h filter
+- **`full`** - Updates existing streams and searches for new ones (24h+ only)
+- **`refresh`** - Complete rebuild from `network_list.txt` (24h+ only)
 - **`check`** - Checks status without modifying files
+- **`--test-mode`** - Limits processing to 10 URLs per channel (for development/testing)
 
 ```bash
 # Quick update (default)
@@ -50,8 +60,15 @@ The `update_networks.sh` script provides three modes:
 # Full update with new stream search
 ./update_networks.sh full
 
+# Complete rebuild from network_list.txt
+./update_networks.sh refresh
+
 # Check only (no file changes)
 ./update_networks.sh check
+
+# Test mode (limits processing for development/testing)
+./update_networks.sh quick --test-mode
+./update_networks.sh full --test-mode
 ```
 
 ### Python Script (Direct)
@@ -67,6 +84,12 @@ python3 maintain_networks.py --verbose
 
 # Search for new streams and update
 python3 maintain_networks.py --add-new --verbose
+
+# Full refresh from network list
+python3 maintain_networks.py --refresh --verbose
+
+# Test mode (limits to 10 URLs per channel for testing code changes)
+python3 maintain_networks.py --test-mode --verbose --check-only
 ```
 
 ## Automation
@@ -159,14 +182,24 @@ sudo systemctl start networks-update.timer
 
 ### Adding New Channels
 
-Edit the `KNOWN_CHANNELS` list in `maintain_networks.py`:
+Edit the `network_list.txt` file to add new channels:
 
-```python
-KNOWN_CHANNELS = [
-    ("Channel Name", "@channel_handle"),
-    ("New Channel", "@newchannel"),
-    # Add more channels here
-]
+```
+Network	YouTube Channel URL
+Sky News	https://www.youtube.com/@SkyNews
+NBC News	https://www.youtube.com/@NBCNews
+New Channel	https://www.youtube.com/@newchannel
+Another Channel	https://www.youtube.com/@anotherchannel
+```
+
+The YouTube Channel URL should be the full channel URL:
+- Format: `https://www.youtube.com/@channelname`
+- Handle format: `https://www.youtube.com/@channelname`
+- Legacy format: `https://www.youtube.com/channel/UCxxxxxxxxxxxxxxxx`
+
+After adding channels, run a refresh to discover their live streams:
+```bash
+./update_networks.sh refresh
 ```
 
 ### Adjusting Rate Limits
@@ -190,17 +223,39 @@ MAX_LOG_SIZE=1048576  # 1MB
 The file uses tab-delimited format with these columns:
 
 - **Network** - Display name of the news network
-- **Channel** - YouTube channel name
+- **Channel** - YouTube channel name  
 - **YouTube URL** - Full YouTube watch URL
 - **Status** - Current status (LIVE/OFFLINE)
 - **Viewers** - Current viewer count (e.g., "1.2K watching")
+- **Duration** - How long the stream has been live (e.g., "2d", "5h", "45m")
+
+**Note:** Only streams that have been live for **over 24 hours** are included.
 
 Example:
 ```
-Network	Channel	YouTube URL	Status	Viewers
-Sky News	Sky News	https://www.youtube.com/watch?v=YDvsBbKfLPA	LIVE	3.9K watching
-NBC News NOW	NBC News	https://www.youtube.com/watch?v=DfwpCn9347w	LIVE	1.2K watching
+Network	Channel	YouTube URL	Status	Viewers	Duration
+Sky News	Sky News	https://www.youtube.com/watch?v=YDvsBbKfLPA	LIVE	3.9K watching	2d
+NBC News NOW	NBC News	https://www.youtube.com/watch?v=DfwpCn9347w	LIVE	1.2K watching	25h
 ```
+
+## network_list.txt Format
+
+The `network_list.txt` file contains the master list of YouTube channels to monitor for live streams. It uses tab-delimited format with these columns:
+
+- **Network** - Display name of the news network
+- **YouTube Channel URL** - Full YouTube channel URL
+
+Example:
+```
+Network	YouTube Channel URL
+Sky News	https://www.youtube.com/@SkyNews
+NBC News	https://www.youtube.com/@NBCNews
+BBC News	https://www.youtube.com/@BBCNews
+CNN	https://www.youtube.com/@CNN
+Fox News	https://www.youtube.com/@FoxNews
+```
+
+This file is used by the maintenance scripts when discovering new live streams (modes: `full`, `refresh`).
 
 ## Troubleshooting
 

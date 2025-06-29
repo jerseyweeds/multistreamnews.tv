@@ -7,12 +7,13 @@
 # It can be run manually or scheduled via cron.
 #
 # Usage:
-#   ./update_networks.sh [quick|full|check]
+#   ./update_networks.sh [quick|full|refresh|check]
 #
 # Modes:
-#   quick - Update existing streams only (default)
-#   full  - Update existing streams and search for new ones
-#   check - Check status without updating files
+#   quick   - Update existing streams only (default)
+#   full    - Update existing streams and search for new ones
+#   refresh - Perform full refresh from network_list.txt (rebuilds Networks.txt)
+#   check   - Check status without updating files
 #
 # Cron example (run every 30 minutes):
 #   */30 * * * * cd /path/to/multistreamnews.tv && ./update_networks.sh quick >> networks_update.log 2>&1
@@ -137,6 +138,11 @@ run_maintenance() {
             info "Running full maintenance (including search for new streams)..."
             backup_networks
             ;;
+        "refresh")
+            python_args="--refresh --verbose"
+            info "Running full refresh from network_list.txt (rebuilding Networks.txt)..."
+            backup_networks
+            ;;
         "quick"|*)
             python_args="--verbose"
             info "Running quick maintenance (existing streams only)..."
@@ -165,17 +171,20 @@ show_usage() {
 Usage: $0 [mode]
 
 Modes:
-  quick  - Update existing streams only (default)
-  full   - Update existing streams and search for new ones  
-  check  - Check status without updating files
+  quick   - Update existing streams only (default)
+  full    - Update existing streams and search for new ones  
+  refresh - Perform full refresh from network_list.txt (rebuilds Networks.txt)
+  check   - Check status without updating files
 
 Examples:
-  $0 quick    # Quick update (default)
-  $0 full     # Full update with new stream search
-  $0 check    # Check only, no file changes
+  $0 quick     # Quick update (default)
+  $0 full      # Full update with new stream search
+  $0 refresh   # Rebuild Networks.txt from network_list.txt
+  $0 check     # Check only, no file changes
 
 This script maintains the Networks.txt file by checking YouTube live streams
-and updating their status and viewer counts.
+and updating their status and viewer counts. The refresh mode will completely
+rebuild Networks.txt by searching all channels listed in network_list.txt.
 
 Files:
   Networks.txt        - Main networks database
@@ -199,7 +208,7 @@ main() {
     
     # Validate mode
     case "$mode" in
-        "quick"|"full"|"check")
+        "quick"|"full"|"refresh"|"check")
             ;;
         *)
             echo -e "${RED}Invalid mode: $mode${NC}"
