@@ -55,8 +55,8 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
 * **Confirmation Modals**: Important actions like "Close All Videos" require user confirmation
 * **Non-blocking Notifications**: Toast-style notifications provide feedback without interrupting workflow
 * **Clean Interface**: Input areas automatically close after successfully adding videos to keep the interface uncluttered
-* **Donation Support**: "Buy me a coffee" dropdown in the header with PayPal and Venmo options
-  - PayPal and Venmo branded SVG icons for professional appearance
+* **Donation Support**: "Buy me a coffee" dropdown in the header with PayPal, Apple Pay, and Venmo options
+  - PayPal, Apple Pay, and Venmo branded SVG icons for professional appearance
   - QR code modal displays when donation option is selected
   - Modal remains open until user closes it for easy scanning
   - Seamless hover-to-select dropdown with no gap issues
@@ -73,8 +73,8 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
 
 ### Supporting the Project
 The page includes a "Buy me a coffee" donation feature in the header:
-1. **Access Donations**: Hover over the "Like this? Buy me a coffee" button to see PayPal and Venmo options
-2. **Choose Payment Method**: Click either PayPal or Venmo to open a QR code modal
+1. **Access Donations**: Hover over the "Like this? Buy me a coffee" button to see PayPal, Apple Pay, and Venmo options
+2. **Choose Payment Method**: Click either PayPal, Apple Pay, or Venmo to open a QR code modal
 3. **Scan QR Code**: Use your mobile device to scan the displayed QR code for easy payment
 4. **Close Modal**: Click the X button or outside the modal to close it
 

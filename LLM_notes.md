@@ -57,12 +57,21 @@ This file serves as long-term knowledge for AI assistants working on this projec
 - **Added**: Built-in news channels array
 - **Benefit**: Improved reliability, faster loading, reduced complexity
 
+#### 2025-06-30: Apple Pay Donation Option Added
+- **Added**: Apple Pay option to coffee donation dropdown
+- **Implementation**: Three-option dropdown (PayPal, Apple Pay, Venmo)
+- **Technical Note**: Apple Pay currently falls back to PayPal pending merchant account setup
+- **User Communication**: Clear modal message explaining fallback behavior
+- **Design**: Official Apple Pay logo and consistent button styling
+- **Files Changed**: index.html (HTML structure, showQRModal function, footer timestamp)
+
 ### UI/UX Evolution
 
 #### Header Coffee Button
 - **Desktop**: Shows "Like this? Buy me a coffee ;-)"
 - **Mobile**: Shows "Buy me a coffee" (cleaner, more direct)
 - **Latest Update**: Ensured mobile version says full phrase instead of just "Coffee"
+- **Payment Options**: PayPal, Apple Pay (with fallback), and Venmo (June 30, 2025)
 
 #### Video Window Controls
 - **Style**: macOS-inspired traffic light buttons (red, yellow, green)
@@ -167,3 +176,4 @@ This file serves as long-term knowledge for AI assistants working on this projec
 
 *Last Updated: June 30, 2025*
 *File Created: June 30, 2025*
+*Latest Change: Added Apple Pay donation option*

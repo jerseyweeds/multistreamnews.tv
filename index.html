@@ -389,9 +389,15 @@
                             </svg>
                             PayPal ($5)
                         </a>
+                        <a href="#" onclick="showQRModal('applepay'); return false;">
+                            <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="#000000">
+                                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                            </svg>
+                            Apple Pay ($5)
+                        </a>
                         <a href="#" onclick="showQRModal('venmo'); return false;">
                             <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="#3d95ce">
-                                <path d="M19.739 4.836c.906 1.123 1.359 2.606 1.359 4.45 0 4.065-2.216 7.866-3.881 10.403L12.074 24l-8.619-.001L7.097.002h4.69l-.872 15.073c.914-1.296 2.065-3.438 2.065-5.848 0-1.33-.279-2.295-.832-2.871L19.739 4.836z"/>
+                                <path d="M19.739 4.836c.906 1.123 1.359 2.606 1.359 4.50 0 4.065-2.216 7.866-3.881 10.403L12.074 24l-8.619-.001L7.097.002h4.69l-.872 15.073c.914-1.296 2.065-3.438 2.065-5.848 0-1.33-.279-2.295-.832-2.871L19.739 4.836z"/>
                             </svg>
                             Venmo ($5)
                         </a>
@@ -1215,6 +1221,13 @@
                 qrModalDescription.textContent = 'Scan this QR code with your phone camera to donate $5 via PayPal';
                 qrModalLink.href = 'https://paypal.me/jwiedmayer/5';
                 qrModalLink.textContent = 'Open PayPal Link';
+            } else if (type === 'applepay') {
+                qrModalTitle.textContent = 'Apple Pay - $5 Donation';
+                // Generate QR code for Apple Pay using a QR code API - linking to PayPal as Apple Pay requires merchant setup
+                qrCodeImage.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent('https://paypal.me/jwiedmayer/5');
+                qrModalDescription.textContent = 'Apple Pay requires merchant setup. Please use this PayPal link instead for your $5 donation';
+                qrModalLink.href = 'https://paypal.me/jwiedmayer/5';
+                qrModalLink.textContent = 'Open PayPal Link';
             } else if (type === 'venmo') {
                 qrModalTitle.textContent = 'Venmo - $5 Donation';
                 // Generate QR code for Venmo using a QR code API
@@ -1308,7 +1321,7 @@
     <!-- Footer with Last Updated Timestamp -->
     <footer class="text-center py-4 mt-8 border-t border-gray-600">
         <p class="text-gray-400 text-sm">
-            Last Updated: <span class="text-gray-300">June 30, 2025 at 10:15 UTC</span>
+            Last Updated: <span class="text-gray-300">June 30, 2025 at 10:45 UTC</span>
         </p>
     </footer>
 </body>
