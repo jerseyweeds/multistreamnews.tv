@@ -61,6 +61,8 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
   - Modal remains open until user closes it for easy scanning
   - Seamless hover-to-select dropdown with no gap issues
   - Mobile text says "Buy me a coffee" for clarity
+  - Apple Pay currently uses PayPal fallback pending merchant account setup
+  - Last updated: June 30, 2025
 
 ### Data Persistence
 * **Persistent Sessions**: Your video layout is automatically saved to your browser's local storage
@@ -142,6 +144,8 @@ The quick-add section includes buttons for these major news outlets:
 ## Installation & Setup
 
 Simply download and open `index.html` in any modern web browser. No additional setup required!
+
+The application is also live at: **https://www.multistreamnews.tv/**
 
 ## File Structure
 
