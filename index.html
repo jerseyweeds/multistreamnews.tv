@@ -376,7 +376,7 @@
                             <span class="block">Like this?</span>
                             <span class="block">Buy me a coffee ;-)</span>
                         </span>
-                        <span class="md:hidden">Coffee?</span>
+                        <span class="md:hidden">Buy me a coffee</span>
                         <svg class="ml-1 w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                         </svg>
@@ -466,16 +466,6 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mobile Drag and Drop Zone (Hidden - not useful on mobile) -->
-            <div class="mobile-drag-drop-zone mb-6 hidden">
-                <div id="dragDropZoneMobile" class="drag-drop-zone">
-                    <div class="drag-drop-content">
-                        <div class="font-semibold text-sm mb-1">Drag YouTube Links Here</div>
-                        <div class="text-xs opacity-75">Drop YouTube video URLs from other windows to instantly add them</div>
                     </div>
                 </div>
             </div>
@@ -594,9 +584,6 @@
              
         ];
 
-        // Global variables
-        let networksData = []; // Keep for any future use
-
         document.addEventListener('DOMContentLoaded', () => {
             // --- DOM Element Selection ---
             const toggleInputBtn = document.getElementById('toggleInputBtn');
@@ -607,7 +594,6 @@
             const loadVideosBtn = document.getElementById('loadVideosBtn');
             const videoPlayersContainer = document.getElementById('videoPlayersContainer');
             const dragDropZone = document.getElementById('dragDropZone');
-            const dragDropZoneMobile = document.getElementById('dragDropZoneMobile');
             
             const loadedVideosSection = document.getElementById('loadedVideosSection');
             const loadedVideosList = document.getElementById('loadedVideosList');
@@ -924,9 +910,8 @@
                 });
             }
 
-            // Setup drag and drop for both zones
+            // Setup drag and drop for the zone
             setupDragAndDrop(dragDropZone);
-            setupDragAndDrop(dragDropZoneMobile);
 
             // Also add drag and drop support to the entire video players container
             videoPlayersContainer.addEventListener('dragover', (e) => {
@@ -1323,7 +1308,7 @@
     <!-- Footer with Last Updated Timestamp -->
     <footer class="text-center py-4 mt-8 border-t border-gray-600">
         <p class="text-gray-400 text-sm">
-            Last Updated: <span class="text-gray-300">June 29, 2025 at 12:20 AM PST</span>
+            Last Updated: <span class="text-gray-300">June 30, 2025 at 10:15 UTC</span>
         </p>
     </footer>
 </body>

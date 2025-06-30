@@ -32,7 +32,7 @@ The web application features a modern, responsive design with video wall header,
 * **Built-in News Channels:**
   - Use a built-in JavaScript array of news channels for instant loading and reliability
   - No external file dependencies - all channels embedded in the application
-  - Include major outlets: Sky, NBC, ABC, CBS, CNN, Fox News, BBC, MSNBC, C-SPAN, DW, France 24, Bloomberg, Al Jazeera, Reuters, CNBC, Euronews, Global News, NASA, PBS NewsHour, CTV News, CBC News, Channel 4 News, 9 News Australia, ABC News Australia, Times Now, WION, GB News, TalkTV, 6abc
+  - Include major outlets: Sky, NBC, ABC, LiveNOW, 6abc, DW, France 24, Bloomberg, Al Jazeera, CNBC, NASA
 
 * **News Channel Buttons:**
   - Each button should have a unique color from a 12-color palette that cycles through:

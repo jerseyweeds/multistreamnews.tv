@@ -23,11 +23,7 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
 ### Quick Add News Channels
 * **Built-in News Channels**: Curated collection of major news outlets with one-click access
 * **One-Click News Access**: Colorful quick-add buttons for major news outlets including:
-  - Sky News, NBC, ABC, CBS, BBC, CNN, Fox News, MSNBC, C-SPAN, PBS NewsHour
-  - International: DW, France 24, Al Jazeera, Bloomberg, Reuters, Euronews
-  - Canadian: CBC News, CTV News, Global News
-  - Australian: ABC News Australia, 9 News Australia
-  - Regional: 6abc, NASA, and more
+  - Sky News, NBC, ABC, LiveNOW, 6abc, DW, France 24, Bloomberg, Al Jazeera, CNBC, NASA
 * **Color-Coded Buttons**: Each news channel button has a unique color from a 12-color palette for easy visual identification
 * **Expandable Interface**: The news channels section can be collapsed to save space when not needed
 
@@ -64,6 +60,7 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
   - QR code modal displays when donation option is selected
   - Modal remains open until user closes it for easy scanning
   - Seamless hover-to-select dropdown with no gap issues
+  - Mobile text says "Buy me a coffee" for clarity
 
 ### Data Persistence
 * **Persistent Sessions**: Your video layout is automatically saved to your browser's local storage
@@ -117,12 +114,10 @@ The application supports standard YouTube video URLs:
 ## News Channels Included
 
 The quick-add section includes buttons for these major news outlets:
-- **US Networks**: NBC, ABC, CBS, CNN, Fox News, MSNBC, C-SPAN, PBS NewsHour, CNBC
-- **UK/Europe**: Sky News, BBC, Channel 4 News, DW, France 24, Euronews, GB News, TalkTV
-- **International**: Al Jazeera, Reuters, Bloomberg, Times Now, WION
-- **Canadian**: CBC News, CTV News, Global News
-- **Australian**: ABC News Australia, 9 News Australia
-- **Regional/Other**: 6abc Philadelphia, NASA
+- **US Networks**: NBC, ABC, LiveNOW, 6abc, CNBC
+- **UK/Europe**: Sky News, DW, France 24
+- **International**: Al Jazeera, Bloomberg
+- **Government/Science**: NASA
 
 ## Technical Details
 
@@ -152,6 +147,7 @@ multistreamnews.tv/
 ├── index.html              # Main web application (single file)
 ├── README.md              # This documentation
 ├── prompt.md              # Development prompt/specifications
+├── LLM_notes.md          # Long-term AI development notes
 └── Todolist.txt           # Development notes and tasks
 ```
 
