@@ -454,6 +454,9 @@
                                 <div id="newsChannelButtons" class="flex flex-wrap justify-center gap-2 sm:gap-3">
                                     <!-- News channel buttons will be dynamically generated here -->
                                 </div>
+                                <p class="text-xs text-gray-400 italic text-center mt-3">
+                                    Sometimes the streams above expire. I'm trying to keep up ;-)
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -544,9 +547,45 @@
         // Backup method: Add or modify news channels here for easy management
         const newsChannels = [
             {
-                label: 'Sky',
+                label: 'CNBC',
+                url: 'https://www.youtube.com/watch?v=9NyxcX3rhQs'
+            },
+            {
+                label: 'Sky News',
                 url: 'https://www.youtube.com/watch?v=YDvsBbKfLPA'
             },
+            {
+                label: 'NBC News',
+                url: 'https://www.youtube.com/watch?v=DfwpCn9347w'
+            },
+            {
+                label: 'ABC News',
+                url: 'https://www.youtube.com/watch?v=iipR5yUp36o'
+            },
+            {
+                label: 'LiveNOW from FOX',
+                url: 'https://www.youtube.com/watch?v=YDfiTGGPYCk'
+            },
+            {
+                label: '6abc Action News',
+                url: 'https://www.youtube.com/watch?v=sNi1KbGCJ3o'
+            },
+            {
+                label: 'DW News',
+                url: 'https://www.youtube.com/watch?v=LuKwFajn37U'
+            },
+            {
+                label: 'France 24',
+                url: 'https://www.youtube.com/watch?v=Ap-UM1O9RBU'
+            },
+            {
+                label: 'Bloomberg Quicktake',
+                url: 'https://www.youtube.com/watch?v=iEpJwprxDdk'
+            },
+            {
+                label: 'Al Jazeera English',
+                url: 'https://www.youtube.com/watch?v=gCNeDWCI0vo'
+            },        
             {
                 label: 'NBC',
                 url: 'https://www.youtube.com/watch?v=DfwpCn9347w'
@@ -636,10 +675,10 @@
             async function loadInitialVideos() {
                 let savedUrls = getUrlsFromStorage();
                 if (savedUrls.length === 0) {
-                    // If local storage is empty, load default videos
+                    // If local storage is empty, load default videos from news channels list
                     savedUrls = [
-                        'https://www.youtube.com/watch?v=YDfiTGGPYCk',
-                        'https://www.youtube.com/watch?v=DfwpCn9347w'
+                        newsChannels[0].url,  // Sky News
+                        newsChannels[1].url   // NBC News
                     ];
                     // Save these defaults for the next session
                     localStorage.setItem('youtubeVideoUrls', JSON.stringify(savedUrls));
@@ -1321,7 +1360,7 @@
     <!-- Footer with Last Updated Timestamp -->
     <footer class="text-center py-4 mt-8 border-t border-gray-600">
         <p class="text-gray-400 text-sm">
-            Last Updated: <span class="text-gray-300">June 30, 2025 at 10:45 UTC</span>
+            Last Updated: <span class="text-gray-300">January 2, 2025 at 12:45 UTC</span>
         </p>
     </footer>
 </body>
