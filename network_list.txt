@@ -1,27 +1,25 @@
 Network	YouTube Channel URL
 
-Youtube Live News Channels  https://www.youtube.com/channel/UC4R8DWoMoI7CAwX8_LjQHig/livetab?ss=CKUK
-
-6abc Philadelphia	https://www.youtube.com/@6abc/streams
-ABC News Australia	https://www.youtube.com/@abcnews-australia/streams
-ABC News Live	https://www.youtube.com/@ABCNews/streams
-Al Jazeera English	https://www.youtube.com/@aljazeeraenglish/streams
-Bloomberg Television	https://www.youtube.com/@markets/streams
-CBS News (Web App)	https://www.youtube.com/@CBSNews/streams
-CBS News 24/7	https://www.youtube.com/@CBSNews/streams
-CNBC	https://www.youtube.com/@CNBC/streams
-CNBC-TV18	https://www.youtube.com/@cnbctv18/streams
-CNN-News18	https://www.youtube.com/@cnnnews18/streams
-DW News	https://www.youtube.com/@dwnews/streams
-Dateline 24/7	https://www.youtube.com/@datelinenbc/streams
-Euronews English	https://www.youtube.com/@euronews/streams
-FOX Weather	https://www.youtube.com/@FOXWeather/streams
-FRANCE 24 English	https://www.youtube.com/@france24english/streams
-GB News	https://www.youtube.com/@GBNewsOnline/streams
-LiveNOW from FOX	https://www.youtube.com/@LiveNOWfromFOX/streams
-NASA ISS Live	https://www.youtube.com/@nasa/streams
-NBC News NOW	https://www.youtube.com/@NBCNews/streams
-Sky News	https://www.youtube.com/@SkyNews/streams
-TRT World	https://www.youtube.com/@trtworld/streams
-Times Now	https://www.youtube.com/@TimesNow/streams
-WION	https://www.youtube.com/@WION/streams
+6abc Philadelphia	https://www.youtube.com/@6abcActionNews
+ABC News Australia	https://www.youtube.com/@abcnews-australia
+ABC News Live	https://www.youtube.com/@ABCNews
+Al Jazeera English	https://www.youtube.com/@aljazeeraenglish
+Bloomberg Television	https://www.youtube.com/@markets
+CBS News (Web App)	https://www.youtube.com/@CBSNews
+CBS News 24/7	https://www.youtube.com/@CBSNews
+CNBC	https://www.youtube.com/@CNBC
+CNBC-TV18	https://www.youtube.com/@cnbctv18
+CNN-News18	https://www.youtube.com/@cnnnews18
+Dateline 24/7	https://www.youtube.com/@datelinenbc
+DW News	https://www.youtube.com/@dwnews
+Euronews English	https://www.youtube.com/@euronews
+FOX Weather	https://www.youtube.com/@FOXWeather
+FRANCE 24 English	https://www.youtube.com/@france24english
+GB News	https://www.youtube.com/@GBNewsOnline
+LiveNOW from FOX	https://www.youtube.com/@LiveNOWfromFOX
+NASA ISS Live	https://www.youtube.com/@nasa
+NBC News NOW	https://www.youtube.com/@NBCNews
+Sky News	https://www.youtube.com/@SkyNews
+Times Now	https://www.youtube.com/@TimesNow
+TRT World	https://www.youtube.com/@trtworld
+WION	https://www.youtube.com/@WION
