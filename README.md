@@ -36,6 +36,9 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
   - **Red Button (Close)**: Instantly removes the video window from the player
   - **Yellow Button (Minimize)**: Collapses the video content, leaving only the title bar visible to save space
   - **Green Button (Maximize)**: Expands the video to the full width of the container and moves it to the top of the grid for focused viewing
+    - **Seamless Playback**: Video continues playing without interruption or restarting
+    - **No Audio Disruption**: Maintains current playback position and audio state
+    - **Smart Positioning**: When maximizing, moves to top; when restoring, maintains current position
 * **Close All Videos**: Red button with confirmation modal to close all video windows at once
 * **Responsive Grid Layout**: Video windows are arranged in a smart grid that automatically adjusts to your screen size:
   - **Mobile**: Single column with small side margins to prevent edge-to-edge display
@@ -129,7 +132,7 @@ The quick-add section includes buttons for these major news outlets:
 * **Persistence**: Leverages browser `localStorage` to save and retrieve video URLs between sessions
 * **Performance**: Lightweight single-file application with no external frameworks
 * **Analytics**: Includes Google Analytics integration for usage tracking
-* **User Experience**: Advanced notification system, confirmation modals, and intelligent video positioning
+* **User Experience**: Advanced notification system, confirmation modals, intelligent video positioning, and seamless maximize/restore without video interruption
 
 ## Installation & Setup
 

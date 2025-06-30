@@ -134,9 +134,15 @@ The web application features a modern, responsive design with video wall header,
   - **Yellow Button (Minimize):** Toggles video content visibility (title bar remains)
   - **Green Button (Maximize):** 
     - Toggles maximized state (spans full grid width)
-    - **IMPORTANT:** When maximizing, unmute the video by reloading iframe without `&mute=1` parameter
-    - When un-maximizing, re-mute the video by adding `&mute=1` back
-    - Move maximized videos to top of grid container
+    - **IMPORTANT:** Does NOT restart the video - maintains continuous playback
+    - When maximizing, moves video to top of grid container for focus
+    - When un-maximizing, simply restores normal size without repositioning
+    - Video continues playing from current position without interruption
+
+* **Intelligent Video Placement:**
+  - New videos are placed at the top-left position by default using `prepend()`
+  - If a video is maximized, new videos are placed immediately after the maximized video
+  - This maintains the user's focus on the maximized video while adding new content nearby
 
 * **Window Styling:**
   - macOS-inspired title bar with linear gradient background
@@ -587,7 +593,7 @@ multistreamnews.tv/
 3. **Toggle Source:** User can switch to Networks.txt via toggle button for live stream database
 4. **Manual Add:** User pastes YouTube URLs in textarea and clicks "Load Video(s)"
 5. **Video Management:** User controls videos with macOS-style window buttons
-6. **Maximize for Audio:** User clicks green button to maximize and unmute a video
+6. **Maximize for Focus:** User clicks green button to maximize a video for focused viewing (video continues playing without interruption)
 7. **Session Persistence:** User's video selection automatically saves and restores
 8. **URL Management:** User can copy all current URLs for sharing or backup
 9. **Support Project:** User can hover over "Buy me a coffee" and select PayPal or Venmo to see QR code for donations

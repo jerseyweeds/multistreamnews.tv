@@ -538,8 +538,8 @@
                 url: 'https://www.youtube.com/watch?v=iipR5yUp36o'
             },   
             {
-                label: 'CBS',
-                url: 'https://www.youtube.com/watch?v=p0nwT8O52MU'
+                label: 'LiveNOW',
+                url: 'https://www.youtube.com/watch?v=YDfiTGGPYCk'
             },                       
             {
                 label: '6abc',
@@ -1097,23 +1097,11 @@
                     } else if (action === 'maximize') {
                         const isNowMaximized = videoWindow.classList.toggle('maximized');
                         if (isNowMaximized) {
-                            // Unmute the video by reloading the iframe without mute parameter
-                            const iframe = videoWindow.querySelector('iframe');
-                            const currentSrc = iframe.src;
-                            const videoId = getYouTubeVideoId(videoWindow.dataset.url);
-                            if (videoId) {
-                                iframe.src = createEmbedUrl(videoId, false); // false = not muted
-                            }
+                            // Move maximized video to top without restarting
                             videoPlayersContainer.prepend(videoWindow);
                             saveUrlsToStorage();
-                        } else {
-                            // When un-maximizing, mute the video again
-                            const iframe = videoWindow.querySelector('iframe');
-                            const videoId = getYouTubeVideoId(videoWindow.dataset.url);
-                            if (videoId) {
-                                iframe.src = createEmbedUrl(videoId, true); // true = muted
-                            }
                         }
+                        // Note: No longer reloading iframe to prevent video restart
                     }
                 });
             }
