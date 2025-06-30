@@ -1,102 +1,42 @@
-# Networks.txt Maintenance System
+# MultiStreamNews.TV - Current State
 
-This directory contains scripts to automatically maintain the `Networks.txt` file, which provides an optional live stream database for the MultiStreamNews.TV application. The application uses built-in channels by default for reliability and speed, with Networks.txt available as an enhanced option via toggle button.
+**Note: This documentation is outdated.** The MultiStreamNews.TV application has been streamlined and no longer uses external maintenance scripts or Networks.txt files.
 
-## Files
+## Current Application Features
 
-- **`Networks.txt`** - Main database of live news streams (tab-delimited)
-- **`network_list.txt`** - List of YouTube channels for stream discovery
-- **`maintain_networks.py`** - Python script for checking and updating streams
-- **`update_networks.sh`** - Shell script for automation and scheduling
-- **`requirements.txt`** - Python dependencies
-- **`NETWORKS_README.md`** - This documentation file
+The application now operates as a single-file web application with the following features:
 
-## Stream Filtering
+- **Built-in News Channels**: All news channels are embedded directly in the HTML file
+- **Drag and Drop**: Entire page acts as a drop zone for YouTube video links
+- **Advanced Notifications**: Color-coded toast notifications for user feedback
+- **Mobile Responsive**: Optimized interface for mobile devices
+- **Confirmation Modals**: Safe bulk actions with user confirmation
+- **Intelligent Video Placement**: Smart positioning of new videos
 
-The maintenance system now includes **24-hour filtering**:
-- Only streams that have been live for **over 24 hours** are included
-- Short-lived streams (under 24 hours) are automatically filtered out
-- This ensures only stable, continuous news streams are displayed
+## Files No Longer Used
 
-## Quick Start
+The following files and features have been removed:
+- `Networks.txt` - Live stream database
+- `network_list.txt` - Channel discovery list
+- `maintain_networks.py` - Python maintenance script
+- `update_networks.sh` - Shell automation script
+- `requirements.txt` - Python dependencies
 
-1. **Install dependencies:**
-   ```bash
-   pip3 install -r requirements.txt
-   ```
+## Current File Structure
 
-2. **Run a quick check:**
-   ```bash
-   ./update_networks.sh check
-   ```
-
-3. **Update existing streams:**
-   ```bash
-   ./update_networks.sh quick
-   ```
-
-4. **Full refresh from channel list:**
-   ```bash
-   ./update_networks.sh refresh
-   ```
+```
+multistreamnews.tv/
+├── index.html              # Main web application (single file)
+├── README.md              # Updated documentation
+├── prompt.md              # Development specifications
+└── Todolist.txt           # Development notes
+```
 
 ## Usage
 
-### Shell Script (Recommended)
+Simply open `index.html` in any modern web browser. No additional setup or dependencies required.
 
-The `update_networks.sh` script provides five modes:
-
-- **`quick`** (default) - Updates existing streams, applies 24h filter
-- **`full`** - Updates existing streams and searches for new ones (24h+ only)
-- **`refresh`** - Complete rebuild from `network_list.txt` (24h+ only)
-- **`check`** - Checks status without modifying files
-- **`--test-mode`** - Limits processing to 10 URLs per channel (for development/testing)
-
-```bash
-# Quick update (default)
-./update_networks.sh
-./update_networks.sh quick
-
-# Full update with new stream search
-./update_networks.sh full
-
-# Complete rebuild from network_list.txt
-./update_networks.sh refresh
-
-# Check only (no file changes)
-./update_networks.sh check
-
-# Test mode (limits processing for development/testing)
-./update_networks.sh quick --test-mode
-./update_networks.sh full --test-mode
-```
-
-### Python Script (Direct)
-
-For more control, use the Python script directly:
-
-```bash
-# Check status without updating
-python3 maintain_networks.py --check-only --verbose
-
-# Update existing streams
-python3 maintain_networks.py --verbose
-
-# Search for new streams and update
-python3 maintain_networks.py --add-new --verbose
-
-# Full refresh from network list
-python3 maintain_networks.py --refresh --verbose
-
-# Test mode (limits to 10 URLs per channel for testing code changes)
-python3 maintain_networks.py --test-mode --verbose --check-only
-```
-
-## Automation
-
-### Cron Jobs
-
-To automatically maintain the networks list, add a cron job:
+For current documentation, see `README.md`.
 
 ```bash
 # Edit crontab

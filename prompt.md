@@ -2,12 +2,9 @@
 
 ## 1. High-Level Objective
 
-Create a comprehensive multi-streaming news platform consisting of:
-1. **Single-page web application (SPA)** named "MultiStreamNews.TV" for viewing multiple YouTube videos simultaneously
-2. **Automated live stream maintenance system** for managing a database of currently live YouTube news streams
-3. **Professional deployment-ready package** with documentation and automation scripts
+Create a comprehensive single-page web application named "MultiStreamNews.TV" for viewing multiple YouTube videos simultaneously. This is a lightweight, user-friendly platform focused on providing an excellent multistreaming experience with built-in news channels, drag-and-drop functionality, and mobile-responsive design.
 
-The web application features a modern, responsive design with video wall header, collapsible sections, quick-add news channel buttons, macOS-style window controls, video title display, and persistent data storage. The maintenance system ensures the live stream database stays current and accurate.
+The web application features a modern, responsive design with video wall header, collapsible sections, quick-add news channel buttons, macOS-style window controls, video title display, drag-and-drop support, advanced notification system, and persistent data storage.
 
 ## 2. Core Functional Requirements
 
@@ -32,17 +29,12 @@ The web application features a modern, responsive design with video wall header,
   - Section should be expanded by default on page load
   - Smooth 0.4-second CSS transitions for expand/collapse animations
 
-* **Dynamic Source Management:**
-  - Include a small toggle button to switch between "Built-in" (default) and "Networks.txt" sources
-  - Primary method: Use built-in JavaScript array for instant loading and reliability
-  - Secondary method: Load channels from Networks.txt file (live database) when toggled
-  - Networks.txt loads in background for seamless toggle functionality
-  - Graceful fallback with user notification when Networks.txt switching fails
-  - Smart retry logic that prevents unnecessary reload attempts
+* **Built-in News Channels:**
+  - Use a built-in JavaScript array of news channels for instant loading and reliability
+  - No external file dependencies - all channels embedded in the application
+  - Include major outlets: Sky, NBC, ABC, CBS, CNN, Fox News, BBC, MSNBC, C-SPAN, DW, France 24, Bloomberg, Al Jazeera, Reuters, CNBC, Euronews, Global News, NASA, PBS NewsHour, CTV News, CBC News, Channel 4 News, 9 News Australia, ABC News Australia, Times Now, WION, GB News, TalkTV, 6abc
 
 * **News Channel Buttons:**
-  - Create an array of news channels with labels and YouTube video URLs
-  - Include major outlets: Sky, NBC, ABC, CBS, CNN, Fox News, BBC, MSNBC, C-SPAN, DW, France 24, Bloomberg, Al Jazeera, Reuters, CNBC, Euronews, Global News, NASA, PBS NewsHour, CTV News, CBC News, Channel 4 News, 9 News Australia, ABC News Australia, Times Now, WION, GB News, TalkTV, 6abc
   - Each button should have a unique color from a 12-color palette that cycles through:
     1. Blue (`bg-blue-600 hover:bg-blue-700`)
     2. Emerald (`bg-emerald-600 hover:bg-emerald-700`)
@@ -59,11 +51,48 @@ The web application features a modern, responsive design with video wall header,
   - Buttons should be flexbox wrapped with gap spacing
   - Clicking a button should instantly add that channel's video to the video wall
 
-### 2.3. Manual Video Input Section
+### 2.3. Drag and Drop System
+
+* **Global Drop Zone:**
+  - Make the entire page a drop zone for YouTube video links
+  - Show visual feedback when dragging over the page
+  - Display drag zone instruction: "Drag a video link anywhere on the page to add a new video window"
+  - Hide drag zone areas on mobile devices (not functional on touch)
+
+* **Drag Visual Feedback:**
+  - Change cursor and add visual indicators when dragging
+  - Highlight drop zones with color changes and animations
+  - Provide clear success/error feedback after dropping
+
+* **Smart Link Processing:**
+  - Extract YouTube video IDs from various URL formats
+  - Support both full YouTube URLs and youtu.be short links
+  - Validate links before processing
+
+### 2.4. Advanced Notification System
+
+* **Non-blocking Toast Notifications:**
+  - Position notifications in top-right corner of screen
+  - Color-coded notification types:
+    - Green: Success messages (video added successfully)
+    - Orange: Duplicate warnings (video already exists)
+    - Red: Error messages (invalid YouTube link)
+    - Yellow: Mixed issues or general warnings
+  - Auto-dismiss after 5 seconds with smooth fade animation
+  - Click to dismiss manually
+
+* **Specific User Feedback:**
+  - "Video added successfully" for successful additions
+  - "This video is already loaded in the video wall" for duplicates
+  - "Not a valid YouTube video link" for invalid URLs
+  - Clear, actionable messages that help users understand what happened
+
+### 2.5. Manual Video Input Section (Desktop/Tablet Only)
 
 * **Collapsible Input Interface:**
-  - Blue toggle button with text "[Hide] Video Input" when expanded, "[Show] Video Input" when collapsed
-  - Section expanded by default on page load
+  - Blue toggle button with text "[Hide] Paste URLs" when expanded, "[Show] Paste URLs" when collapsed
+  - Section hidden by default on page load
+  - Hide entire section on mobile devices (`hidden md:block`)
   - Smooth CSS transitions matching the news channels section
 
 * **URL Input:**
@@ -74,12 +103,11 @@ The web application features a modern, responsive design with video wall header,
 
 * **Processing Logic:**
   - Process each unique, valid YouTube URL from the textarea
-  - Silent duplicate rejection (no error messages for duplicates)
-  - Show modal alert for invalid YouTube URLs
+  - Use notification system for user feedback
   - Auto-collapse input section after successfully adding videos
   - Clear textarea after successful video addition
 
-### 2.4. Video Title Integration
+### 2.6. Video Title Integration
 
 * **Automatic Title Fetching:**
   - Use YouTube's oEmbed API to fetch real video titles: `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`
