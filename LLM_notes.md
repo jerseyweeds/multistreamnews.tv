@@ -8,12 +8,14 @@ This file serves as long-term knowledge for AI assistants working on this projec
 - **Decision**: Keep everything in one HTML file (index.html)
 - **Rationale**: Simplicity, easy deployment, no build process, single point of truth
 - **Impact**: All CSS, JavaScript, and HTML in one file for easy hosting and maintenance
+- **Deployment**: GitHub Pages support with CNAME configuration
 
 ### 2. Built-in vs External Data Sources
 - **Decision**: Use built-in JavaScript arrays for news channels instead of external files
 - **Rationale**: Eliminated dependency on external files, improved reliability, faster loading
 - **Previous Issue**: Originally used external networks.txt file which caused loading issues
 - **Current State**: All news channels are hardcoded in the `newsChannels` array
+- **Backend Support**: Optional Python scripts available for advanced stream parsing and network management
 
 ### 3. Touch Device Detection Strategy
 - **Challenge**: Hide drag-and-drop and manual input only on true mobile devices, not small screens
@@ -122,6 +124,12 @@ This file serves as long-term knowledge for AI assistants working on this projec
 - **Video Autoplay**: Muted autoplay works better across iOS versions
 - **Layout**: Careful handling of viewport units on mobile Safari
 
+### 4. Backend Integration Considerations
+- **Python Scripts**: Available for advanced stream parsing and network management
+- **CORS Issues**: Browser limitations prevent direct YouTube page access
+- **Proxy Solutions**: Server-side proxy may be needed for advanced YouTube data extraction
+- **API Rate Limits**: YouTube oEmbed API has usage limits that should be respected
+
 ## Code Quality Guidelines
 
 ### 1. Maintainability
@@ -147,12 +155,16 @@ This file serves as long-term knowledge for AI assistants working on this projec
 3. **Custom Layouts**: Saved layout presets
 4. **Extended Platform Support**: Other video platforms beyond YouTube
 5. **PWA Features**: Offline functionality and installation
+6. **Live Stream Detection**: Advanced YouTube live stream identification and monitoring
+7. **Backend API Integration**: Enhanced data fetching and stream management
+8. **Advanced Analytics**: User behavior tracking and video engagement metrics
 
 ### Architecture Decisions to Maintain
-1. **Single File**: Keep everything in one HTML file
-2. **Built-in Data**: Avoid external data dependencies
+1. **Single File**: Keep everything in one HTML file for core functionality
+2. **Built-in Data**: Avoid external data dependencies for primary features
 3. **Touch-First**: Mobile-optimized design with desktop enhancement
 4. **Non-breaking Updates**: Always maintain backward compatibility
+5. **Optional Backend**: Keep backend features optional and non-blocking
 
 ## Development Workflow
 
@@ -167,13 +179,24 @@ This file serves as long-term knowledge for AI assistants working on this projec
 - [ ] Coffee donation modal and QR codes
 
 ### Deployment Notes
-- **Single File**: Only index.html needs to be deployed
+- **Single File**: Only index.html needs to be deployed for core functionality
 - **CDN Dependencies**: Tailwind CSS and Google Fonts
 - **No Build Process**: Direct deployment to any web server
 - **HTTPS Required**: For clipboard API and some browser features
+- **GitHub Pages**: Configured with custom domain via CNAME
+- **Backend Scripts**: Optional Python modules for advanced features
+- **Analytics**: Google Analytics (GA4) integration included
+
+### Current Project State (December 2024)
+- **Core Application**: Fully functional single-page app
+- **Deployment**: Live at multistreamnews.tv via GitHub Pages
+- **Backend Scripts**: Python modules available for stream parsing
+- **Documentation**: Comprehensive README, prompt, and development notes
+- **Monetization**: Donation system implemented with multiple payment options
+- **Mobile Optimization**: Advanced touch device detection and responsive design
 
 ---
 
 *Last Updated: June 30, 2025*
 *File Created: June 30, 2025*
-*Latest Change: Added Apple Pay donation option*
+*Latest Change: Updated documentation to reflect current codebase state*

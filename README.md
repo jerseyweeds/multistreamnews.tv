@@ -123,6 +123,8 @@ The quick-add section includes buttons for these major news outlets:
 
 * **Frontend**: Built entirely with vanilla HTML, CSS, and JavaScript
 * **Styling**: Utilizes **Tailwind CSS** (via CDN) for modern, responsive design with a custom color palette
+* **Backend Scripts**: Python modules for stream parsing and network management (optional backend functionality)
+* **Data Sources**: Built-in JavaScript arrays for news channels, with optional external network configuration files
 * **Responsive Design**: Mobile-first approach with progressive enhancement:
   - CSS Grid with responsive breakpoints (640px, 768px, 1024px, 1280px)
   - **Touch Device Detection**: Advanced multi-method detection (CSS `@media (pointer: coarse)`, JavaScript touch capabilities)
@@ -132,9 +134,10 @@ The quick-add section includes buttons for these major news outlets:
   - Maintains video aspect ratios across all device sizes
 * **APIs**: Uses YouTube's oEmbed API to fetch video titles
 * **Persistence**: Leverages browser `localStorage` to save and retrieve video URLs between sessions
-* **Performance**: Lightweight single-file application with no external frameworks
+* **Performance**: Lightweight single-file application with no external frameworks required
 * **Analytics**: Includes Google Analytics integration for usage tracking
 * **User Experience**: Advanced notification system, confirmation modals, intelligent video positioning, and seamless maximize/restore without video interruption
+* **Deployment**: Single HTML file deployment with GitHub Pages support
 
 ## Installation & Setup
 
@@ -148,7 +151,14 @@ multistreamnews.tv/
 ├── README.md              # This documentation
 ├── prompt.md              # Development prompt/specifications
 ├── LLM_notes.md          # Long-term AI development notes
-└── Todolist.txt           # Development notes and tasks
+├── Todolist.txt           # Development notes and tasks
+├── monetization_ideas.md  # Business model and revenue strategies
+├── requirements.txt       # Python dependencies (for backend scripts)
+├── network_list.txt       # News network URLs and data
+├── news_networks.txt      # Additional network configurations
+├── LICENSE               # MIT License
+├── CNAME                 # GitHub Pages domain configuration
+
 ```
 
 ## Customization
