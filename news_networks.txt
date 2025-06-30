@@ -1,0 +1,44 @@
+Sky News	@SkyNews
+Al Jazeera English	@aljazeeraenglish
+NBC News NOW	@NBCNews
+ABC News Live	@ABCNews
+LiveNOW from FOX	@LiveNOWfromFOX
+GB News	@GBNewsOnline
+ABC News Australia	@abcnews-australia
+FRANCE 24 English	@france24english
+Euronews English	@euronews
+Bloomberg Television	@markets
+DW News	@dwnews
+TRT World	@trtworld
+WION	@WION
+CNN-News18	@cnnnews18
+Times Now	@TimesNow
+CNBC-TV18	@cnbctv18
+FOX Weather	@FOXWeather
+Dateline 24/7	@datelinenbc
+CBS News 24/7	@CBSNews
+CBS News (Web App)	@CBSNews
+6abc Philadelphia	@6abc
+NASA ISS Live	@nasa
+CNBC	@CNBC
+NBC News NOW	@NBCNews
+ABC News Live	@ABCNews
+LiveNOW from FOX	@LiveNOWfromFOX
+GB News	@GBNewsOnline
+ABC News Australia	@abcnews-australia
+FRANCE 24 English	@france24english
+Euronews English	@euronews
+Bloomberg Television	@markets
+DW News	@dwnews
+TRT World	@trtworld
+WION	@WION
+CNN-News18	@cnnnews18
+Times Now	@TimesNow
+CNBC-TV18	@cnbctv18
+FOX Weather	@FOXWeather
+Dateline 24/7	@datelinenbc
+CBS News 24/7	@CBSNews
+CBS News (Web App)	@CBSNews
+6abc Philadelphia	@6abcActionNews
+NASA ISS Live	@nasa
+CNBC	@CNBC

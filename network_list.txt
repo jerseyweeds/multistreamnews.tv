@@ -1,24 +1,24 @@
 Network	YouTube Channel URL
-Sky News	https://www.youtube.com/@SkyNews
-NBC News NOW	https://www.youtube.com/@NBCNews
-ABC News Live	https://www.youtube.com/@ABCNews
-LiveNOW from FOX	https://www.youtube.com/@LiveNOWfromFOX
-GB News	https://www.youtube.com/@GBNewsOnline
-Al Jazeera English	https://www.youtube.com/@aljazeeraenglish
-ABC News Australia	https://www.youtube.com/@abcnews-australia
-FRANCE 24 English	https://www.youtube.com/@france24english
-Euronews English	https://www.youtube.com/@euronews
-Bloomberg Television	https://www.youtube.com/@markets
-DW News	https://www.youtube.com/@dwnews
-TRT World	https://www.youtube.com/@trtworld
-WION	https://www.youtube.com/@WION
-CNN-News18	https://www.youtube.com/@cnnnews18
-Times Now	https://www.youtube.com/@TimesNow
-CNBC-TV18	https://www.youtube.com/@cnbctv18
-FOX Weather	https://www.youtube.com/@FOXWeather
-Dateline 24/7	https://www.youtube.com/@datelinenbc
-CBS News 24/7	https://www.youtube.com/@CBSNews
-CBS News (Web App)	https://www.youtube.com/@CBSNews
-6abc Philadelphia	https://www.youtube.com/@6abc
-NASA ISS Live	https://www.youtube.com/@nasa
-CNBC	https://www.youtube.com/@CNBC
+6abc Philadelphia	https://www.youtube.com/@6abc/streams
+ABC News Australia	https://www.youtube.com/@abcnews-australia/streams
+ABC News Live	https://www.youtube.com/@ABCNews/streams
+Al Jazeera English	https://www.youtube.com/@aljazeeraenglish/streams
+Bloomberg Television	https://www.youtube.com/@markets/streams
+CBS News (Web App)	https://www.youtube.com/@CBSNews/streams
+CBS News 24/7	https://www.youtube.com/@CBSNews/streams
+CNBC	https://www.youtube.com/@CNBC/streams
+CNBC-TV18	https://www.youtube.com/@cnbctv18/streams
+CNN-News18	https://www.youtube.com/@cnnnews18/streams
+DW News	https://www.youtube.com/@dwnews/streams
+Dateline 24/7	https://www.youtube.com/@datelinenbc/streams
+Euronews English	https://www.youtube.com/@euronews/streams
+FOX Weather	https://www.youtube.com/@FOXWeather/streams
+FRANCE 24 English	https://www.youtube.com/@france24english/streams
+GB News	https://www.youtube.com/@GBNewsOnline/streams
+LiveNOW from FOX	https://www.youtube.com/@LiveNOWfromFOX/streams
+NASA ISS Live	https://www.youtube.com/@nasa/streams
+NBC News NOW	https://www.youtube.com/@NBCNews/streams
+Sky News	https://www.youtube.com/@SkyNews/streams
+TRT World	https://www.youtube.com/@trtworld/streams
+Times Now	https://www.youtube.com/@TimesNow/streams
+WION	https://www.youtube.com/@WION/streams

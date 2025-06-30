@@ -1,1 +1,4 @@
 ✅ add a link under the qr codes for paypal and venmo - COMPLETED
+
+-lets rework that last script. using this list of streams which are currently live look see if you can find a stream by @6abcActionNews in the list of streams found on this page https://www.youtube.com/channel/UC4R8DWoMoI7CAwX8_LjQHig/livetab?ss=CKEK
+

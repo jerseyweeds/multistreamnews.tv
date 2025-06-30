@@ -190,6 +190,119 @@
             max-height: none; /* Remove height constraint when maximized */
         }
 
+        /* Drag and Drop Zone Styles */
+        .drag-drop-zone {
+            border: 2px dashed #9CA3AF;
+            border-radius: 8px;
+            background-color: rgba(107, 114, 128, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 100px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #E5E7EB;
+            font-size: 0.75rem;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        /* Control Panel Grid Layout */
+        .control-panel-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 768px) {
+            .control-panel-grid {
+                grid-template-columns: 120px 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        .drag-drop-column {
+            display: none;
+            align-items: stretch;
+        }
+
+        @media (min-width: 768px) {
+            .drag-drop-column {
+                display: flex;
+            }
+        }
+
+        .main-controls-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .drag-drop-zone.drag-over {
+            border-color: #3B82F6;
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #3B82F6;
+            transform: scale(1.02);
+        }
+
+        .drag-drop-zone.drag-over::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #3B82F6, #1D4ED8);
+            border-radius: 14px;
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        /* Global drag state styles */
+        body.dragging-over {
+            background-color: #2D3748;
+        }
+
+        body.dragging-over .drag-drop-zone {
+            border-color: #10B981;
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #10B981;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+            to { box-shadow: 0 0 30px rgba(16, 185, 129, 0.6); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .drag-drop-content {
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .drag-drop-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.6;
+        }
+
+        .drag-drop-zone.drag-over .drag-drop-icon {
+            animation: bounce 1s infinite;
+        }
+
+        body.dragging-over .drag-drop-icon {
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
         /* Responsive breakpoints */
         @media (min-width: 640px) {
             #videoPlayersContainer {
@@ -233,13 +346,16 @@
             <div aria-hidden="true" class="absolute inset-0 bg-gray-900 opacity-60"></div>
             
             <!-- Buy me a coffee dropdown - Top right corner -->
-            <div class="absolute top-4 right-4 z-20">
+            <div class="absolute top-4 right-4 z-20 max-w-xs">
                 <div class="coffee-dropdown">
-                    <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 rounded-lg shadow-lg transition-colors duration-300 hover:shadow-xl">
+                    <button class="inline-flex items-center px-2 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 rounded-lg shadow-lg transition-colors duration-300 hover:shadow-xl">
                         <span class="mr-1">☕</span>
-                        <span class="hidden sm:inline">Like this? Buy me a coffee ;-)</span>
-                        <span class="sm:hidden">Coffee? ;-)</span>
-                        <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <span class="hidden md:inline flex-col text-center leading-tight">
+                            <span class="block">Like this?</span>
+                            <span class="block">Buy me a coffee ;-)</span>
+                        </span>
+                        <span class="md:hidden">Coffee?</span>
+                        <svg class="ml-1 w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                         </svg>
                     </button>
@@ -261,46 +377,83 @@
                 </div>
             </div>
             
-            <div class="relative mx-auto flex max-w-3xl flex-col items-center py-24 text-center">
-                <h1 class="text-4xl font-bold tracking-tight text-white lg:text-5xl">MultiStreamNews.TV</h1>
-                <p class="mt-4 text-xl text-gray-300">Your central hub for multistream news and content.</p>
+            <div class="relative mx-auto flex max-w-3xl flex-col items-center py-12 sm:py-16 md:py-18 text-center px-4">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mt-8 sm:mt-4 md:mt-0">MultiStreamNews.TV</h1>
+                <p class="mt-2 sm:mt-4 text-lg sm:text-xl text-gray-300 px-4">Your central hub for multistream news and content.</p>
+            </div>
+        </div>
+
+        <!-- Notification Area -->
+        <div id="notificationArea" class="hidden fixed top-4 left-1/2 transform -translate-x-1/2 z-50 max-w-md w-full mx-4">
+            <div id="notificationContent" class="bg-gray-800 border border-gray-600 rounded-lg shadow-lg p-4 flex items-center">
+                <div id="notificationIcon" class="flex-shrink-0 mr-3">
+                    <!-- Icon will be inserted here -->
+                </div>
+                <div id="notificationMessage" class="text-white text-sm font-medium">
+                    <!-- Message will be inserted here -->
+                </div>
+                <button id="notificationClose" class="ml-auto flex-shrink-0 text-gray-400 hover:text-white">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
             </div>
         </div>
 
         <!-- Main content area with responsive padding -->
         <div class="p-2 sm:p-4 md:p-6 lg:p-8">
-            <!-- News Channels Section -->
-            <div class="mb-6">
-                <button id="toggleNewsChannelsBtn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                    [Hide] Quick Add News Channels
-                </button>
-                <div id="newsChannelsSection" class="bg-gray-800 rounded-lg shadow-lg expanded">
-                    <div class="p-4">
-                        <div class="mb-3 flex justify-between items-center">
-                            <span class="text-sm text-gray-300">Source:</span>
-                            <button id="toggleSourceBtn" class="bg-gray-600 hover:bg-gray-500 text-white text-xs font-medium py-1 px-3 rounded transition-colors duration-300">
-                                Networks.txt
-                            </button>
+            <!-- Control Panel Grid Layout -->
+            <div class="control-panel-grid mb-6">
+                <!-- Drag and Drop Zone - Left Column (Hidden on mobile) -->
+                <div class="drag-drop-column hidden md:block">
+                    <div id="dragDropZone" class="drag-drop-zone">
+                        <div class="drag-drop-content">
+                            <div class="font-semibold text-xs mb-1">Drag Links</div>
+                            <div class="text-xs opacity-75">Drag a video link anywhere on the page to add a new video window</div>
                         </div>
-                        <div id="newsChannelButtons" class="flex flex-wrap justify-center gap-2 sm:gap-3">
-                            <!-- News channel buttons will be dynamically generated here -->
+                    </div>
+                </div>
+
+                <!-- Main Controls - Right Column -->
+                <div class="main-controls-column">
+                    <!-- News Channels Section -->
+                    <div class="mb-6">
+                        <button id="toggleNewsChannelsBtn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                            [Hide] Quick Add News Channels
+                        </button>
+                        <div id="newsChannelsSection" class="bg-gray-800 rounded-lg shadow-lg">
+                            <div class="p-4">
+                                <div id="newsChannelButtons" class="flex flex-wrap justify-center gap-2 sm:gap-3">
+                                    <!-- News channel buttons will be dynamically generated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Collapsible Input Section (Hidden on mobile) -->
+                    <div class="mb-6 hidden md:block">
+                        <button id="toggleInputBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                            [Hide] Paste URLs
+                        </button>
+                        <div id="inputSection" class="bg-gray-800 rounded-lg shadow-lg">
+                            <div class="p-4">
+                                <label for="videoUrls" class="block mb-2 text-sm font-medium text-gray-300">Paste YouTube Video URL(s) here, one per line:</label>
+                                <textarea id="videoUrls" rows="6" class="w-full p-2.5 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500" placeholder="https://www.youtube.com/watch?v=VIDEO_ID"></textarea>
+                                <button id="loadVideosBtn" class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                                    Load Video(s)
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Collapsible Input Section -->
-            <div class="mb-6">
-                <button id="toggleInputBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                    [Hide] Video Input
-                </button>
-                <div id="inputSection" class="bg-gray-800 rounded-lg shadow-lg expanded">
-                    <div class="p-4">
-                        <label for="videoUrls" class="block mb-2 text-sm font-medium text-gray-300">Paste YouTube Video URL(s) here, one per line:</label>
-                        <textarea id="videoUrls" rows="6" class="w-full p-2.5 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500" placeholder="https://www.youtube.com/watch?v=VIDEO_ID"></textarea>
-                        <button id="loadVideosBtn" class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                            Load Video(s)
-                        </button>
+            <!-- Mobile Drag and Drop Zone (Hidden - not useful on mobile) -->
+            <div class="mobile-drag-drop-zone mb-6 hidden">
+                <div id="dragDropZoneMobile" class="drag-drop-zone">
+                    <div class="drag-drop-content">
+                        <div class="font-semibold text-sm mb-1">Drag YouTube Links Here</div>
+                        <div class="text-xs opacity-75">Drop YouTube video URLs from other windows to instantly add them</div>
                     </div>
                 </div>
             </div>
@@ -316,9 +469,12 @@
                 <ul id="loadedVideosList" class="list-disc list-inside mb-4 text-gray-300 space-y-1 break-all">
                     <!-- URLs will be dynamically inserted here -->
                 </ul>
-                <button id="copyUrlsBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 relative">
+                <button id="copyUrlsBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 relative mr-2">
                     Copy All URLs
                     <span id="copyConfirmation" class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-xs font-semibold px-2 py-1 rounded-md opacity-0 transition-opacity duration-300 pointer-events-none">Copied!</span>
+                </button>
+                <button id="closeAllVideosBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                    Close All Videos
                 </button>
             </div>
         </div>
@@ -329,6 +485,17 @@
         <div class="bg-gray-800 rounded-lg shadow-2xl p-6 w-full max-w-sm text-center">
             <p id="modalMessage" class="mb-4 text-lg">Modal Message</p>
             <button id="closeModalBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full">Close</button>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
+        <div class="bg-gray-800 rounded-lg shadow-2xl p-6 w-full max-w-sm text-center">
+            <p id="confirmationMessage" class="mb-6 text-lg">Are you sure?</p>
+            <div class="flex gap-3">
+                <button id="confirmOkBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex-1">OK</button>
+                <button id="confirmCancelBtn" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded flex-1">Cancel</button>
+            </div>
         </div>
     </div>
 
@@ -405,10 +572,8 @@
              
         ];
 
-        // Global variables for source management
-        let useNetworksFile = false; // Primary method: use Built-in (changed from true)
-        let networksData = []; // Cache for Networks.txt data
-        let networksLoadFailed = false; // Track if Networks.txt loading failed
+        // Global variables
+        let networksData = []; // Keep for any future use
 
         document.addEventListener('DOMContentLoaded', () => {
             // --- DOM Element Selection ---
@@ -416,10 +581,11 @@
             const inputSection = document.getElementById('inputSection');
             const toggleNewsChannelsBtn = document.getElementById('toggleNewsChannelsBtn');
             const newsChannelsSection = document.getElementById('newsChannelsSection');
-            const toggleSourceBtn = document.getElementById('toggleSourceBtn');
             const videoUrlsInput = document.getElementById('videoUrls');
             const loadVideosBtn = document.getElementById('loadVideosBtn');
             const videoPlayersContainer = document.getElementById('videoPlayersContainer');
+            const dragDropZone = document.getElementById('dragDropZone');
+            const dragDropZoneMobile = document.getElementById('dragDropZoneMobile');
             
             const loadedVideosSection = document.getElementById('loadedVideosSection');
             const loadedVideosList = document.getElementById('loadedVideosList');
@@ -481,73 +647,15 @@
                 loadedVideosSection.classList.remove('hidden');
             }
             
-            // --- NETWORKS.TXT PARSING ---
-            async function loadNetworksFromFile() {
-                try {
-                    const response = await fetch('./Networks.txt');
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const text = await response.text();
-                    const lines = text.split('\n').filter(line => line.trim() !== '');
-                    
-                    // Skip header line (first line)
-                    const dataLines = lines.slice(1);
-                    
-                    networksData = dataLines.map(line => {
-                        const columns = line.split('\t');
-                        if (columns.length >= 3) {
-                            return {
-                                label: columns[0].trim(), // Network name (first column)
-                                url: columns[2].trim()    // YouTube URL (third column)
-                            };
-                        }
-                        return null;
-                    }).filter(item => item !== null);
-                    
-                    console.log(`Loaded ${networksData.length} networks from Networks.txt`);
-                    networksLoadFailed = false; // Reset failure flag on success
-                    return true;
-                } catch (error) {
-                    console.error('Failed to load Networks.txt:', error);
-                    networksData = [];
-                    networksLoadFailed = true; // Set failure flag
-                    return false;
-                }
-            }
-
             // --- UI TOGGLES & MODAL ---
             toggleInputBtn.addEventListener('click', () => {
                 const isExpanded = inputSection.classList.toggle('expanded');
-                toggleInputBtn.textContent = isExpanded ? '[Hide] Video Input' : '[Show] Video Input';
+                toggleInputBtn.textContent = isExpanded ? '[Hide] Paste URLs' : '[Show] Paste URLs';
             });
 
             toggleNewsChannelsBtn.addEventListener('click', () => {
                 const isExpanded = newsChannelsSection.classList.toggle('expanded');
                 toggleNewsChannelsBtn.textContent = isExpanded ? '[Hide] Quick Add News Channels' : '[Show] Quick Add News Channels';
-            });
-
-            toggleSourceBtn.addEventListener('click', async () => {
-                useNetworksFile = !useNetworksFile;
-                toggleSourceBtn.textContent = useNetworksFile ? 'Networks.txt' : 'Built-in';
-                
-                if (useNetworksFile && networksData.length === 0) {
-                    // Try to load Networks.txt if we don't have data yet
-                    const loaded = await loadNetworksFromFile();
-                    if (!loaded) {
-                        // Fall back to built-in if loading fails
-                        useNetworksFile = false;
-                        toggleSourceBtn.textContent = 'Built-in';
-                        if (networksLoadFailed) {
-                            showModal('Networks.txt not available (CORS or file access restriction)', true);
-                        } else {
-                            showModal('Failed to load Networks.txt, using built-in channels', true);
-                        }
-                    }
-                }
-                
-                // Regenerate buttons with new source
-                createNewsChannelButtons();
             });
             
             function showModal(message, autoHide = false) {
@@ -562,9 +670,293 @@
                 }
             }
 
+            // New notification system
+            function showNotification(message, type = 'info', autoHide = true) {
+                const notificationArea = document.getElementById('notificationArea');
+                const notificationContent = document.getElementById('notificationContent');
+                const notificationIcon = document.getElementById('notificationIcon');
+                const notificationMessage = document.getElementById('notificationMessage');
+                
+                // Set message
+                notificationMessage.textContent = message;
+                
+                // Set icon and styling based on type
+                let iconHTML = '';
+                let bgColor = 'bg-gray-800';
+                let borderColor = 'border-gray-600';
+                
+                switch (type) {
+                    case 'success':
+                        iconHTML = '<svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>';
+                        bgColor = 'bg-green-800';
+                        borderColor = 'border-green-600';
+                        break;
+                    case 'error':
+                        iconHTML = '<svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>';
+                        bgColor = 'bg-red-800';
+                        borderColor = 'border-red-600';
+                        break;
+                    case 'warning':
+                        iconHTML = '<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>';
+                        bgColor = 'bg-yellow-800';
+                        borderColor = 'border-yellow-600';
+                        break;
+                    case 'duplicate':
+                        iconHTML = '<svg class="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>';
+                        bgColor = 'bg-orange-800';
+                        borderColor = 'border-orange-600';
+                        break;
+                    default: // info
+                        iconHTML = '<svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>';
+                        bgColor = 'bg-blue-800';
+                        borderColor = 'border-blue-600';
+                        break;
+                }
+                
+                notificationIcon.innerHTML = iconHTML;
+                notificationContent.className = `${bgColor} border ${borderColor} rounded-lg shadow-lg p-4 flex items-center`;
+                
+                // Show notification
+                notificationArea.classList.remove('hidden');
+                
+                // Auto-hide after 4 seconds if autoHide is true
+                if (autoHide) {
+                    setTimeout(() => {
+                        notificationArea.classList.add('hidden');
+                    }, 4000);
+                }
+            }
+
             closeModalBtn.addEventListener('click', () => customModal.classList.add('hidden'));
             customModal.addEventListener('click', (e) => {
                 if(e.target === customModal) customModal.classList.add('hidden');
+            });
+
+            // Notification close button
+            document.getElementById('notificationClose').addEventListener('click', () => {
+                document.getElementById('notificationArea').classList.add('hidden');
+            });
+
+            // --- DRAG AND DROP FUNCTIONALITY ---
+            
+            let dragCounter = 0; // Track drag enter/leave events
+            
+            // Global drag events for visual feedback
+            document.addEventListener('dragenter', (e) => {
+                e.preventDefault();
+                dragCounter++;
+                document.body.classList.add('dragging-over');
+            });
+            
+            document.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dragCounter--;
+                if (dragCounter === 0) {
+                    document.body.classList.remove('dragging-over');
+                }
+            });
+            
+            // Prevent default drag behaviors on the entire document
+            document.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+            
+            document.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dragCounter = 0;
+                document.body.classList.remove('dragging-over');
+            });
+
+            // Function to setup drag and drop for a zone
+            function setupDragAndDrop(zone) {
+                if (!zone) return;
+                
+                zone.addEventListener('dragenter', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+
+                zone.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    // Only remove drag-over if we're actually leaving the drop zone
+                    if (!zone.contains(e.relatedTarget)) {
+                        zone.classList.remove('drag-over');
+                    }
+                });
+
+                zone.addEventListener('drop', async (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    
+                    console.log('🎬 Drop event triggered on zone:', zone.id);
+                    
+                    // Handle different types of dropped data
+                    const items = e.dataTransfer.items;
+                    const files = e.dataTransfer.files;
+                    const text = e.dataTransfer.getData('text/plain');
+                    const html = e.dataTransfer.getData('text/html');
+                    const url = e.dataTransfer.getData('text/uri-list');
+                    
+                    console.log('Drop event data:', { text, html, url, itemsLength: items ? items.length : 0, filesLength: files ? files.length : 0 });
+                    
+                    let urls = [];
+                    
+                    // Method 1: Try to get URL from text/uri-list
+                    if (url && url.trim()) {
+                        urls.push(url.trim());
+                    }
+                    
+                    // Method 2: Try to extract URLs from plain text
+                    if (text && text.trim()) {
+                        const urlMatches = text.match(/https?:\/\/[^\s]+/g);
+                        if (urlMatches) {
+                            urls.push(...urlMatches);
+                        }
+                    }
+                    
+                    // Method 3: Try to extract URLs from HTML
+                    if (html && html.trim()) {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = html;
+                        const links = tempDiv.querySelectorAll('a[href]');
+                        links.forEach(link => {
+                            if (link.href) urls.push(link.href);
+                        });
+                        
+                        // Also look for URLs in the HTML text content
+                        const htmlUrlMatches = html.match(/https?:\/\/[^\s"'<>]+/g);
+                        if (htmlUrlMatches) {
+                            urls.push(...htmlUrlMatches);
+                        }
+                    }
+                    
+                    // Remove duplicates and filter for YouTube URLs
+                    urls = [...new Set(urls)].filter(url => {
+                        try {
+                            const urlObj = new URL(url);
+                            return urlObj.hostname.includes('youtube.com') || urlObj.hostname.includes('youtu.be');
+                        } catch {
+                            return false;
+                        }
+                    });
+                    
+                    console.log('Extracted YouTube URLs:', urls);
+                    
+                    if (urls.length > 0) {
+                        let addedCount = 0;
+                        let duplicateCount = 0;
+                        let invalidCount = 0;
+                        
+                        // Add visual feedback
+                        zone.style.borderColor = '#10B981';
+                        zone.style.backgroundColor = 'rgba(16, 185, 129, 0.2)';
+                        
+                        for (const url of urls) {
+                            const result = await addVideo(url, false);
+                            if (result.success) {
+                                addedCount++;
+                            } else if (result.reason === 'duplicate') {
+                                duplicateCount++;
+                            } else if (result.reason === 'invalid') {
+                                invalidCount++;
+                            }
+                        }
+                        
+                        // Reset visual feedback
+                        setTimeout(() => {
+                            zone.style.borderColor = '';
+                            zone.style.backgroundColor = '';
+                        }, 1000);
+                        
+                        if (addedCount > 0) {
+                            saveUrlsToStorage();
+                            showNotification(`Successfully added ${addedCount} video${addedCount > 1 ? 's' : ''}!`, 'success');
+                        } else if (duplicateCount > 0 && invalidCount === 0) {
+                            showNotification(`${duplicateCount > 1 ? 'Videos are' : 'Video is'} already loaded.`, 'duplicate');
+                        } else if (invalidCount > 0 && duplicateCount === 0) {
+                            showNotification(`${invalidCount > 1 ? 'Links are' : 'Link is'} not valid YouTube video links.`, 'error');
+                        } else if (duplicateCount > 0 && invalidCount > 0) {
+                            showNotification(`Some videos are duplicates, others are invalid.`, 'warning');
+                        }
+                    } else {
+                        console.log('❌ No YouTube URLs found');
+                        showNotification('No valid YouTube URLs found in the dropped content.', 'error');
+                    }
+                });
+            }
+
+            // Setup drag and drop for both zones
+            setupDragAndDrop(dragDropZone);
+            setupDragAndDrop(dragDropZoneMobile);
+
+            // Also add drag and drop support to the entire video players container
+            videoPlayersContainer.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'copy';
+            });
+
+            videoPlayersContainer.addEventListener('drop', async (e) => {
+                e.preventDefault();
+                
+                // Use the same logic as the drop zone by triggering setupDragAndDrop logic
+                const urls = [];
+                const text = e.dataTransfer.getData('text/plain');
+                const html = e.dataTransfer.getData('text/html');
+                const url = e.dataTransfer.getData('text/uri-list');
+                
+                if (url && url.trim()) urls.push(url.trim());
+                if (text && text.trim()) {
+                    const urlMatches = text.match(/https?:\/\/[^\s]+/g);
+                    if (urlMatches) urls.push(...urlMatches);
+                }
+                if (html && html.trim()) {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = html;
+                    const links = tempDiv.querySelectorAll('a[href]');
+                    links.forEach(link => { if (link.href) urls.push(link.href); });
+                }
+                
+                const youtubeUrls = [...new Set(urls)].filter(url => {
+                    try {
+                        const urlObj = new URL(url);
+                        return urlObj.hostname.includes('youtube.com') || urlObj.hostname.includes('youtu.be');
+                    } catch { return false; }
+                });
+                
+                if (youtubeUrls.length > 0) {
+                    let addedCount = 0;
+                    let duplicateCount = 0;
+                    let invalidCount = 0;
+                    
+                    for (const url of youtubeUrls) {
+                        const result = await addVideo(url, false);
+                        if (result.success) {
+                            addedCount++;
+                        } else if (result.reason === 'duplicate') {
+                            duplicateCount++;
+                        } else if (result.reason === 'invalid') {
+                            invalidCount++;
+                        }
+                    }
+                    
+                    if (addedCount > 0) {
+                        saveUrlsToStorage();
+                        showNotification(`Successfully added ${addedCount} video${addedCount > 1 ? 's' : ''}!`, 'success');
+                    } else if (duplicateCount > 0 && invalidCount === 0) {
+                        showNotification(`${duplicateCount > 1 ? 'Videos are' : 'Video is'} already loaded.`, 'duplicate');
+                    } else if (invalidCount > 0 && duplicateCount === 0) {
+                        showNotification(`${invalidCount > 1 ? 'Links are' : 'Link is'} not valid YouTube video links.`, 'error');
+                    } else if (duplicateCount > 0 && invalidCount > 0) {
+                        showNotification(`Some videos are duplicates, others are invalid.`, 'warning');
+                    }
+                } else {
+                    showNotification('No valid YouTube URLs found in the dropped content.', 'error');
+                }
             });
 
             // --- VIDEO MANAGEMENT ---
@@ -604,15 +996,20 @@
             }
 
             async function addVideo(url, shouldSave = true) {
+                console.log('🎥 addVideo called with URL:', url);
+                
                 const videoId = getYouTubeVideoId(url);
                 if (!videoId) {
-                    showModal(`Invalid YouTube URL: ${url}`);
-                    return false;
+                    console.log('❌ Invalid YouTube URL:', url);
+                    showNotification(`Not a valid YouTube video link: ${url}`, 'error');
+                    return { success: false, reason: 'invalid' };
                 }
                 
                 const currentUrls = Array.from(videoPlayersContainer.querySelectorAll('.video-window')).map(win => win.dataset.url);
                 if (currentUrls.includes(url)) {
-                    return false;
+                    console.log('⚠️ Video already exists:', url);
+                    showNotification('This video is already loaded in the video wall.', 'duplicate');
+                    return { success: false, reason: 'duplicate' };
                 }
 
                 // Get video title
@@ -622,7 +1019,8 @@
                 if (shouldSave) {
                     saveUrlsToStorage();
                 }
-                return true;
+                console.log('✅ Video added successfully:', url);
+                return { success: true, reason: 'success' };
             }
             
             loadVideosBtn.addEventListener('click', async () => {
@@ -633,7 +1031,7 @@
                     
                     for (const url of uniqueUrls) {
                         const result = await addVideo(url, false);
-                        if (result) {
+                        if (result.success) {
                             videosAdded++;
                         }
                     }
@@ -643,10 +1041,10 @@
                         saveUrlsToStorage();
                         // Auto-close the input panel
                         inputSection.classList.remove('expanded');
-                        toggleInputBtn.textContent = '[Show] Video Input';
+                        toggleInputBtn.textContent = '[Show] Paste URLs';
                     }
                 } else {
-                    showModal('Please paste at least one YouTube URL.');
+                    showNotification('Please paste at least one YouTube URL.', 'warning');
                 }
             });
 
@@ -671,7 +1069,16 @@
                     </div>
                 `;
                 
-                videoPlayersContainer.appendChild(videoWindow);
+                // Check if there's a maximized video and place new video after it
+                const maximizedVideo = videoPlayersContainer.querySelector('.video-window.maximized');
+                if (maximizedVideo) {
+                    // Place the new video after the maximized video
+                    maximizedVideo.insertAdjacentElement('afterend', videoWindow);
+                } else {
+                    // No maximized video, place at the beginning as usual
+                    videoPlayersContainer.prepend(videoWindow);
+                }
+                
                 addWindowEventListeners(videoWindow);
             }
             
@@ -715,14 +1122,14 @@
             copyUrlsBtn.addEventListener('click', () => {
                 const urlsText = getUrlsFromStorage().join('\n');
                 if (!urlsText) {
-                    showModal("There are no URLs to copy.");
+                    showNotification("There are no URLs to copy.", 'warning');
                     return;
                 }
                 navigator.clipboard.writeText(urlsText).then(() => {
                     copyConfirmation.style.opacity = '1';
                     setTimeout(() => { copyConfirmation.style.opacity = '0'; }, 2000);
                 }).catch(err => {
-                    showModal('Failed to copy URLs to clipboard.');
+                    showNotification('Failed to copy URLs to clipboard.', 'error');
                     console.error('Copy failed:', err);
                 });
             });
@@ -734,8 +1141,8 @@
                 // Clear existing buttons
                 newsChannelButtonsContainer.innerHTML = '';
                 
-                // Determine which data source to use
-                const channelData = useNetworksFile && networksData.length > 0 ? networksData : newsChannels;
+                // Use built-in news channels
+                const channelData = newsChannels;
                 
                 // Color palette for news channel buttons
                 const colorPalette = [
@@ -768,26 +1175,14 @@
                     newsChannelButtonsContainer.appendChild(button);
                 });
                 
-                console.log(`Generated ${channelData.length} buttons from ${useNetworksFile ? 'Networks.txt' : 'built-in channels'}`);
+                console.log(`Generated ${channelData.length} news channel buttons`);
             }
 
             // --- Initial App Load ---
             async function initializeApp() {
-                // Use built-in channels as default (primary method)
-                toggleSourceBtn.textContent = 'Built-in';
-                console.log('Using built-in channels as default');
+                console.log('Using built-in news channels');
                 
-                // Optionally load Networks.txt in the background for toggle functionality
-                // This doesn't block the UI and is only used when user switches sources
-                loadNetworksFromFile().then(networksLoaded => {
-                    if (networksLoaded) {
-                        console.log('Networks.txt loaded successfully and available via toggle');
-                    } else {
-                        console.log('Networks.txt not available - only built-in channels will be accessible');
-                    }
-                });
-                
-                // Create buttons using built-in channels (fast loading)
+                // Create buttons using built-in channels
                 createNewsChannelButtons();
                 
                 // Load initial videos
@@ -835,6 +1230,70 @@
             const qrModal = document.getElementById('qrModal');
             if (e.target === qrModal) {
                 closeQRModal();
+            }
+        });
+
+        // --- CONFIRMATION MODAL ---
+        function showConfirmationModal(message) {
+            return new Promise((resolve) => {
+                const confirmationModal = document.getElementById('confirmationModal');
+                const confirmationMessage = document.getElementById('confirmationMessage');
+                const confirmOkBtn = document.getElementById('confirmOkBtn');
+                const confirmCancelBtn = document.getElementById('confirmCancelBtn');
+                
+                confirmationMessage.textContent = message;
+                confirmationModal.classList.remove('hidden');
+                
+                function cleanup() {
+                    confirmationModal.classList.add('hidden');
+                    confirmOkBtn.removeEventListener('click', handleOk);
+                    confirmCancelBtn.removeEventListener('click', handleCancel);
+                }
+                
+                function handleOk() {
+                    cleanup();
+                    resolve(true);
+                }
+                
+                function handleCancel() {
+                    cleanup();
+                    resolve(false);
+                }
+                
+                confirmOkBtn.addEventListener('click', handleOk);
+                confirmCancelBtn.addEventListener('click', handleCancel);
+                
+                // Add ESC key support
+                function handleKeyDown(e) {
+                    if (e.key === 'Escape') {
+                        handleCancel();
+                    }
+                }
+                
+                document.addEventListener('keydown', handleKeyDown);
+                
+                // Clean up keydown listener in cleanup function
+                const originalCleanup = cleanup;
+                cleanup = function() {
+                    document.removeEventListener('keydown', handleKeyDown);
+                    originalCleanup();
+                };
+            });
+        }
+
+        // --- CLOSE ALL VIDEOS ---
+        document.getElementById('closeAllVideosBtn').addEventListener('click', async () => {
+            const videoWindows = document.querySelectorAll('.video-window');
+            if (videoWindows.length === 0) {
+                showNotification("There are no videos to close.", 'warning');
+                return;
+            }
+            
+            const confirmed = await showConfirmationModal(`Are you sure you want to close all ${videoWindows.length} video window${videoWindows.length === 1 ? '' : 's'}?`);
+            if (confirmed) {
+                videoWindows.forEach(window => window.remove());
+                saveUrlsToStorage();
+                showNotification('All videos have been closed.', 'success');
             }
         });
     </script>

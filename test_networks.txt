@@ -1,6 +1,0 @@
-Network	Channel	YouTube URL	Status	Viewers
-Sky News	Sky News	https://www.youtube.com/watch?v=YDvsBbKfLPA	LIVE	783 watching
-Sky News	Sky News	https://www.youtube.com/watch?v=8MyBaQ7Ai9Y	LIVE	7.0K watching
-Sky News	Sky News	https://www.youtube.com/watch?v=yTgg4XIVVt4	LIVE	0 watching
-Sky News	Sky News	https://www.youtube.com/watch?v=5Pr3IRWIbxI	LIVE	2.2K watching
-Sky News	Sky News	https://www.youtube.com/watch?v=gyz6w26HHsc	LIVE	23.7K watching
