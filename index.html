@@ -224,14 +224,36 @@
         }
 
         .drag-drop-column {
-            display: none;
+            display: flex;
             align-items: stretch;
         }
 
-        @media (min-width: 768px) {
+        /* Hide drag-and-drop on touch devices */
+        @media (pointer: coarse) {
             .drag-drop-column {
-                display: flex;
+                display: none !important;
             }
+        }
+
+        /* Additional mobile detection class */
+        .touch-device .drag-drop-column {
+            display: none !important;
+        }
+
+        .paste-url-section {
+            display: block;
+        }
+
+        /* Hide paste URL section on touch devices */
+        @media (pointer: coarse) {
+            .paste-url-section {
+                display: none !important;
+            }
+        }
+
+        /* Additional mobile detection class */
+        .touch-device .paste-url-section {
+            display: none !important;
         }
 
         .main-controls-column {
@@ -404,8 +426,8 @@
         <div class="p-2 sm:p-4 md:p-6 lg:p-8">
             <!-- Control Panel Grid Layout -->
             <div class="control-panel-grid mb-6">
-                <!-- Drag and Drop Zone - Left Column (Hidden on mobile) -->
-                <div class="drag-drop-column hidden md:block">
+                <!-- Drag and Drop Zone - Left Column (Hidden only on touch/mobile devices) -->
+                <div class="drag-drop-column">
                     <div id="dragDropZone" class="drag-drop-zone">
                         <div class="drag-drop-content">
                             <div class="font-semibold text-xs mb-1">Drag Links</div>
@@ -430,8 +452,8 @@
                         </div>
                     </div>
 
-                    <!-- Collapsible Input Section (Hidden on mobile) -->
-                    <div class="mb-6 hidden md:block">
+                    <!-- Collapsible Input Section (Hidden only on touch/mobile devices) -->
+                    <div class="mb-6 paste-url-section">
                         <button id="toggleInputBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
                             [Hide] Paste URLs
                         </button>
@@ -595,6 +617,18 @@
             const customModal = document.getElementById('customModal');
             const modalMessage = document.getElementById('modalMessage');
             const closeModalBtn = document.getElementById('closeModalBtn');
+
+            // --- TOUCH DEVICE DETECTION ---
+            function isTouchDevice() {
+                return (('ontouchstart' in window) ||
+                        (navigator.maxTouchPoints > 0) ||
+                        (navigator.msMaxTouchPoints > 0));
+            }
+
+            // Add touch-device class if this is a touch device
+            if (isTouchDevice()) {
+                document.body.classList.add('touch-device');
+            }
 
             // --- LOCAL STORAGE & INITIALIZATION ---
             function getUrlsFromStorage() {
@@ -1289,7 +1323,7 @@
     <!-- Footer with Last Updated Timestamp -->
     <footer class="text-center py-4 mt-8 border-t border-gray-600">
         <p class="text-gray-400 text-sm">
-            Last Updated: <span class="text-gray-300">June 28, 2025 at 10:45 PM PST</span>
+            Last Updated: <span class="text-gray-300">June 29, 2025 at 12:20 AM PST</span>
         </p>
     </footer>
 </body>

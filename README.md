@@ -47,10 +47,13 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
   - **Large screens**: Additional spacing and margins for optimal viewing
 
 ### User Interface
-* **Mobile-Optimized Design**: Streamlined interface for mobile devices:
-  - Drag and drop zones hidden on mobile (not functional on touch devices)
-  - Manual URL input hidden on mobile for cleaner interface
-  - Focus on Quick Add News Channels for easy mobile interaction
+* **Touch Device Optimized Design**: Intelligent interface adaptation based on device capabilities:
+  - **Touch Device Detection**: Advanced detection using multiple methods (`ontouchstart`, `navigator.maxTouchPoints`, `pointer: coarse` CSS media query)
+  - **Drag & Drop**: Hidden only on actual touch/mobile devices (smartphones, tablets without mouse)
+  - **Manual URL Input**: Hidden only on actual touch/mobile devices for streamlined interface
+  - **Small Desktop Windows**: Drag & drop and manual input remain fully accessible on small desktop windows and tablets with mouse/trackpad support
+  - **Smart Responsive Logic**: Distinguishes between screen size and device capabilities for optimal UX
+* **Progressive Enhancement**: Features are selectively hidden based on device capabilities rather than just screen size
 * **Collapsible Sections**: News channels section can be shown or hidden with toggle buttons
 * **Visual Feedback**: Smooth animations and hover effects provide clear user feedback
 * **Confirmation Modals**: Important actions like "Close All Videos" require user confirmation
@@ -80,20 +83,22 @@ The page includes a "Buy me a coffee" donation feature in the header:
 
 ### Adding Videos - Multiple Methods
 
-#### Method 1: Drag and Drop (Desktop/Tablet)
+#### Method 1: Drag and Drop (Desktop & Small Desktop Windows)
 1. **Drag from anywhere**: Simply drag a YouTube video link from any browser window, email, or document
 2. **Drop anywhere on the page**: The entire page acts as a drop zone - drag the link anywhere on the page
-3. **Instant feedback**: Get immediate visual feedback and notifications about success, duplicates, or invalid links
+3. **Device Compatibility**: Available on all non-touch devices including small desktop windows and tablets with mouse/trackpad
+4. **Instant feedback**: Get immediate visual feedback and notifications about success, duplicates, or invalid links
 
 #### Method 2: Quick Add News Channels (All Devices)
 1. **Access News Channels**: The colorful quick-add buttons are visible by default at the top of the page
 2. **Click to Add**: Simply click any news channel button to instantly add that stream to your video wall
 3. **Collapse if Needed**: Use the "[Hide] Quick Add News Channels" button to minimize this section
 
-#### Method 3: Manual URL Input (Desktop/Tablet)
-1. **Show the Input**: Click the "[Show] Paste URLs" button to expand the input panel (hidden on mobile)
+#### Method 3: Manual URL Input (Desktop & Small Desktop Windows)
+1. **Show the Input**: Click the "[Show] Paste URLs" button to expand the input panel (hidden only on touch devices)
 2. **Add Videos**: Paste one or more YouTube video URLs into the text area (one URL per line)
-3. **Load Videos**: Click the "Load Video(s)" button - videos will appear in the grid and the input panel will automatically close
+3. **Device Compatibility**: Available on all non-touch devices including small desktop windows and tablets with mouse/trackpad
+4. **Load Videos**: Click the "Load Video(s)" button - videos will appear in the grid and the input panel will automatically close
 
 ### Managing Your Video Wall
 1. **Control Individual Videos**: Use the red, yellow, and green buttons on each video's title bar to close, minimize, or maximize windows
@@ -125,7 +130,9 @@ The quick-add section includes buttons for these major news outlets:
 * **Styling**: Utilizes **Tailwind CSS** (via CDN) for modern, responsive design with a custom color palette
 * **Responsive Design**: Mobile-first approach with progressive enhancement:
   - CSS Grid with responsive breakpoints (640px, 768px, 1024px, 1280px)
-  - Mobile-optimized interface with hidden drag zones and URL input (not practical on mobile)
+  - **Touch Device Detection**: Advanced multi-method detection (CSS `@media (pointer: coarse)`, JavaScript touch capabilities)
+  - **Smart Feature Hiding**: Drag zones and URL input hidden only on actual touch devices, not based on screen size
+  - **Small Desktop Support**: Full functionality preserved on small desktop windows and tablets with mouse/trackpad
   - Progressive multi-column layout for tablets and desktop
   - Maintains video aspect ratios across all device sizes
 * **APIs**: Uses YouTube's oEmbed API to fetch video titles

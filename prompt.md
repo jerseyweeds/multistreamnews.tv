@@ -57,7 +57,8 @@ The web application features a modern, responsive design with video wall header,
   - Make the entire page a drop zone for YouTube video links
   - Show visual feedback when dragging over the page
   - Display drag zone instruction: "Drag a video link anywhere on the page to add a new video window"
-  - Hide drag zone areas on mobile devices (not functional on touch)
+  - Hide drag zone areas on touch/mobile devices (not functional on touch devices)
+  - Use advanced touch detection methods: CSS `@media (pointer: coarse)` and JavaScript capabilities detection
 
 * **Drag Visual Feedback:**
   - Change cursor and add visual indicators when dragging
@@ -92,7 +93,9 @@ The web application features a modern, responsive design with video wall header,
 * **Collapsible Input Interface:**
   - Blue toggle button with text "[Hide] Paste URLs" when expanded, "[Show] Paste URLs" when collapsed
   - Section hidden by default on page load
-  - Hide entire section on mobile devices (`hidden md:block`)
+  - Hide entire section on touch devices using intelligent device detection (not just screen width)
+  - Preserve functionality on small desktop windows and tablets with mouse/trackpad
+  - Use CSS `@media (pointer: coarse)` and JavaScript `isTouchDevice()` function
   - Smooth CSS transitions matching the news channels section
 
 * **URL Input:**
@@ -107,7 +110,35 @@ The web application features a modern, responsive design with video wall header,
   - Auto-collapse input section after successfully adding videos
   - Clear textarea after successful video addition
 
-### 2.6. Video Title Integration
+### 2.6. Advanced Touch Device Detection
+
+* **Multi-Method Detection Implementation:**
+  - **CSS Media Query**: Use `@media (pointer: coarse)` to detect touch-primary devices
+  - **JavaScript Detection**: Implement `isTouchDevice()` function with multiple checks:
+    ```javascript
+    function isTouchDevice() {
+        return (('ontouchstart' in window) ||
+                (navigator.maxTouchPoints > 0) ||
+                (navigator.msMaxTouchPoints > 0));
+    }
+    ```
+  - **Dynamic Class Application**: Add `touch-device` class to body element for touch devices
+  - **CSS Rules**: Use both media queries and classes for robust detection:
+    ```css
+    @media (pointer: coarse) {
+        .drag-drop-column, .paste-url-section { display: none !important; }
+    }
+    .touch-device .drag-drop-column, 
+    .touch-device .paste-url-section { display: none !important; }
+    ```
+
+* **Smart Responsive Logic:**
+  - **Desktop Small Windows**: Maintain full functionality on resized desktop browsers
+  - **Tablets with Mouse**: Preserve drag & drop on tablets with mouse/trackpad attached
+  - **Touch-Only Devices**: Hide drag zones and manual input on smartphones and touch-only tablets
+  - **Progressive Enhancement**: Features are selectively disabled based on input capabilities, not screen dimensions
+
+### 2.7. Video Title Integration
 
 * **Automatic Title Fetching:**
   - Use YouTube's oEmbed API to fetch real video titles: `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`
@@ -122,7 +153,7 @@ The web application features a modern, responsive design with video wall header,
   - Add a `title` attribute for hover tooltips showing full titles
   - Use appropriate text styling (`text-gray-600 text-sm font-medium`)
 
-### 2.5. Video Window Management
+### 2.8. Video Window Management
 
 * **Dynamic Video Creation:**
   - Each valid video URL creates a new embedded video window
@@ -150,7 +181,7 @@ The web application features a modern, responsive design with video wall header,
   - 16:9 aspect ratio video containers with responsive design
   - Rounded corners and shadow effects
 
-### 2.6. Responsive Grid Layout
+### 2.9. Responsive Grid Layout
 
 * **CSS Grid Implementation:**
   - Mobile-first responsive design with progressive enhancement
@@ -163,13 +194,19 @@ The web application features a modern, responsive design with video wall header,
   - Videos have max-height of 720px (removed when maximized)
   - Maximized videos span full width: `grid-column: 1 / -1`
 
-* **Mobile Optimization:**
+* **Touch Device Optimization:**
+  - **Advanced Touch Detection**: Multi-method detection using:
+    - CSS Media Query: `@media (pointer: coarse)` 
+    - JavaScript: `'ontouchstart' in window`, `navigator.maxTouchPoints`, `navigator.msMaxTouchPoints`
+    - Dynamic class application: `.touch-device` added to body element
+  - **Smart Feature Hiding**: Drag zones and manual input hidden only on actual touch devices
+  - **Desktop Compatibility**: Full functionality preserved on small desktop windows and tablets with mouse/trackpad
   - Prevent horizontal overflow with `min-width: 0` and `max-width: 100%`
   - Maintain 16:9 aspect ratio across all screen sizes
   - Touch-friendly button spacing with responsive gaps
   - Container padding scales from 8px (mobile) to 32px (desktop)
 
-### 2.7. Data Persistence & URL Management
+### 2.10. Data Persistence & URL Management
 
 * **localStorage Integration:**
   - Save all current video URLs to localStorage on any change
@@ -191,7 +228,7 @@ The web application features a modern, responsive design with video wall header,
 
 ### PART B: LIVE STREAM MAINTENANCE SYSTEM
 
-### 2.9. Networks.txt Database
+### 2.11. Networks.txt Database
 
 * **File Structure:**
   - Tab-delimited text file with columns: Network, Channel, YouTube URL, Status, Viewers, Duration
@@ -214,7 +251,7 @@ The web application features a modern, responsive design with video wall header,
   - Automatic deduplication to maintain database integrity
   - **Usage**: Secondary source accessed via toggle button for live stream data
 
-### 2.9.1. network_list.txt Channel Database
+### 2.11.1. network_list.txt Channel Database
 
 * **Purpose:** Master list of news channel pages for automated stream discovery
 * **File Structure:**
@@ -236,7 +273,7 @@ The web application features a modern, responsive design with video wall header,
   - Enables dynamic discovery of new streams without manual URL updates
   - Supports both @handle and channel ID formats
 
-### 2.10. Python Maintenance Script (maintain_networks.py)
+### 2.12. Python Maintenance Script (maintain_networks.py)
 
 * **Core Functionality:**
   - **Stream Verification:** Check if each YouTube URL is currently live
@@ -271,7 +308,7 @@ The web application features a modern, responsive design with video wall header,
   - Supports both @channel and channel ID formats
   - Easy configuration for adding new channels
 
-### 2.11. Shell Automation Script (update_networks.sh)
+### 2.13. Shell Automation Script (update_networks.sh)
 
 * **Operation Modes:**
   - **Quick Mode:** Update existing streams only (default, fastest)
@@ -304,7 +341,7 @@ The web application features a modern, responsive design with video wall header,
   - Example cron entries provided in documentation
   - Supports both quick (frequent) and full (periodic) updates
 
-### 2.8. User Interface & UX
+### 2.14. User Interface & UX
 
 * **Modal System:**
   - Custom modal for error messages and confirmations
@@ -573,12 +610,15 @@ multistreamnews.tv/
 * Screen reader friendly structure
 * High contrast for text readability
 
-### 4.3. Cross-Browser Compatibility & Mobile Support
+### 4.3. Cross-Browser Compatibility & Touch Device Support
 * Modern browser support (Chrome, Firefox, Safari, Edge)
 * Fallbacks for older browsers where reasonable
-* Fully responsive design optimized for mobile devices:
+* Fully responsive design optimized for touch devices:
+  - **Intelligent Device Detection**: Advanced multi-method touch detection
+  - **Progressive Enhancement**: Features hidden based on device capabilities, not screen size
   - Touch-friendly interface with appropriate button sizes
   - Single-column layout on mobile with proper margins
+  - **Smart Desktop Support**: Full functionality preserved on small desktop windows
   - Progressive enhancement for tablets and desktop
   - Maintains video quality and functionality across all screen sizes
   - Prevents horizontal scrolling on any device
@@ -624,7 +664,7 @@ multistreamnews.tv/
 * **User Experience:** Intuitive interface with clear visual feedback and seamless donation system
 * **Performance:** Fast loading and smooth interactions
 * **Reliability:** Robust error handling and graceful degradation
-* **Mobile Optimization:** Fully responsive design with mobile-friendly donation QR codes
+* **Touch Device Optimization:** Intelligent device-based feature adaptation with multi-method touch detection
 
 ### 6.2. Maintenance System Standards
 * **Production Ready:** Robust error handling, logging, and backup systems
