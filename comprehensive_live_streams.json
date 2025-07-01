@@ -1,0 +1,566 @@
+{
+  "scan_info": {
+    "timestamp": "2025-06-30T18:48:31.828415",
+    "scanner_type": "comprehensive_video_checking",
+    "total_networks_scanned": 15,
+    "total_live_streams": 67
+  },
+  "live_streams": [
+    {
+      "video_id": "ZbnNOECYIAg",
+      "url": "https://www.youtube.com/watch?v=ZbnNOECYIAg",
+      "title": "LIVE: ABC News Live — Monday, June 30",
+      "viewers": 53514,
+      "network": "ABC News Live",
+      "detected_at": "2025-06-30T18:39:40.181196"
+    },
+    {
+      "video_id": "iipR5yUp36o",
+      "url": "https://www.youtube.com/watch?v=iipR5yUp36o",
+      "title": "WATCH: ABC News Live - 24/7 news, context and analysis",
+      "viewers": 2918765,
+      "network": "ABC News Live",
+      "detected_at": "2025-06-30T18:39:41.990373"
+    },
+    {
+      "video_id": "gCNeDWCI0vo",
+      "url": "https://www.youtube.com/watch?v=gCNeDWCI0vo",
+      "title": "🔴 Al Jazeera English | Live",
+      "viewers": 396152546,
+      "network": "Al Jazeera English",
+      "detected_at": "2025-06-30T18:40:11.245788"
+    },
+    {
+      "video_id": "iEpJwprxDdk",
+      "url": "https://www.youtube.com/watch?v=iEpJwprxDdk",
+      "title": "Bloomberg Business News Live",
+      "viewers": 30791189,
+      "network": "Bloomberg Television",
+      "detected_at": "2025-06-30T18:40:39.493702"
+    },
+    {
+      "video_id": "BG74iHrI5Fc",
+      "url": "https://www.youtube.com/watch?v=BG74iHrI5Fc",
+      "title": "LIVE: Breaking News and Top Stories on CBS News 24/7",
+      "viewers": 31631,
+      "network": "CBS News (Web App)",
+      "detected_at": "2025-06-30T18:41:10.856528"
+    },
+    {
+      "video_id": "UDZa_XAK3lc",
+      "url": "https://www.youtube.com/watch?v=UDZa_XAK3lc",
+      "title": "Watch Live: Senate's \\",
+      "viewers": 8032,
+      "network": "CBS News (Web App)",
+      "detected_at": "2025-06-30T18:41:12.507470"
+    },
+    {
+      "video_id": "BG74iHrI5Fc",
+      "url": "https://www.youtube.com/watch?v=BG74iHrI5Fc",
+      "title": "LIVE: Breaking News and Top Stories on CBS News 24/7",
+      "viewers": 31631,
+      "network": "CBS News 24/7",
+      "detected_at": "2025-06-30T18:41:41.831795"
+    },
+    {
+      "video_id": "UDZa_XAK3lc",
+      "url": "https://www.youtube.com/watch?v=UDZa_XAK3lc",
+      "title": "Watch Live: Senate's \\",
+      "viewers": 8032,
+      "network": "CBS News 24/7",
+      "detected_at": "2025-06-30T18:41:43.479868"
+    },
+    {
+      "video_id": "dHok_fvO0p4",
+      "url": "https://www.youtube.com/watch?v=dHok_fvO0p4",
+      "title": "Sean Diddy Trial LIVE | Jury Sends Note To Judge As They Deliberate In Sean 'Diddy' Combs' Trial",
+      "viewers": 15647,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:42:42.807792"
+    },
+    {
+      "video_id": "eAt10EPmLkQ",
+      "url": "https://www.youtube.com/watch?v=eAt10EPmLkQ",
+      "title": "LIVE Opening VP Sara Duterte's Trial | Sara Duterte Faces Impeachment Trail | Francis Escudero N18G",
+      "viewers": 664592,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:42:44.865664"
+    },
+    {
+      "video_id": "uemX7smaYjo",
+      "url": "https://www.youtube.com/watch?v=uemX7smaYjo",
+      "title": "US Senate LIVE | Senate Kicks Off Vote-A-Rama On Trump Megabill | Trump Bill LIVE | US House | N18G",
+      "viewers": 17918,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:42:46.820080"
+    },
+    {
+      "video_id": "ub7R8f8mWZ0",
+      "url": "https://www.youtube.com/watch?v=ub7R8f8mWZ0",
+      "title": "LIVE | Trump Latest News | Trump Gets VERY VERY ANGRY At Iran | Trump To Attack IRAN Again | N18G",
+      "viewers": 3887,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:42:48.511814"
+    },
+    {
+      "video_id": "usnL-Hr-Vck",
+      "url": "https://www.youtube.com/watch?v=usnL-Hr-Vck",
+      "title": "LIVE | Trump Warns Khamenei: “Ready to Strike Iran Again” | US Israel News | Nuclear Threat | N18G",
+      "viewers": 46438,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:42:50.563640"
+    },
+    {
+      "video_id": "e2doOAwGu_I",
+      "url": "https://www.youtube.com/watch?v=e2doOAwGu_I",
+      "title": "Trump's Agenda Bill LIVE: Lawmakers Debating 'Big Beautiful Bill' On The Senate Floor | GOP Backlash",
+      "viewers": 23248,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:42:52.465200"
+    },
+    {
+      "video_id": "5_5sP-sKhjM",
+      "url": "https://www.youtube.com/watch?v=5_5sP-sKhjM",
+      "title": "Senate Vote LIVE | US Senate Begins Voting On Trump's 'Big Beautiful Bill' | Vote A Rama live",
+      "viewers": 6876,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:42:54.285365"
+    },
+    {
+      "video_id": "UG5ahG3fH48",
+      "url": "https://www.youtube.com/watch?v=UG5ahG3fH48",
+      "title": "Karoline Leavitt LIVE | ’Harvard Punished For Anti-Semitism’ Says Karoline Leavitt | White House",
+      "viewers": 1574,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:42:56.275320"
+    },
+    {
+      "video_id": "0efKkusCEnQ",
+      "url": "https://www.youtube.com/watch?v=0efKkusCEnQ",
+      "title": "US Congress LIVE | Trump's 'Beautiful' effect? Thom Tillis exits from Congress | US House LIVE |N18G",
+      "viewers": 6043,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:42:58.237619"
+    },
+    {
+      "video_id": "LiMlFsQdafg",
+      "url": "https://www.youtube.com/watch?v=LiMlFsQdafg",
+      "title": "House Senate LIVE | Dramatic Senate Voting LIVE On Trump's Agenda Bill | US House LIVE | N18G",
+      "viewers": 2902,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:43:00.119216"
+    },
+    {
+      "video_id": "kPlPTeOcFy0",
+      "url": "https://www.youtube.com/watch?v=kPlPTeOcFy0",
+      "title": "Iran US LIVE Update | Trump's BIG WARNING To Khamenei | Trump Vs Khamenei | Israel Iran | N18G",
+      "viewers": 7080,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:43:02.152213"
+    },
+    {
+      "video_id": "Sa6bmaAZAKw",
+      "url": "https://www.youtube.com/watch?v=Sa6bmaAZAKw",
+      "title": "IDAHO Shooting LIVE: Firefighters Attacked Near Coeur d’Alene County; 2 killed, Suspect Neutralised",
+      "viewers": 41721,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:43:03.878582"
+    },
+    {
+      "video_id": "xHPH0wqQyzQ",
+      "url": "https://www.youtube.com/watch?v=xHPH0wqQyzQ",
+      "title": "Dalai Lama’s 90th Birthday Live Celebrations | Dharamshala Celebrate Dalai Lama’s Birthday | N18G",
+      "viewers": 8763,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:43:05.671180"
+    },
+    {
+      "video_id": "_tL8-D5idR0",
+      "url": "https://www.youtube.com/watch?v=_tL8-D5idR0",
+      "title": "LIVE | Russia Ukraine War | Putin Vows To CAPTURE Ukraine | Vladimir Putin Speech | Zelensky | N18G",
+      "viewers": 3212,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:43:07.695754"
+    },
+    {
+      "video_id": "zpIib2EDKI0",
+      "url": "https://www.youtube.com/watch?v=zpIib2EDKI0",
+      "title": "White House Briefing | Karoline Leavitt Media Showdown Over Trump's Big Beautiful Bill | N18G",
+      "viewers": 1955,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T18:43:09.745866"
+    },
+    {
+      "video_id": "R7WRYqEgZLs",
+      "url": "https://www.youtube.com/watch?v=R7WRYqEgZLs",
+      "title": "LIVE: Dateline 24/7",
+      "viewers": 970,
+      "network": "Dateline 24/7",
+      "detected_at": "2025-06-30T18:43:13.836418"
+    },
+    {
+      "video_id": "LuKwFajn37U",
+      "url": "https://www.youtube.com/watch?v=LuKwFajn37U",
+      "title": "DW News livestream | Headline news from around the world",
+      "viewers": 3763487,
+      "network": "DW News",
+      "detected_at": "2025-06-30T18:43:40.888914"
+    },
+    {
+      "video_id": "IUtlu5tG4r4",
+      "url": "https://www.youtube.com/watch?v=IUtlu5tG4r4",
+      "title": "Iran’s gambit and its impact on the global nuclear arms race | DW News Desk",
+      "viewers": 6120,
+      "network": "DW News",
+      "detected_at": "2025-06-30T18:43:47.927828"
+    },
+    {
+      "video_id": "wt6SIE7BXS8",
+      "url": "https://www.youtube.com/watch?v=wt6SIE7BXS8",
+      "title": "Watch FOX Weather Channel Live Stream: Tracking Breaking Weather News, Local and National Forecasts",
+      "viewers": 14797015,
+      "network": "FOX Weather",
+      "detected_at": "2025-06-30T18:44:37.821173"
+    },
+    {
+      "video_id": "BcervJu1XXI",
+      "url": "https://www.youtube.com/watch?v=BcervJu1XXI",
+      "title": "Patrick Christys Tonight Late Edition | Monday 30 June",
+      "viewers": 1919,
+      "network": "GB News",
+      "detected_at": "2025-06-30T18:45:08.523437"
+    },
+    {
+      "video_id": "QliL4CGc7iY",
+      "url": "https://www.youtube.com/watch?v=QliL4CGc7iY",
+      "title": "GB News Live: Watch GB News 24/7",
+      "viewers": 7989028,
+      "network": "GB News",
+      "detected_at": "2025-06-30T18:45:33.238418"
+    },
+    {
+      "video_id": "7eCWkePf9sk",
+      "url": "https://www.youtube.com/watch?v=7eCWkePf9sk",
+      "title": "Axiom Mission 4 Arrival and Welcome Remarks",
+      "viewers": 231256,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T18:45:46.010983"
+    },
+    {
+      "video_id": "_4TT_1e6rkM",
+      "url": "https://www.youtube.com/watch?v=_4TT_1e6rkM",
+      "title": "Axiom Mission 4 Launches to the International Space Station",
+      "viewers": 322300,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T18:45:47.514778"
+    },
+    {
+      "video_id": "xP9LyPsqI_g",
+      "url": "https://www.youtube.com/watch?v=xP9LyPsqI_g",
+      "title": "U.S. Spacewalk 93",
+      "viewers": 165600,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T18:45:48.966558"
+    },
+    {
+      "video_id": "5q8RKIRTqn4",
+      "url": "https://www.youtube.com/watch?v=5q8RKIRTqn4",
+      "title": "NASA Astronaut Don Pettit Post-Flight News Conference",
+      "viewers": 31492,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T18:45:50.492739"
+    },
+    {
+      "video_id": "UlBJrUBOpwo",
+      "url": "https://www.youtube.com/watch?v=UlBJrUBOpwo",
+      "title": "NASA's SpaceX 32nd Commercial Resupply Services Rendezvous and Docking",
+      "viewers": 64331,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T18:45:52.020343"
+    },
+    {
+      "video_id": "D-_UpmNP844",
+      "url": "https://www.youtube.com/watch?v=D-_UpmNP844",
+      "title": "NASA's SpaceX 32nd Commercial Resupply Services Launch",
+      "viewers": 68427,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T18:45:53.604304"
+    },
+    {
+      "video_id": "4DmBm9gP460",
+      "url": "https://www.youtube.com/watch?v=4DmBm9gP460",
+      "title": "NASA Astronaut Don Pettit Soyuz MS-26 Re-entry and Landing",
+      "viewers": 117816,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T18:45:55.124268"
+    },
+    {
+      "video_id": "MXzy9GahNHE",
+      "url": "https://www.youtube.com/watch?v=MXzy9GahNHE",
+      "title": "NASA Astronaut Don Pettit Soyuz MS-26 Undocking",
+      "viewers": 43869,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T18:45:56.598171"
+    },
+    {
+      "video_id": "foC3zzJrYG8",
+      "url": "https://www.youtube.com/watch?v=foC3zzJrYG8",
+      "title": "NASA Astronaut Don Pettit Soyuz MS-26 Space Station Farewells and Hatch Closing",
+      "viewers": 30640,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T18:45:58.144775"
+    },
+    {
+      "video_id": "tqejrlbfB84",
+      "url": "https://www.youtube.com/watch?v=tqejrlbfB84",
+      "title": "Jared Isaacman Senate Nomination Hearing for NASA Administrator",
+      "viewers": 60559,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T18:45:59.672168"
+    },
+    {
+      "video_id": "83VU509bbKQ",
+      "url": "https://www.youtube.com/watch?v=83VU509bbKQ",
+      "title": "NASA Astronaut Jonny Kim Soyuz MS-27 Hatch Opening",
+      "viewers": 53630,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T18:46:01.125864"
+    },
+    {
+      "video_id": "b7Kk4r9DomA",
+      "url": "https://www.youtube.com/watch?v=b7Kk4r9DomA",
+      "title": "NASA Astronaut Jonny Kim Soyuz MS-27 Docking",
+      "viewers": 52270,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T18:46:02.822287"
+    },
+    {
+      "video_id": "JrvpFfdm2GU",
+      "url": "https://www.youtube.com/watch?v=JrvpFfdm2GU",
+      "title": "LIVE: Bryan Kohberger appears to accept plea deal in Idaho student murders case | NBC News NOW",
+      "viewers": 5519,
+      "network": "NBC News NOW",
+      "detected_at": "2025-06-30T18:46:08.581971"
+    },
+    {
+      "video_id": "pXwxTtW20Z8",
+      "url": "https://www.youtube.com/watch?v=pXwxTtW20Z8",
+      "title": "LIVE: Senate ‘vote-a-rama’ on GOP agenda bill | NBC News",
+      "viewers": 214072,
+      "network": "NBC News NOW",
+      "detected_at": "2025-06-30T18:46:10.671568"
+    },
+    {
+      "video_id": "YDvsBbKfLPA",
+      "url": "https://www.youtube.com/watch?v=YDvsBbKfLPA",
+      "title": "Watch Sky News",
+      "viewers": 55864983,
+      "network": "Sky News",
+      "detected_at": "2025-06-30T18:46:40.254708"
+    },
+    {
+      "video_id": "906F_y7zfr8",
+      "url": "https://www.youtube.com/watch?v=906F_y7zfr8",
+      "title": "Trump LIVE | Trump Makes STUNNING Announcement in All-Important Press Conference | US News LIVE",
+      "viewers": 42788,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:08.022782"
+    },
+    {
+      "video_id": "L9IQ_ZrBDoE",
+      "url": "https://www.youtube.com/watch?v=L9IQ_ZrBDoE",
+      "title": "LIVE | Trump’s EXPLOSIVE Warning Stuns Iran: “We’ll Bomb Again” | Trump Latest News Live | US News",
+      "viewers": 14365,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:09.987475"
+    },
+    {
+      "video_id": "WfY1UI7WASE",
+      "url": "https://www.youtube.com/watch?v=WfY1UI7WASE",
+      "title": "Donald Trump Live | Trump’s Savage Shutdown of Reporter in Fiery Briefing | White House | US News",
+      "viewers": 11734,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:11.850401"
+    },
+    {
+      "video_id": "kp6eL33ug4Y",
+      "url": "https://www.youtube.com/watch?v=kp6eL33ug4Y",
+      "title": "White House Briefing LIVE | Karoline Leavitt LIVE On Trump's Agenda Bill | Leavitt Press Conference",
+      "viewers": 9266,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:13.785365"
+    },
+    {
+      "video_id": "bCr18wVAzYI",
+      "url": "https://www.youtube.com/watch?v=bCr18wVAzYI",
+      "title": "LIVE Opening VP Sara Duterte's Trial | Sara Duterte Faces Impeachment Trail | Francis Escudero",
+      "viewers": 7715,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:15.685329"
+    },
+    {
+      "video_id": "hCuLO13JvjQ",
+      "url": "https://www.youtube.com/watch?v=hCuLO13JvjQ",
+      "title": "LIVE | Trump Warns Khamenei: “Ready to Strike Iran Again” | US Israel News | Nuclear Threat | TN",
+      "viewers": 6435,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:17.841265"
+    },
+    {
+      "video_id": "5ItWmL1YHlU",
+      "url": "https://www.youtube.com/watch?v=5ItWmL1YHlU",
+      "title": "US NEWS LIVE | Major U.S. Cities on High Alert Following Recent Threat Intelligence Reports | Trump",
+      "viewers": 5306,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:19.580168"
+    },
+    {
+      "video_id": "LHiBimd5nWE",
+      "url": "https://www.youtube.com/watch?v=LHiBimd5nWE",
+      "title": "LIVE: Jal Ganga Conservation Campaign closing ceremony, watershed conference organized at Mandi",
+      "viewers": 856,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:21.613510"
+    },
+    {
+      "video_id": "mVH7wFkiNhA",
+      "url": "https://www.youtube.com/watch?v=mVH7wFkiNhA",
+      "title": "LIVE: 'World War 3 In...': Trump Issues STUNNING Nuclear Warning | US Big Attack On Iran | US News",
+      "viewers": 9419,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:23.375624"
+    },
+    {
+      "video_id": "cHwU_neknl8",
+      "url": "https://www.youtube.com/watch?v=cHwU_neknl8",
+      "title": "Russia-Ukraine War LIVE: Russia’s 470+ Drones Rain Hell In Ukraine|Moscow’s ‘Biggest’ Aerial Assault",
+      "viewers": 1508,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:25.205352"
+    },
+    {
+      "video_id": "u0IBtRChs28",
+      "url": "https://www.youtube.com/watch?v=u0IBtRChs28",
+      "title": "US NEWS LIVE | Major U.S. Cities on High Alert Following Recent Threat Intelligence Reports",
+      "viewers": 5548,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:27.037920"
+    },
+    {
+      "video_id": "p5PSdXr4Ftk",
+      "url": "https://www.youtube.com/watch?v=p5PSdXr4Ftk",
+      "title": "LIVE | Three Dead, Several Injured In Stampede At Jagannath Rath Yatra Near Puri’s Gundicha Temple",
+      "viewers": 10513,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:28.752922"
+    },
+    {
+      "video_id": "GQQ9imCkuAs",
+      "url": "https://www.youtube.com/watch?v=GQQ9imCkuAs",
+      "title": "TRUMP LIVE | Trump Stuns the World with Historic Peace Deal – A Global Game Changer! | US NEWS",
+      "viewers": 5318,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:30.752961"
+    },
+    {
+      "video_id": "M4UvCTkxW0g",
+      "url": "https://www.youtube.com/watch?v=M4UvCTkxW0g",
+      "title": "Iran Strikes Tel Aviv LIVE: Sirens Sound, Ballistic Missiles Flying Overnight Across Skies In Israel",
+      "viewers": 36915,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:32.900776"
+    },
+    {
+      "video_id": "tQ4smLOt-Ic",
+      "url": "https://www.youtube.com/watch?v=tQ4smLOt-Ic",
+      "title": "Trump LIVE | President Trump Makes SHOCKING Announcement On Canada, Ukraine Minerals Deal | Cabinet",
+      "viewers": 31700,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T18:47:34.908292"
+    },
+    {
+      "video_id": "QLb48bv5Geo",
+      "url": "https://www.youtube.com/watch?v=QLb48bv5Geo",
+      "title": "Russia’s Largest Air Attack Yet! Putin's 477 Drones, 60 Missiles Burn Ukraine | Ukraine War LIVE",
+      "viewers": 21377,
+      "network": "WION",
+      "detected_at": "2025-06-30T18:48:05.922109"
+    },
+    {
+      "video_id": "TtDomXn8oC4",
+      "url": "https://www.youtube.com/watch?v=TtDomXn8oC4",
+      "title": "Iran Preparing For Bigger War? Tehran ‘Saving’ Lethal Missiles For Major Fight: Reports | War LIVE",
+      "viewers": 17097,
+      "network": "WION",
+      "detected_at": "2025-06-30T18:48:07.883569"
+    },
+    {
+      "video_id": "DwK_nbP56s4",
+      "url": "https://www.youtube.com/watch?v=DwK_nbP56s4",
+      "title": "China Floods LIVE: Flood Hell In China! New Cyclone Hits After Deadly Floods; 80,000 Evacuated",
+      "viewers": 26397,
+      "network": "WION",
+      "detected_at": "2025-06-30T18:48:09.724302"
+    },
+    {
+      "video_id": "135py3-lWZg",
+      "url": "https://www.youtube.com/watch?v=135py3-lWZg",
+      "title": "China Unveils ‘Blackout Bomb’; New Threat For Taiwan? | China's New Secret Weapon | WION LIVE",
+      "viewers": 22828,
+      "network": "WION",
+      "detected_at": "2025-06-30T18:48:11.672105"
+    },
+    {
+      "video_id": "OvXM6fSbEB0",
+      "url": "https://www.youtube.com/watch?v=OvXM6fSbEB0",
+      "title": "Turkey Wildfire LIVE: Turkey Burns! More Than 50,000 Evacuated | Emergency in Turkey | WION LIVE",
+      "viewers": 7853,
+      "network": "WION",
+      "detected_at": "2025-06-30T18:48:13.321496"
+    },
+    {
+      "video_id": "gadjsB5BkK4",
+      "url": "https://www.youtube.com/watch?v=gadjsB5BkK4",
+      "title": "WION LIVE News | World Latest English News | International News | Top English News | Live",
+      "viewers": 18767783,
+      "network": "WION",
+      "detected_at": "2025-06-30T18:48:14.977144"
+    },
+    {
+      "video_id": "7Wnp-ro0vBE",
+      "url": "https://www.youtube.com/watch?v=7Wnp-ro0vBE",
+      "title": "WION LIVE News | Latest News Updates From Across The World | English News | Top International News",
+      "viewers": 19525,
+      "network": "WION",
+      "detected_at": "2025-06-30T18:48:16.927601"
+    },
+    {
+      "video_id": "JnttcoZFFI8",
+      "url": "https://www.youtube.com/watch?v=JnttcoZFFI8",
+      "title": "WION LIVE News | Latest News Updates From Across The World | English News | Top International News",
+      "viewers": 1016068,
+      "network": "WION",
+      "detected_at": "2025-06-30T18:48:18.723097"
+    }
+  ],
+  "summary": {
+    "networks_with_live_content": [
+      "WION",
+      "ABC News Live",
+      "DW News",
+      "NBC News NOW",
+      "NASA ISS Live",
+      "Al Jazeera English",
+      "GB News",
+      "CBS News 24/7",
+      "FOX Weather",
+      "Bloomberg Television",
+      "CNN-News18",
+      "Sky News",
+      "Dateline 24/7",
+      "CBS News (Web App)",
+      "Times Now"
+    ],
+    "total_viewers": 534830813
+  }
+}

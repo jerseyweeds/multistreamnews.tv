@@ -1,0 +1,299 @@
+{
+  "scan_info": {
+    "scan_number": 1,
+    "timestamp": "2025-06-30T21:57:38.626730",
+    "scan_type": "quick",
+    "total_live_streams": 36,
+    "total_networks": 21
+  },
+  "live_streams": [
+    {
+      "video_id": "vOTiJkg1voo",
+      "url": "https://www.youtube.com/watch?v=vOTiJkg1voo",
+      "title": "Watch ABC News Australia live | ABC News",
+      "viewers": 0,
+      "network": "ABC News Australia",
+      "detected_at": "2025-06-30T21:55:15.172956"
+    },
+    {
+      "video_id": "ZbnNOECYIAg",
+      "url": "https://www.youtube.com/watch?v=ZbnNOECYIAg",
+      "title": "LIVE: ABC News Live — Monday, June 30",
+      "viewers": 0,
+      "network": "ABC News Live",
+      "detected_at": "2025-06-30T21:55:23.003203"
+    },
+    {
+      "video_id": "iipR5yUp36o",
+      "url": "https://www.youtube.com/watch?v=iipR5yUp36o",
+      "title": "WATCH: ABC News Live - 24/7 news, context and analysis",
+      "viewers": 0,
+      "network": "ABC News Live",
+      "detected_at": "2025-06-30T21:55:24.457958"
+    },
+    {
+      "video_id": "gCNeDWCI0vo",
+      "url": "https://www.youtube.com/watch?v=gCNeDWCI0vo",
+      "title": "🔴 Al Jazeera English | Live",
+      "viewers": 0,
+      "network": "Al Jazeera English",
+      "detected_at": "2025-06-30T21:55:31.177954"
+    },
+    {
+      "video_id": "iEpJwprxDdk",
+      "url": "https://www.youtube.com/watch?v=iEpJwprxDdk",
+      "title": "Bloomberg Business News Live",
+      "viewers": 0,
+      "network": "Bloomberg Television",
+      "detected_at": "2025-06-30T21:55:36.974486"
+    },
+    {
+      "video_id": "qnL5aLYRb7M",
+      "url": "https://www.youtube.com/watch?v=qnL5aLYRb7M",
+      "title": "LIVE: Breaking News and Top Stories on CBS News 24/7",
+      "viewers": 0,
+      "network": "CBS News 24/7",
+      "detected_at": "2025-06-30T21:55:46.045230"
+    },
+    {
+      "video_id": "TrnTFK_VGQ0",
+      "url": "https://www.youtube.com/watch?v=TrnTFK_VGQ0",
+      "title": "WATCH LIVE: US Senate Kicks off Vote-A-Rama on Trump's Big Beautiful Bill | Senate Republicans |N18G",
+      "viewers": 0,
+      "network": "CNBC-TV18",
+      "detected_at": "2025-06-30T21:55:59.694995"
+    },
+    {
+      "video_id": "kIOmv1LLDRQ",
+      "url": "https://www.youtube.com/watch?v=kIOmv1LLDRQ",
+      "title": "Philippines LIVE: Incoming Senators Warn Fellow Members of the Senate Sara Impeachment Court | N18G",
+      "viewers": 0,
+      "network": "CNBC-TV18",
+      "detected_at": "2025-06-30T21:56:01.043715"
+    },
+    {
+      "video_id": "6EO1CJJUkcc",
+      "url": "https://www.youtube.com/watch?v=6EO1CJJUkcc",
+      "title": "Big Beautiful Bill Vote LIVE: Senate Votes on Trump's Mega Bill Changes in ‘Vote-a-Rama’ | GOP |N18G",
+      "viewers": 0,
+      "network": "CNBC-TV18",
+      "detected_at": "2025-06-30T21:56:02.354404"
+    },
+    {
+      "video_id": "hvE-9lWnJpU",
+      "url": "https://www.youtube.com/watch?v=hvE-9lWnJpU",
+      "title": "LIVE: President Trump Intensifies Attacks on Fed Chair Powell on Interest Rates | Karoline | N18G",
+      "viewers": 0,
+      "network": "CNBC-TV18",
+      "detected_at": "2025-06-30T21:56:03.581689"
+    },
+    {
+      "video_id": "93qYZZHHBH8",
+      "url": "https://www.youtube.com/watch?v=93qYZZHHBH8",
+      "title": "LIVE: Karoline Leavitt Warns: Mamdani Will “Crush NYC” | Fiery White House Briefing | Trump | N18G",
+      "viewers": 0,
+      "network": "CNBC-TV18",
+      "detected_at": "2025-06-30T21:56:04.928122"
+    },
+    {
+      "video_id": "VAgD6LbJIYU",
+      "url": "https://www.youtube.com/watch?v=VAgD6LbJIYU",
+      "title": "US Senate LIVE | US Senate Begins Voting On Trump's 'Big Beautiful Bill' | Vote A Rama live N18G",
+      "viewers": 0,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T21:56:07.830368"
+    },
+    {
+      "video_id": "dHok_fvO0p4",
+      "url": "https://www.youtube.com/watch?v=dHok_fvO0p4",
+      "title": "Sean Diddy Trial LIVE | Jury Sends Note To Judge As They Deliberate In Sean 'Diddy' Combs' Trial",
+      "viewers": 0,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T21:56:09.301589"
+    },
+    {
+      "video_id": "eAt10EPmLkQ",
+      "url": "https://www.youtube.com/watch?v=eAt10EPmLkQ",
+      "title": "LIVE Opening VP Sara Duterte's Trial | Sara Duterte Faces Impeachment Trail | Francis Escudero N18G",
+      "viewers": 0,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T21:56:10.723358"
+    },
+    {
+      "video_id": "1Bl_20tawSI",
+      "url": "https://www.youtube.com/watch?v=1Bl_20tawSI",
+      "title": "LIVE | World War 3 Begins?| Iran Strikes U.S. Base in Qatar | Explosions In Doha | World News | N18L",
+      "viewers": 0,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T21:56:12.023958"
+    },
+    {
+      "video_id": "uemX7smaYjo",
+      "url": "https://www.youtube.com/watch?v=uemX7smaYjo",
+      "title": "US Senate LIVE | Senate Kicks Off Vote-A-Rama On Trump Megabill | Trump Bill LIVE | US House | N18G",
+      "viewers": 0,
+      "network": "CNN-News18",
+      "detected_at": "2025-06-30T21:56:13.341069"
+    },
+    {
+      "video_id": "LuKwFajn37U",
+      "url": "https://www.youtube.com/watch?v=LuKwFajn37U",
+      "title": "DW News livestream | Headline news from around the world",
+      "viewers": 0,
+      "network": "DW News",
+      "detected_at": "2025-06-30T21:56:16.326570"
+    },
+    {
+      "video_id": "IUtlu5tG4r4",
+      "url": "https://www.youtube.com/watch?v=IUtlu5tG4r4",
+      "title": "Iran’s gambit and its impact on the global nuclear arms race | DW News Desk",
+      "viewers": 0,
+      "network": "DW News",
+      "detected_at": "2025-06-30T21:56:21.185013"
+    },
+    {
+      "video_id": "wt6SIE7BXS8",
+      "url": "https://www.youtube.com/watch?v=wt6SIE7BXS8",
+      "title": "Watch FOX Weather Channel Live Stream: Tracking Breaking Weather News, Local and National Forecasts",
+      "viewers": 0,
+      "network": "FOX Weather",
+      "detected_at": "2025-06-30T21:56:30.553202"
+    },
+    {
+      "video_id": "Ap-UM1O9RBU",
+      "url": "https://www.youtube.com/watch?v=Ap-UM1O9RBU",
+      "title": "FRANCE 24 English – LIVE – International Breaking News & Top stories - 24/7 stream • FRANCE 24",
+      "viewers": 0,
+      "network": "FRANCE 24 English",
+      "detected_at": "2025-06-30T21:56:37.748608"
+    },
+    {
+      "video_id": "7eCWkePf9sk",
+      "url": "https://www.youtube.com/watch?v=7eCWkePf9sk",
+      "title": "Axiom Mission 4 Arrival and Welcome Remarks",
+      "viewers": 0,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T21:56:55.801012"
+    },
+    {
+      "video_id": "_4TT_1e6rkM",
+      "url": "https://www.youtube.com/watch?v=_4TT_1e6rkM",
+      "title": "Axiom Mission 4 Launches to the International Space Station",
+      "viewers": 0,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T21:56:57.164391"
+    },
+    {
+      "video_id": "xP9LyPsqI_g",
+      "url": "https://www.youtube.com/watch?v=xP9LyPsqI_g",
+      "title": "U.S. Spacewalk 93",
+      "viewers": 0,
+      "network": "NASA ISS Live",
+      "detected_at": "2025-06-30T21:56:58.652219"
+    },
+    {
+      "video_id": "JrvpFfdm2GU",
+      "url": "https://www.youtube.com/watch?v=JrvpFfdm2GU",
+      "title": "LIVE: NBC News NOW - June 30",
+      "viewers": 0,
+      "network": "NBC News NOW",
+      "detected_at": "2025-06-30T21:57:01.453779"
+    },
+    {
+      "video_id": "pXwxTtW20Z8",
+      "url": "https://www.youtube.com/watch?v=pXwxTtW20Z8",
+      "title": "LIVE: Senate ‘vote-a-rama’ on GOP agenda bill | NBC News",
+      "viewers": 0,
+      "network": "NBC News NOW",
+      "detected_at": "2025-06-30T21:57:02.851030"
+    },
+    {
+      "video_id": "YDvsBbKfLPA",
+      "url": "https://www.youtube.com/watch?v=YDvsBbKfLPA",
+      "title": "Watch Sky News",
+      "viewers": 0,
+      "network": "Sky News",
+      "detected_at": "2025-06-30T21:57:09.748251"
+    },
+    {
+      "video_id": "906F_y7zfr8",
+      "url": "https://www.youtube.com/watch?v=906F_y7zfr8",
+      "title": "Trump LIVE | Trump Makes STUNNING Announcement in All-Important Press Conference | US News LIVE",
+      "viewers": 0,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T21:57:16.742943"
+    },
+    {
+      "video_id": "_TPFdWW3ZFE",
+      "url": "https://www.youtube.com/watch?v=_TPFdWW3ZFE",
+      "title": "LIVE | ‘World War 3 In…’: Trump STUNNING Nuclear Warning Shocks Europe, Middle East | FULL SPEECH",
+      "viewers": 0,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T21:57:18.124230"
+    },
+    {
+      "video_id": "WfY1UI7WASE",
+      "url": "https://www.youtube.com/watch?v=WfY1UI7WASE",
+      "title": "Donald Trump Live | Trump’s Savage Shutdown of Reporter in Fiery Briefing | White House | US News",
+      "viewers": 0,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T21:57:19.542290"
+    },
+    {
+      "video_id": "L9IQ_ZrBDoE",
+      "url": "https://www.youtube.com/watch?v=L9IQ_ZrBDoE",
+      "title": "LIVE | Trump’s EXPLOSIVE Warning Stuns Iran: “We’ll Bomb Again” | Trump Latest News Live | US News",
+      "viewers": 0,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T21:57:20.865667"
+    },
+    {
+      "video_id": "nREPCUSWock",
+      "url": "https://www.youtube.com/watch?v=nREPCUSWock",
+      "title": "US News LIVE: Iran DECLARES WAR On US? Threatens US Ships | Trump's Next Move | Trump News LIVE",
+      "viewers": 0,
+      "network": "Times Now",
+      "detected_at": "2025-06-30T21:57:22.345616"
+    },
+    {
+      "video_id": "pk78eerxCY8",
+      "url": "https://www.youtube.com/watch?v=pk78eerxCY8",
+      "title": "China Unveils ‘Blackout Bomb’; Taiwan Faces New Threat? | Secret Weapon | WION LIVE | World News",
+      "viewers": 0,
+      "network": "WION",
+      "detected_at": "2025-06-30T21:57:31.524123"
+    },
+    {
+      "video_id": "TtDomXn8oC4",
+      "url": "https://www.youtube.com/watch?v=TtDomXn8oC4",
+      "title": "Iran Preparing For Bigger War? Tehran ‘Saving’ Lethal Missiles For Major Fight: Reports | War LIVE",
+      "viewers": 0,
+      "network": "WION",
+      "detected_at": "2025-06-30T21:57:32.989610"
+    },
+    {
+      "video_id": "QLb48bv5Geo",
+      "url": "https://www.youtube.com/watch?v=QLb48bv5Geo",
+      "title": "Russia’s Largest Air Attack Yet! Putin's 477 Drones, 60 Missiles Burn Ukraine | Ukraine War LIVE",
+      "viewers": 0,
+      "network": "WION",
+      "detected_at": "2025-06-30T21:57:34.484093"
+    },
+    {
+      "video_id": "DwK_nbP56s4",
+      "url": "https://www.youtube.com/watch?v=DwK_nbP56s4",
+      "title": "China Floods LIVE: Flood Hell In China! New Cyclone Hits After Deadly Floods; 80,000 Evacuated",
+      "viewers": 0,
+      "network": "WION",
+      "detected_at": "2025-06-30T21:57:35.939596"
+    },
+    {
+      "video_id": "JaH1cbAcsjU",
+      "url": "https://www.youtube.com/watch?v=JaH1cbAcsjU",
+      "title": "Turkey Wildfire LIVE: Helicopters Fight Flames in Izmir | Houses Engulfed | Evacuations Underway",
+      "viewers": 0,
+      "network": "WION",
+      "detected_at": "2025-06-30T21:57:37.316914"
+    }
+  ]
+}

@@ -24,6 +24,10 @@ Welcome to MultiStreamNews.TV, a single-page web application designed for viewin
 * **Built-in News Channels**: Curated collection of major news outlets with one-click access
 * **One-Click News Access**: Colorful quick-add buttons for major news outlets including:
   - Sky News, NBC, ABC, LiveNOW, 6abc, DW, France 24, Bloomberg, Al Jazeera, CNBC, NASA
+* **Add All Networks Button**: Gradient purple-blue button to instantly add all available news channels at once
+  - Smart duplicate prevention and progress feedback
+  - Confirmation dialog to prevent accidental bulk loading
+  - Detailed results showing added, duplicate, and failed videos
 * **Color-Coded Buttons**: Each news channel button has a unique color from a 12-color palette for easy visual identification
 * **Expandable Interface**: The news channels section can be collapsed to save space when not needed
 
@@ -90,8 +94,12 @@ The page includes a "Buy me a coffee" donation feature in the header:
 
 #### Method 2: Quick Add News Channels (All Devices)
 1. **Access News Channels**: The colorful quick-add buttons are visible by default at the top of the page
-2. **Click to Add**: Simply click any news channel button to instantly add that stream to your video wall
-3. **Collapse if Needed**: Use the "[Hide] Quick Add News Channels" button to minimize this section
+2. **Single Channel**: Click any individual news channel button to instantly add that stream to your video wall
+3. **Add All Networks**: Click the gradient "✨ Add All Networks" button to add all available news channels at once
+   - Confirmation dialog prevents accidental bulk loading
+   - Smart duplicate detection and progress feedback
+   - Detailed results showing what was added vs. already loaded
+4. **Collapse if Needed**: Use the "[Hide] Quick Add News Channels" button to minimize this section
 
 #### Method 3: Manual URL Input (Desktop & Small Desktop Windows)
 1. **Show the Input**: Click the "[Show] Paste URLs" button to expand the input panel (hidden only on touch devices)
@@ -151,19 +159,59 @@ The application is also live at: **https://www.multistreamnews.tv/**
 
 ```
 multistreamnews.tv/
-├── index.html              # Main web application (single file)
-├── README.md              # This documentation
-├── prompt.md              # Development prompt/specifications
-├── LLM_notes.md          # Long-term AI development notes
-├── Todolist.txt           # Development notes and tasks
-├── monetization_ideas.md  # Business model and revenue strategies
-├── requirements.txt       # Python dependencies (for backend scripts)
-├── network_list.txt       # News network URLs and data
-├── news_networks.txt      # Additional network configurations
-├── LICENSE               # MIT License
-├── CNAME                 # GitHub Pages domain configuration
-
+├── index.html                      # Main web application (single file)
+├── live_stream_manager.sh          # Shell script for scanner management
+├── README.md                       # This documentation
+├── Scanners.md                     # Scanner tools documentation
+├── LLM_notes.md                    # Long-term AI development notes
+├── requirements.txt                # Python dependencies (for backend scripts)
+├── network_list.txt                # News network URLs and data (primary config)
+├── LICENSE                         # MIT License
+├── CNAME                           # GitHub Pages domain configuration
+│
+├── Python Scanner Scripts/
+│   ├── auto_refresh_scanner.py           # Main automated scanner (recommended)
+│   ├── comprehensive_live_scanner.py     # Detailed analysis scanner
+│   ├── advanced_live_detector.py         # Test scanner for specific channels
+│   ├── manual_scan_live_streams.py       # Multi-endpoint scanning
+│   ├── precise_live_scanner.py           # Precise pattern matching scanner
+│   └── enhanced_scan_live_streams.py     # Enhanced detection methods
+│
+└── Generated Results/
+    ├── latest_live_streams.json           # Latest scan results
+    ├── quick_live_test_results.json       # Test scan results  
+    ├── comprehensive_live_streams.json    # Detailed scan results
+    └── detailed_scan_results.json         # Manual scan results
 ```
+
+## Backend Scanner Tools
+
+This project includes advanced Python-based tools for scanning YouTube news channels for live streams:
+
+### Quick Start with Scanners
+```bash
+# Make shell script executable
+chmod +x live_stream_manager.sh
+
+# Run quick scan (2-3 minutes)
+./live_stream_manager.sh quick
+
+# View latest results
+./live_stream_manager.sh view
+
+# Get help
+./live_stream_manager.sh help
+```
+
+### Scanner Features
+- **Automated Detection**: Scans 21+ news networks for live streams
+- **Multiple Scan Types**: Quick (2-3 min), comprehensive (5-10 min), test scans
+- **Continuous Monitoring**: Background monitoring with configurable intervals
+- **Smart Detection**: Video-by-video live status checking for accuracy
+- **Result Management**: JSON output with viewer counts and network summaries
+- **Shell Script Manager**: Easy-to-use command-line interface
+
+See [`Scanners.md`](Scanners.md) for detailed scanner documentation.
 
 ## Customization
 

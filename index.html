@@ -457,6 +457,11 @@
                                 <p class="text-xs text-gray-400 italic text-center mt-3">
                                     Sometimes the streams above expire. I'm trying to keep up ;-)
                                 </p>
+                                <div class="text-center mt-4">
+                                    <button id="addAllNetworksBtn" class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                                        ✨ Add All Networks
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1229,6 +1234,72 @@
                 
                 console.log(`Generated ${channelData.length} news channel buttons`);
             }
+
+            // --- ADD ALL NETWORKS FUNCTIONALITY ---
+            document.getElementById('addAllNetworksBtn').addEventListener('click', async () => {
+                const confirmed = await showConfirmationModal(`Are you sure you want to add all ${newsChannels.length} news channels to your video wall? This will load a lot of videos at once.`);
+                if (!confirmed) {
+                    return;
+                }
+
+                showNotification('Adding all networks... This may take a moment.', 'info');
+                
+                let addedCount = 0;
+                let duplicateCount = 0;
+                let errorCount = 0;
+                
+                // Create a unique set of URLs to avoid duplicates within the news channels
+                const uniqueChannels = [];
+                const seenUrls = new Set();
+                
+                for (const channel of newsChannels) {
+                    if (!seenUrls.has(channel.url)) {
+                        seenUrls.add(channel.url);
+                        uniqueChannels.push(channel);
+                    }
+                }
+                
+                for (const channel of uniqueChannels) {
+                    try {
+                        const result = await addVideo(channel.url, false);
+                        if (result.success) {
+                            addedCount++;
+                        } else if (result.reason === 'duplicate') {
+                            duplicateCount++;
+                        } else {
+                            errorCount++;
+                        }
+                        
+                        // Small delay to prevent overwhelming the browser
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                    } catch (error) {
+                        console.error(`Error adding ${channel.label}:`, error);
+                        errorCount++;
+                    }
+                }
+                
+                // Save after all videos are added
+                if (addedCount > 0) {
+                    saveUrlsToStorage();
+                }
+                
+                // Show summary notification
+                let message = '';
+                if (addedCount > 0) {
+                    message = `Successfully added ${addedCount} new video${addedCount > 1 ? 's' : ''}!`;
+                    if (duplicateCount > 0) {
+                        message += ` (${duplicateCount} were already loaded)`;
+                    }
+                    if (errorCount > 0) {
+                        message += ` (${errorCount} failed to load)`;
+                    }
+                    showNotification(message, 'success');
+                } else if (duplicateCount > 0 && errorCount === 0) {
+                    showNotification('All networks are already loaded in your video wall.', 'duplicate');
+                } else if (errorCount > 0) {
+                    showNotification(`Failed to load ${errorCount} network${errorCount > 1 ? 's' : ''}. ${duplicateCount > 0 ? duplicateCount + ' were already loaded.' : ''}`, 'error');
+                }
+            });
 
             // --- Initial App Load ---
             async function initializeApp() {
