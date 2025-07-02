@@ -1532,6 +1532,28 @@
                 setTimeout(updateFloatingButtonPosition, 100);
             }
             
+            // --- CLOSE ALL VIDEOS ---
+            document.getElementById('closeAllVideosBtn').addEventListener('click', async () => {
+                const videoWindows = document.querySelectorAll('.video-window');
+                if (videoWindows.length === 0) {
+                    showNotification("There are no videos to close.", 'warning');
+                    return;
+                }
+                
+                const confirmed = await showConfirmationModal(`Are you sure you want to close all ${videoWindows.length} video window${videoWindows.length === 1 ? '' : 's'}?`);
+                if (confirmed) {
+                    // Clear the tracking set since we're removing all videos
+                    processedVideoIds.clear();
+                    console.log('🗑️ Cleared all video IDs from tracking set');
+                    
+                    videoWindows.forEach(window => window.remove());
+                    saveUrlsToStorage();
+                    showNotification('All videos have been closed.', 'success');
+                    // Update floating button position after removing all videos
+                    setTimeout(updateFloatingButtonPosition, 100);
+                }
+            });
+
             // Start the app
             initializeApp();
             
@@ -1638,28 +1660,6 @@
                 };
             });
         }
-
-        // --- CLOSE ALL VIDEOS ---
-        document.getElementById('closeAllVideosBtn').addEventListener('click', async () => {
-            const videoWindows = document.querySelectorAll('.video-window');
-            if (videoWindows.length === 0) {
-                showNotification("There are no videos to close.", 'warning');
-                return;
-            }
-            
-            const confirmed = await showConfirmationModal(`Are you sure you want to close all ${videoWindows.length} video window${videoWindows.length === 1 ? '' : 's'}?`);
-            if (confirmed) {
-                // Clear the tracking set since we're removing all videos
-                processedVideoIds.clear();
-                console.log('🗑️ Cleared all video IDs from tracking set');
-                
-                videoWindows.forEach(window => window.remove());
-                saveUrlsToStorage();
-                showNotification('All videos have been closed.', 'success');
-                // Update floating button position after removing all videos
-                setTimeout(updateFloatingButtonPosition, 100);
-            }
-        });
 
         // =====================================================
         // YOUTUBE SEARCH SECTION FUNCTIONALITY
