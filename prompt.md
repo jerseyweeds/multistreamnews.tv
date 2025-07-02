@@ -1,8 +1,8 @@
-# Comprehensive Prompt: MultiStreamNews.TV - Complete Platform
+# Comprehensive Prompt: Multi Stream News .TV - Complete Platform
 
 ## 1. High-Level Objective
 
-MultiStreamNews.TV is a comprehensive news streaming platform combining a modern single-page web application with a robust backend monitoring system. The platform features live stream detection, automated content discovery, and an intuitive multistreaming interface for viewing multiple YouTube news channels simultaneously.
+Multi Stream News .TV is a comprehensive news streaming platform combining a modern single-page web application with a robust backend monitoring system. The platform features live stream detection, automated content discovery, and an intuitive multistreaming interface for viewing multiple YouTube news channels simultaneously.
 
 The system includes:
 - **Frontend**: Modern responsive web application with video wall, drag-and-drop functionality, and mobile optimization
@@ -17,7 +17,7 @@ The system includes:
 ### 2.1. Header Design
 * **Hero Section:** Create a prominent header with a background image using this URL: `https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`
 * **Overlay:** Add a dark overlay (`bg-gray-900 opacity-60`) to ensure text readability
-* **Title & Subtitle:** Display "MultiStreamNews.TV" as the main title and "Your central hub for multistream news and content." as the subtitle
+* **Title & Subtitle:** Display "Multi Stream News .TV" as the main title and "Your central hub for multistream news and content." as the subtitle
 * **Donation Feature:** Include a "Buy me a coffee" dropdown in the header with PayPal and Venmo options
   - Professional branded SVG icons for PayPal and Venmo
   - Hover-activated dropdown with seamless interaction (no gap between button and menu)

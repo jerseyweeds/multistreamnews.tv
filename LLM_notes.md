@@ -1,4 +1,4 @@
-# LLM Development Notes - MultiStreamNews.TV
+# LLM Development Notes - Multi Stream News .TV
 
 This file serves as long-term knowledge for AI assistants working on this project, documenting key decisions, architectural choices, and change history.
 
@@ -90,10 +90,33 @@ This file serves as long-term knowledge for AI assistants working on this projec
 #### 2025-07-01: News Channel Button Layout Enhancement
 - **Problem**: News channels section was constrained to narrow grid column instead of full width
 - **Root Cause**: Section was nested inside `control-panel-grid` which created 120px left column + flexible right column
-- **Solution**: Moved news channels section outside grid layout to span full page width
-- **Technical**: Restructured HTML to place news channels section before control panel grid
-- **Result**: Buttons now properly utilize full width with responsive multi-row layout
-- **CSS Updates**: Enhanced responsive breakpoints for better button distribution across screen sizes
+- **Solution**: Moved news channels section outside grid to use full width
+- **Key Changes**: 
+  - Removed news channels from grid layout
+  - Updated responsive CSS for button wrapping
+  - Improved mobile experience with better button sizing
+- **Result**: News channel buttons now properly wrap and use full page width
+
+#### January 3, 2025: HTML Title Tag Consistency Update
+- **Issue**: HTML `<title>` tag still contained old branding "MultiStreamNews.TV"
+- **Fix**: Updated to "Multi Stream News .TV" to match main heading and overall branding
+- **Documentation Review**: Updated all .md files to reflect current project state
+- **Timestamp Update**: Updated footer timestamp to January 3, 2025 at 02:15 UTC
+- **Status**: All branding now consistent across HTML title, main heading, and documentation
+
+#### January 2, 2025: Drag Zone Repositioning and UI Refinements
+- **Drag Zone Relocation**: Moved drag-and-drop instructions from top-left to top-right corner (below donation menu)
+- **CSS Updates**: 
+  - Changed from `position: fixed` to `position: absolute` for better header integration
+  - Updated positioning from `top: 1rem; left: 1rem` to `top: 4.5rem; right: 1rem`
+  - Reduced z-index from 1000 to 15 to fit within header structure
+- **Title Typography Enhancement**: 
+  - Updated main heading from "MultiStreamNews.TV" to "Multi Stream News .TV"
+  - Maintained consistent responsive font sizing across all elements
+  - Improved readability with proper word separation
+- **JavaScript Updates**: Updated element references from `dragZoneTopLeft` to `dragZoneTopRight`
+- **Documentation Synchronization**: Updated README.md and LLM_notes.md to reflect new branding
+- **Timestamp Policy Compliance**: Updated footer timestamps for all frontend modifications
 
 #### 2025-07-02: Comprehensive Documentation & Architecture Review
 - **Action**: Complete review and revision of all .md documentation files
@@ -284,6 +307,6 @@ This file serves as long-term knowledge for AI assistants working on this projec
 
 ---
 
-*Last Updated: June 30, 2025*
+*Last Updated: January 3, 2025*
 *File Created: June 30, 2025*
-*Latest Change: Updated footer timestamp and completed comprehensive documentation review*
+*Latest Change: Updated HTML title tag branding consistency and completed documentation review*

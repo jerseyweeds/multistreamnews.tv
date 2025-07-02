@@ -11,7 +11,7 @@
     </script>    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MultiStreamNews.TV</title>
+    <title>Multi Stream News .TV</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -96,7 +96,7 @@
             top: 100%;
             background-color: #374151;
             min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.25);
             border-radius: 0.5rem;
             z-index: 1000;
             /* Removed margin-top to eliminate gap between button and dropdown */
@@ -209,35 +209,46 @@
             font-weight: 500;
         }
 
-        /* Control Panel Grid Layout */
-        .control-panel-grid {
-            display: grid;
-            gap: 1rem;
-            grid-template-columns: 1fr;
+        /* Control Panel - Simplified (no longer using grid) */
+
+        /* Drag and Drop Area Styles */
+        .drag-drop-area {
+            transition: all 0.3s ease;
         }
 
-        @media (min-width: 768px) {
-            .control-panel-grid {
-                grid-template-columns: 120px 1fr;
-                gap: 1.5rem;
+        .drag-drop-area.drag-over {
+            border-color: #10B981 !important;
+            background-color: rgba(16, 185, 129, 0.1) !important;
+            transform: scale(1.02);
+        }
+
+        .drag-drop-area.drag-over svg {
+            color: #10B981 !important;
+            animation: bounce 1s infinite;
+        }
+
+        body.dragging-over .drag-drop-area {
+            border-color: #6B7280;
+            background-color: rgba(107, 114, 128, 0.1);
+        }
+
+        body.dragging-over .drag-drop-area svg {
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                transform: translate3d(0,0,0);
             }
-        }
-
-        .drag-drop-column {
-            display: flex;
-            align-items: stretch;
-        }
-
-        /* Hide drag-and-drop on touch devices */
-        @media (pointer: coarse) {
-            .drag-drop-column {
-                display: none !important;
+            40%, 43% {
+                transform: translate3d(0,-5px,0);
             }
-        }
-
-        /* Additional mobile detection class */
-        .touch-device .drag-drop-column {
-            display: none !important;
+            70% {
+                transform: translate3d(0,-3px,0);
+            }
+            90% {
+                transform: translate3d(0,-1px,0);
+            }
         }
 
         .paste-url-section {
@@ -256,10 +267,56 @@
             display: none !important;
         }
 
-        .main-controls-column {
+        /* Drag Zone Between Sections */
+        .drag-zone-between {
+            background-color: rgba(31, 41, 55, 0.9);
+            border: 2px dashed rgba(156, 163, 175, 0.5);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            color: #D1D5DB;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            min-height: 100px;
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
+
+        /* Hide on mobile and touch devices */
+        @media (max-width: 768px) {
+            .drag-zone-between {
+                display: none !important;
+            }
+        }
+
+        @media (pointer: coarse) {
+            .drag-zone-between {
+                display: none !important;
+            }
+        }
+
+        .touch-device .drag-zone-between {
+            display: none !important;
+        }
+
+        .drag-zone-between:hover {
+            background-color: rgba(75, 85, 99, 1);
+            border-color: rgba(156, 163, 175, 0.8);
+            transform: scale(1.02);
+        }
+
+        .drag-zone-between.drag-over {
+            border-color: #3B82F6;
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #3B82F6;
+            transform: scale(1.05);
+        }
+
+        /* Remove sidebar layout - drag zone will be positioned absolutely */
 
         .drag-drop-zone.drag-over {
             border-color: #3B82F6;
@@ -349,63 +406,63 @@
             }
         }
 
-        /* News Channel Button Wrapping Fix */
+        /* News Channel Button Wrapping Fix - Updated for compact layout */
         #newsChannelButtons {
-            display: flex !important;
-            flex-wrap: wrap !important;
-            justify-content: flex-start;
-            gap: 0.5rem;
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.25rem;
             width: 100%;
-        }
-
-        #newsChannelButtons button {
-            flex: 0 0 auto; /* Don't grow or shrink, maintain natural size */
-            min-width: fit-content;
-            max-width: calc(50% - 0.25rem); /* Ensure at least 2 buttons per row on narrow screens */
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
-
-        /* Responsive button sizing for better wrapping */
-        @media (min-width: 640px) {
-            #newsChannelButtons {
-                gap: 0.75rem;
-                justify-content: flex-start;
-            }
-            
-            #newsChannelButtons button {
-                max-width: calc(33.333% - 0.5rem); /* Allow 3 buttons per row on tablets */
-            }
-        }
-
-        @media (min-width: 768px) {
-            #newsChannelButtons {
-                gap: 0.75rem;
-                justify-content: flex-start;
-            }
-            
-            #newsChannelButtons button {
-                max-width: calc(25% - 0.563rem); /* Allow 4 buttons per row on desktop */
-            }
         }
 
         @media (min-width: 1024px) {
             #newsChannelButtons {
-                gap: 0.75rem;
-                justify-content: flex-start;
+                grid-template-columns: repeat(3, 1fr);
             }
-            
-            #newsChannelButtons button {
-                max-width: calc(16.666% - 0.625rem); /* Allow up to 6 buttons per row on large screens */
-                min-width: 120px; /* Minimum button width for consistency */
-            }
+        }
+
+        #newsChannelButtons button {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-size: 0.75rem;
+            padding: 0.375rem 0.5rem;
         }
 
         @media (min-width: 1280px) {
             #videoPlayersContainer {
                 padding: 0 20px; /* Maximum margins on very large screens */
             }
+        }
+
+        /* YouTube Search Section Styles - Updated for compact layout */
+        .youtube-search-collapsed {
+            height: 0;
+            overflow: hidden;
+        }
+
+        .youtube-search-expanded {
+            height: 400px; /* Reduced from 550px for compact layout */
+        }
+
+        .youtube-iframe-container {
+            height: 350px; /* Reduced from 500px */
+            padding: 15px; /* Reduced from 20px */
+        }
+
+        /* News Channels Section Styles */
+        .news-channels-collapsed {
+            height: 0;
+            overflow: hidden;
+        }
+
+        /* Input Section Styles */
+        .input-section-collapsed {
+            height: 0;
+            overflow: hidden;
+        }
+
+        #youTubeSearchIframe {
+            border-radius: 8px;
         }
     </style>
 </head>
@@ -420,10 +477,10 @@
             </div>
             <div aria-hidden="true" class="absolute inset-0 bg-gray-900 opacity-60"></div>
             
-            <!-- Buy me a coffee dropdown - Top right corner -->
-            <div class="absolute top-4 right-4 z-20 max-w-xs">
+            <!-- Buy me a coffee dropdown - Floating top right corner -->
+            <div id="floatingDonationButton" class="fixed top-4 right-4 z-50 max-w-xs transition-all duration-300 ease-in-out">
                 <div class="coffee-dropdown">
-                    <button class="inline-flex items-center px-2 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 rounded-lg shadow-lg transition-colors duration-300 hover:shadow-xl">
+                    <button class="inline-flex items-center px-2 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 rounded-lg shadow-lg transition-colors duration-300 hover:shadow-xl opacity-85 hover:opacity-100">
                         <span class="mr-1">☕</span>
                         <span class="hidden md:inline flex-col text-center leading-tight">
                             <span class="block">Like this?</span>
@@ -459,7 +516,9 @@
             </div>
             
             <div class="relative mx-auto flex max-w-3xl flex-col items-center py-12 sm:py-16 md:py-18 text-center px-4">
-                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mt-8 sm:mt-4 md:mt-0">MultiStreamNews.TV</h1>
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mt-8 sm:mt-4 md:mt-0">
+                    Multi Stream News .TV
+                </h1>
                 <p class="mt-2 sm:mt-4 text-lg sm:text-xl text-gray-300 px-4">Your central hub for multistream news and content.</p>
             </div>
         </div>
@@ -483,63 +542,142 @@
 
         <!-- Main content area with responsive padding -->
         <div class="p-2 sm:p-4 md:p-6 lg:p-8">
-            <!-- News Channels Section - Full Width -->
+            <!-- Compact Control Panel - Three Sections in One Row -->
             <div class="mb-6">
-                <button id="toggleNewsChannelsBtn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                    [Hide] Quick Add News Channels
-                </button>
-                <div id="newsChannelsSection" class="bg-gray-800 rounded-lg shadow-lg">
-                    <div class="p-4">
-                        <div id="newsChannelButtons">
-                            <!-- News channel buttons will be dynamically generated here -->
-                        </div>
-                        <p class="text-xs text-gray-400 italic text-center mt-3">
-                            Sometimes the streams above expire. I'm trying to keep up ;-)
-                        </p>
-                        <div class="text-center mt-4">
-                            <button id="addAllNetworksBtn" class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-                                ✨ Add All Networks
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Control Panel Grid Layout -->
-            <div class="control-panel-grid mb-6">
-                <!-- Drag and Drop Zone - Left Column (Hidden only on touch/mobile devices) -->
-                <div class="drag-drop-column">
-                    <div id="dragDropZone" class="drag-drop-zone">
-                        <div class="drag-drop-content">
-                            <div class="font-semibold text-xs mb-1">Drag Links</div>
-                            <div class="text-xs opacity-75">Drag a video link anywhere on the page to add a new video window</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Main Controls - Right Column -->
-                <div class="main-controls-column">
-                    <!-- Collapsible Input Section (Hidden only on touch/mobile devices) -->
-                    <div class="mb-6 paste-url-section">
-                        <button id="toggleInputBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                            [Hide] Paste URLs
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:items-start">
+                    <!-- YouTube News Search Section -->
+                    <div class="flex flex-col h-full">
+                        <button id="toggleYouTubeSearchBtn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-3 rounded-lg transition-colors duration-300 flex items-center justify-center text-sm min-h-[44px]">
+                            <svg class="w-4 h-4 mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                            <span id="youTubeSearchToggleText" class="hidden sm:inline">[Show] Browse Live News</span>
+                            <span class="sm:hidden">[Show] Browse</span>
                         </button>
-                        <div id="inputSection" class="bg-gray-800 rounded-lg shadow-lg">
-                            <div class="p-4">
-                                <label for="videoUrls" class="block mb-2 text-sm font-medium text-gray-300">Paste YouTube Video URL(s) here, one per line:</label>
-                                <textarea id="videoUrls" rows="6" class="w-full p-2.5 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500" placeholder="https://www.youtube.com/watch?v=VIDEO_ID"></textarea>
-                                <button id="loadVideosBtn" class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                                    Load Video(s)
-                                </button>
+                        <div id="youTubeSearchSection" class="youtube-search-collapsed bg-gray-800 rounded-lg shadow-lg mt-2 overflow-hidden transition-all duration-500 ease-in-out">
+                            <div class="p-3 border-b border-gray-700">
+                                <h3 class="text-base font-semibold text-white mb-1">Live News Search</h3>
+                                <p class="text-gray-300 text-xs">Browse live news streams</p>
+                            </div>
+                            <div class="youtube-iframe-container">
+                                <div class="flex flex-col items-center justify-center h-full bg-gray-900 rounded-lg p-4 text-center">
+                                    <div class="mb-4">
+                                        <svg class="w-12 h-12 mx-auto text-red-500 mb-3" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                        </svg>
+                                        <h4 class="text-lg font-bold text-white mb-2">YouTube Live News</h4>
+                                        <p class="text-gray-400 text-xs mb-4">Click buttons to open YouTube search in new tab</p>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-2 gap-2 w-full">
+                                        <a href="https://www.youtube.com/results?search_query=news&sp=EgJAAQ%253D%253D" 
+                                           target="_blank" 
+                                           rel="noopener noreferrer"
+                                           class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-2 rounded transition-colors duration-300 flex items-center justify-center text-xs">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M18.364 5.636L16.95 7.05A7 7 0 1 0 19 12h2a9 9 0 1 1-2.636-6.364z"/>
+                                            </svg>
+                                            Live
+                                        </a>
+                                        
+                                        <a href="https://www.youtube.com/results?search_query=breaking+news&sp=EgJAAQ%253D%253D" 
+                                           target="_blank" 
+                                           rel="noopener noreferrer"
+                                           class="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-2 rounded transition-colors duration-300 flex items-center justify-center text-xs">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M13 7h8l-2 9H8l-1.5 3h-1L7 16H2l1-4h5l1-4h4V7z"/>
+                                            </svg>
+                                            Breaking
+                                        </a>
+                                        
+                                        <a href="https://www.youtube.com/results?search_query=world+news&sp=EgJAAQ%253D%253D" 
+                                           target="_blank" 
+                                           rel="noopener noreferrer"
+                                           class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-2 rounded transition-colors duration-300 flex items-center justify-center text-xs">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.477 10 10 10 10-4.477 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                            </svg>
+                                            World
+                                        </a>
+                                        
+                                        <a href="https://www.youtube.com/results?search_query=local+news&sp=EgJAAQ%253D%253D" 
+                                           target="_blank" 
+                                           rel="noopener noreferrer"
+                                           class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-2 rounded transition-colors duration-300 flex items-center justify-center text-xs">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                            </svg>
+                                            Local
+                                        </a>
+                                    </div>
+                                    
+                                    <p class="text-gray-500 text-xs mt-3">Opens in new tab</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+
+                    <!-- News Channels Section -->
+                    <div class="flex flex-col h-full">
+                        <button id="toggleNewsChannelsBtn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-3 rounded-lg transition-colors duration-300 text-sm min-h-[44px]">
+                            <span class="hidden sm:inline">[Show] Quick Add News Channels</span>
+                            <span class="sm:hidden">[Show] Channels</span>
+                        </button>
+                        <div id="newsChannelsSection" class="news-channels-collapsed bg-gray-800 rounded-lg shadow-lg mt-2 overflow-hidden transition-all duration-500 ease-in-out">
+                            <div class="p-3">
+                                <div id="newsChannelButtons" class="grid grid-cols-2 lg:grid-cols-3 gap-1">
+                                    <!-- News channel buttons will be dynamically generated here -->
+                                </div>
+                                <p class="text-xs text-gray-400 italic text-center mt-2">
+                                    <span class="hidden sm:inline">Sometimes streams expire. I'm keeping up ;-)</span>
+                                    <span class="sm:hidden">Streams may expire</span>
+                                </p>
+                                <div class="text-center mt-3">
+                                    <button id="addAllNetworksBtn" class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm">
+                                        <span class="hidden sm:inline">✨ Add All Networks</span>
+                                        <span class="sm:hidden">✨ Add All</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paste URLs Section -->
+                    <div class="flex flex-col paste-url-section h-full">
+                        <button id="toggleInputBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-3 rounded-lg transition-colors duration-300 text-sm min-h-[44px]">
+                            <span class="hidden sm:inline">[Show] Paste URLs</span>
+                            <span class="sm:hidden">[Show] URLs</span>
+                        </button>
+                        <div id="inputSection" class="input-section-collapsed bg-gray-800 rounded-lg shadow-lg mt-2 overflow-hidden transition-all duration-500 ease-in-out">
+                            <div class="p-3">
+                                <label for="videoUrls" class="block mb-2 text-xs font-medium text-gray-300">
+                                    <span class="hidden sm:inline">Paste YouTube URLs, one per line:</span>
+                                    <span class="sm:hidden">Paste YouTube URLs:</span>
+                                </label>
+                                <textarea id="videoUrls" rows="4" class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500 text-sm" placeholder="https://www.youtube.com/watch?v=VIDEO_ID"></textarea>
+                                <button id="loadVideosBtn" class="mt-3 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-3 rounded transition-colors duration-300 text-sm">
+                                    <span class="hidden sm:inline">Load Video(s)</span>
+                                    <span class="sm:hidden">Load</span>
+                                </button>
+                            </div>
+                        </div>                </div>
             </div>
 
             <!-- Video Players Container -->
-            <div id="videoPlayersContainer">
-                <!-- Video windows will be dynamically inserted here -->
+            <div class="mt-4 mb-20">
+                <!-- Drag and Drop Area - Compact -->
+                <div id="dragDropArea" class="drag-drop-area border-2 border-dashed border-gray-500 rounded-lg p-3 text-center text-gray-400 transition-all duration-300 hover:border-gray-400 hover:bg-gray-800/20 mb-4">
+                    <div class="flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        <span class="text-sm font-medium">Drag YouTube links here to add videos</span>
+                    </div>
+                </div>
+                
+                <div id="videoPlayersContainer" class="rounded-lg p-20 min-h-[20px]">
+                    <!-- Video windows will be dynamically inserted here -->
+                </div>
             </div>
 
             <!-- Loaded Videos List Section -->
@@ -556,6 +694,8 @@
                     Close All Videos
                 </button>
             </div>
+
+
         </div>
     </div>
 
@@ -643,60 +783,26 @@
             {
                 label: 'Al Jazeera English',
                 url: 'https://www.youtube.com/watch?v=gCNeDWCI0vo'
-            },        
-            {
-                label: 'NBC',
-                url: 'https://www.youtube.com/watch?v=DfwpCn9347w'
-            },
-            {
-                label: 'ABC',
-                url: 'https://www.youtube.com/watch?v=iipR5yUp36o'
-            },   
-            {
-                label: 'LiveNOW',
-                url: 'https://www.youtube.com/watch?v=YDfiTGGPYCk'
-            },                       
-            {
-                label: '6abc',
-                url: 'https://www.youtube.com/watch?v=sNi1KbGCJ3o'
-            },
-            {
-                label: 'DW',
-                url: 'https://www.youtube.com/watch?v=LuKwFajn37U'
-            },
-            {
-                label: 'France 24',
-                url: 'https://www.youtube.com/watch?v=Ap-UM1O9RBU'
-            },
-            {
-                label: 'Bloomberg',
-                url: 'https://www.youtube.com/watch?v=iEpJwprxDdk'
-            },
-            {
-                label: 'Al Jazeera',
-                url: 'https://www.youtube.com/watch?v=gCNeDWCI0vo'
-            },
-            {
-                label: 'CNBC',
-                url: 'https://www.youtube.com/watch?v=9NyxcX3rhQs'
             },
             {
                 label: 'NASA',
                 url: 'https://www.youtube.com/watch?v=DIgkvm2nmHc'
             }
-             
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
+            // --- GLOBAL VARIABLES ---
+            let processedVideoIds = new Set(); // Track processed video IDs to prevent duplicates
+            
             // --- DOM Element Selection ---
             const toggleInputBtn = document.getElementById('toggleInputBtn');
             const inputSection = document.getElementById('inputSection');
             const toggleNewsChannelsBtn = document.getElementById('toggleNewsChannelsBtn');
             const newsChannelsSection = document.getElementById('newsChannelsSection');
+            const toggleYouTubeSearchBtn = document.getElementById('toggleYouTubeSearchBtn');
             const videoUrlsInput = document.getElementById('videoUrls');
             const loadVideosBtn = document.getElementById('loadVideosBtn');
             const videoPlayersContainer = document.getElementById('videoPlayersContainer');
-            const dragDropZone = document.getElementById('dragDropZone');
             
             const loadedVideosSection = document.getElementById('loadedVideosSection');
             const loadedVideosList = document.getElementById('loadedVideosList');
@@ -718,6 +824,24 @@
             if (isTouchDevice()) {
                 document.body.classList.add('touch-device');
             }
+
+            // --- FLOATING DONATION BUTTON POSITIONING ---
+            function updateFloatingButtonPosition() {
+                const floatingButton = document.getElementById('floatingDonationButton');
+                if (!floatingButton) return;
+
+                // Always keep the button in the top-right corner
+                Object.assign(floatingButton.style, {
+                    top: '16px',
+                    right: '16px',
+                    left: 'auto',
+                    bottom: 'auto',
+                    transform: 'none'
+                });
+            }
+
+            // Update button position on resize only (not on scroll)
+            window.addEventListener('resize', updateFloatingButtonPosition);
 
             // --- LOCAL STORAGE & INITIALIZATION ---
             function getUrlsFromStorage() {
@@ -772,14 +896,58 @@
             
             // --- UI TOGGLES & MODAL ---
             toggleInputBtn.addEventListener('click', () => {
-                const isExpanded = inputSection.classList.toggle('expanded');
-                toggleInputBtn.textContent = isExpanded ? '[Hide] Paste URLs' : '[Show] Paste URLs';
+                const isCollapsed = inputSection.classList.contains('input-section-collapsed');
+                
+                if (isCollapsed) {
+                    // Expanding
+                    inputSection.classList.remove('input-section-collapsed');
+                    inputSection.classList.add('expanded');
+                    
+                    const fullSpan = toggleInputBtn.querySelector('.hidden.sm\\:inline');
+                    const shortSpan = toggleInputBtn.querySelector('.sm\\:hidden');
+                    
+                    if (fullSpan) fullSpan.textContent = '[Hide] Paste URLs';
+                    if (shortSpan) shortSpan.textContent = '[Hide] URLs';
+                } else {
+                    // Collapsing
+                    inputSection.classList.remove('expanded');
+                    inputSection.classList.add('input-section-collapsed');
+                    
+                    const fullSpan = toggleInputBtn.querySelector('.hidden.sm\\:inline');
+                    const shortSpan = toggleInputBtn.querySelector('.sm\\:hidden');
+                    
+                    if (fullSpan) fullSpan.textContent = '[Show] Paste URLs';
+                    if (shortSpan) shortSpan.textContent = '[Show] URLs';
+                }
             });
 
             toggleNewsChannelsBtn.addEventListener('click', () => {
-                const isExpanded = newsChannelsSection.classList.toggle('expanded');
-                toggleNewsChannelsBtn.textContent = isExpanded ? '[Hide] Quick Add News Channels' : '[Show] Quick Add News Channels';
+                const isCollapsed = newsChannelsSection.classList.contains('news-channels-collapsed');
+                
+                if (isCollapsed) {
+                    // Expanding
+                    newsChannelsSection.classList.remove('news-channels-collapsed');
+                    newsChannelsSection.classList.add('expanded');
+                    
+                    const fullSpan = toggleNewsChannelsBtn.querySelector('.hidden.sm\\:inline');
+                    const shortSpan = toggleNewsChannelsBtn.querySelector('.sm\\:hidden');
+                    
+                    if (fullSpan) fullSpan.textContent = '[Hide] Quick Add News Channels';
+                    if (shortSpan) shortSpan.textContent = '[Hide] Channels';
+                } else {
+                    // Collapsing
+                    newsChannelsSection.classList.remove('expanded');
+                    newsChannelsSection.classList.add('news-channels-collapsed');
+                    
+                    const fullSpan = toggleNewsChannelsBtn.querySelector('.hidden.sm\\:inline');
+                    const shortSpan = toggleNewsChannelsBtn.querySelector('.sm\\:hidden');
+                    
+                    if (fullSpan) fullSpan.textContent = '[Show] Quick Add News Channels';
+                    if (shortSpan) shortSpan.textContent = '[Show] Channels';
+                }
             });
+            
+            // --- VIDEO MANAGEMENT ---
             
             function showModal(message, autoHide = false) {
                 modalMessage.textContent = message;
@@ -914,18 +1082,18 @@
 
                 zone.addEventListener('drop', async (e) => {
                     e.preventDefault();
+                    e.stopPropagation();
+                    
                     zone.classList.remove('drag-over');
                     
                     console.log('🎬 Drop event triggered on zone:', zone.id);
                     
                     // Handle different types of dropped data
-                    const items = e.dataTransfer.items;
-                    const files = e.dataTransfer.files;
                     const text = e.dataTransfer.getData('text/plain');
                     const html = e.dataTransfer.getData('text/html');
                     const url = e.dataTransfer.getData('text/uri-list');
                     
-                    console.log('Drop event data:', { text, html, url, itemsLength: items ? items.length : 0, filesLength: files ? files.length : 0 });
+                    console.log('Drop event data:', { text, html, url });
                     
                     let urls = [];
                     
@@ -1013,74 +1181,6 @@
                 });
             }
 
-            // Setup drag and drop for the zone
-            setupDragAndDrop(dragDropZone);
-
-            // Also add drag and drop support to the entire video players container
-            videoPlayersContainer.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                e.dataTransfer.dropEffect = 'copy';
-            });
-
-            videoPlayersContainer.addEventListener('drop', async (e) => {
-                e.preventDefault();
-                
-                // Use the same logic as the drop zone by triggering setupDragAndDrop logic
-                const urls = [];
-                const text = e.dataTransfer.getData('text/plain');
-                const html = e.dataTransfer.getData('text/html');
-                const url = e.dataTransfer.getData('text/uri-list');
-                
-                if (url && url.trim()) urls.push(url.trim());
-                if (text && text.trim()) {
-                    const urlMatches = text.match(/https?:\/\/[^\s]+/g);
-                    if (urlMatches) urls.push(...urlMatches);
-                }
-                if (html && html.trim()) {
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = html;
-                    const links = tempDiv.querySelectorAll('a[href]');
-                    links.forEach(link => { if (link.href) urls.push(link.href); });
-                }
-                
-                const youtubeUrls = [...new Set(urls)].filter(url => {
-                    try {
-                        const urlObj = new URL(url);
-                        return urlObj.hostname.includes('youtube.com') || urlObj.hostname.includes('youtu.be');
-                    } catch { return false; }
-                });
-                
-                if (youtubeUrls.length > 0) {
-                    let addedCount = 0;
-                    let duplicateCount = 0;
-                    let invalidCount = 0;
-                    
-                    for (const url of youtubeUrls) {
-                        const result = await addVideo(url, false);
-                        if (result.success) {
-                            addedCount++;
-                        } else if (result.reason === 'duplicate') {
-                            duplicateCount++;
-                        } else if (result.reason === 'invalid') {
-                            invalidCount++;
-                        }
-                    }
-                    
-                    if (addedCount > 0) {
-                        saveUrlsToStorage();
-                        showNotification(`Successfully added ${addedCount} video${addedCount > 1 ? 's' : ''}!`, 'success');
-                    } else if (duplicateCount > 0 && invalidCount === 0) {
-                        showNotification(`${duplicateCount > 1 ? 'Videos are' : 'Video is'} already loaded.`, 'duplicate');
-                    } else if (invalidCount > 0 && duplicateCount === 0) {
-                        showNotification(`${invalidCount > 1 ? 'Links are' : 'Link is'} not valid YouTube video links.`, 'error');
-                    } else if (duplicateCount > 0 && invalidCount > 0) {
-                        showNotification(`Some videos are duplicates, others are invalid.`, 'warning');
-                    }
-                } else {
-                    showNotification('No valid YouTube URLs found in the dropped content.', 'error');
-                }
-            });
-
             // --- VIDEO MANAGEMENT ---
             
             function getYouTubeVideoId(url) {
@@ -1127,12 +1227,28 @@
                     return { success: false, reason: 'invalid' };
                 }
                 
-                const currentUrls = Array.from(videoPlayersContainer.querySelectorAll('.video-window')).map(win => win.dataset.url);
-                if (currentUrls.includes(url)) {
-                    console.log('⚠️ Video already exists:', url);
+                // Check global tracking set first for fast duplicate detection
+                if (processedVideoIds.has(videoId)) {
+                    console.log('⚠️ Video ID already processed:', videoId);
                     showNotification('This video is already loaded in the video wall.', 'duplicate');
                     return { success: false, reason: 'duplicate' };
                 }
+                
+                // Double-check against DOM elements as backup
+                const existingWindows = Array.from(videoPlayersContainer.querySelectorAll('.video-window'));
+                const currentUrls = existingWindows.map(win => win.dataset.url);
+                const currentVideoIds = existingWindows.map(win => win.dataset.videoId).filter(id => id);
+                
+                if (currentUrls.includes(url) || currentVideoIds.includes(videoId)) {
+                    console.log('⚠️ Video already exists in DOM:', url, 'VideoID:', videoId);
+                    // Add to tracking set if it wasn't there already
+                    processedVideoIds.add(videoId);
+                    showNotification('This video is already loaded in the video wall.', 'duplicate');
+                    return { success: false, reason: 'duplicate' };
+                }
+                
+                // Add to tracking set before creating video
+                processedVideoIds.add(videoId);
 
                 // Get video title
                 const videoTitle = await getVideoTitle(videoId);
@@ -1141,6 +1257,10 @@
                 if (shouldSave) {
                     saveUrlsToStorage();
                 }
+                
+                // Update floating button position after adding video
+                setTimeout(updateFloatingButtonPosition, 100);
+                
                 console.log('✅ Video added successfully:', url);
                 return { success: true, reason: 'success' };
             }
@@ -1163,7 +1283,13 @@
                         saveUrlsToStorage();
                         // Auto-close the input panel
                         inputSection.classList.remove('expanded');
-                        toggleInputBtn.textContent = '[Show] Paste URLs';
+                        inputSection.classList.add('input-section-collapsed');
+                        
+                        const fullSpan = toggleInputBtn.querySelector('.hidden.sm\\:inline');
+                        const shortSpan = toggleInputBtn.querySelector('.sm\\:hidden');
+                        
+                        if (fullSpan) fullSpan.textContent = '[Show] Paste URLs';
+                        if (shortSpan) shortSpan.textContent = '[Show] URLs';
                     }
                 } else {
                     showNotification('Please paste at least one YouTube URL.', 'warning');
@@ -1174,6 +1300,7 @@
                 const videoWindow = document.createElement('div');
                 videoWindow.className = 'video-window rounded-lg shadow-lg overflow-hidden';
                 videoWindow.dataset.url = url;
+                videoWindow.dataset.videoId = videoId;
 
                 const embedUrl = createEmbedUrl(videoId);
 
@@ -1212,8 +1339,16 @@
 
                     const content = videoWindow.querySelector('.video-content-wrapper');
                     if (action === 'close') {
+                        // Remove from tracking set
+                        const videoId = videoWindow.dataset.videoId;
+                        if (videoId) {
+                            processedVideoIds.delete(videoId);
+                            console.log('🗑️ Removed video ID from tracking:', videoId);
+                        }
                         videoWindow.remove();
                         saveUrlsToStorage();
+                        // Update floating button position after removing video
+                        setTimeout(updateFloatingButtonPosition, 100);
                     } else if (action === 'minimize') {
                         content.classList.toggle('hidden');
                     } else if (action === 'maximize') {
@@ -1255,7 +1390,7 @@
                 const channelData = newsChannels;
                 
                 // Color palette for news channel buttons
-                const colorPalette = [
+                                                             const colorPalette = [
                     'bg-blue-600 hover:bg-blue-700',      // Blue
                     'bg-emerald-600 hover:bg-emerald-700', // Emerald
                     'bg-purple-600 hover:bg-purple-700',   // Purple
@@ -1358,15 +1493,55 @@
             async function initializeApp() {
                 console.log('Using built-in news channels');
                 
+                // Set initial UI states - all sections collapsed
+                newsChannelsSection.classList.add('news-channels-collapsed');
+                inputSection.classList.add('input-section-collapsed');
+                
+                // Ensure all button text shows "[Show]" state
+                const newsFullSpan = toggleNewsChannelsBtn.querySelector('.hidden.sm\\:inline');
+                const newsShortSpan = toggleNewsChannelsBtn.querySelector('.sm\\:hidden');
+                
+                if (newsFullSpan) newsFullSpan.textContent = '[Show] Quick Add News Channels';
+                if (newsShortSpan) newsShortSpan.textContent = '[Show] Channels';
+                
+                const inputFullSpan = toggleInputBtn.querySelector('.hidden.sm\\:inline');
+                const inputShortSpan = toggleInputBtn.querySelector('.sm\\:hidden');
+                
+                if (inputFullSpan) inputFullSpan.textContent = '[Show] Paste URLs';
+                if (inputShortSpan) inputShortSpan.textContent = '[Show] URLs';
+                
+                const youtubeFullSpan = document.querySelector('#youTubeSearchToggleText');
+                const youtubeShortSpan = toggleYouTubeSearchBtn.querySelector('.sm\\:hidden');
+                
+                if (youtubeFullSpan) youtubeFullSpan.textContent = '[Show] Browse Live News';
+                if (youtubeShortSpan) youtubeShortSpan.textContent = '[Show] Browse';
+                
                 // Create buttons using built-in channels
                 createNewsChannelButtons();
                 
+                // Initialize drag and drop
+                const dragDropArea = document.getElementById('dragDropArea');
+                if (dragDropArea) {
+                    setupDragAndDrop(dragDropArea);
+                }
+                
                 // Load initial videos
                 await loadInitialVideos();
+                
+                // Initial button positioning after videos are loaded
+                setTimeout(updateFloatingButtonPosition, 100);
             }
             
             // Start the app
             initializeApp();
+            
+            // Initialize floating button position after DOM is fully ready
+            setTimeout(updateFloatingButtonPosition, 500);
+            
+            // Also update position when page is fully loaded (including images)
+            window.addEventListener('load', () => {
+                setTimeout(updateFloatingButtonPosition, 200);
+            });
         });
 
         // --- QR CODE MODAL FUNCTIONS ---
@@ -1474,9 +1649,51 @@
             
             const confirmed = await showConfirmationModal(`Are you sure you want to close all ${videoWindows.length} video window${videoWindows.length === 1 ? '' : 's'}?`);
             if (confirmed) {
+                // Clear the tracking set since we're removing all videos
+                processedVideoIds.clear();
+                console.log('🗑️ Cleared all video IDs from tracking set');
+                
                 videoWindows.forEach(window => window.remove());
                 saveUrlsToStorage();
                 showNotification('All videos have been closed.', 'success');
+                // Update floating button position after removing all videos
+                setTimeout(updateFloatingButtonPosition, 100);
+            }
+        });
+
+        // =====================================================
+        // YOUTUBE SEARCH SECTION FUNCTIONALITY
+        // =====================================================
+        let isYouTubeSearchExpanded = false;
+        
+        document.getElementById('toggleYouTubeSearchBtn').addEventListener('click', function() {
+            const section = document.getElementById('youTubeSearchSection');
+            const toggleBtn = document.getElementById('toggleYouTubeSearchBtn');
+            
+            if (!isYouTubeSearchExpanded) {
+                // Expand the section
+                section.classList.remove('youtube-search-collapsed');
+                section.classList.add('youtube-search-expanded');
+                
+                const fullSpan = toggleBtn.querySelector('.hidden.sm\\:inline');
+                const shortSpan = toggleBtn.querySelector('.sm\\:hidden');
+                
+                if (fullSpan) fullSpan.textContent = '[Hide] Browse Live News';
+                if (shortSpan) shortSpan.textContent = '[Hide] Browse';
+                
+                isYouTubeSearchExpanded = true;
+            } else {
+                // Collapse the section
+                section.classList.remove('youtube-search-expanded');
+                section.classList.add('youtube-search-collapsed');
+                
+                const fullSpan = toggleBtn.querySelector('.hidden.sm\\:inline');
+                const shortSpan = toggleBtn.querySelector('.sm\\:hidden');
+                
+                if (fullSpan) fullSpan.textContent = '[Show] Browse Live News';
+                if (shortSpan) shortSpan.textContent = '[Show] Browse';
+                
+                isYouTubeSearchExpanded = false;
             }
         });
     </script>
@@ -1484,7 +1701,7 @@
     <!-- Footer with Last Updated Timestamp -->
     <footer class="text-center py-4 mt-8 border-t border-gray-600">
         <p class="text-gray-400 text-sm">
-            Last Updated: <span class="text-gray-300">January 2, 2025 at 12:00 UTC</span>
+            Last Updated: <span class="text-gray-300">January 3, 2025 at 03:25 UTC</span>
         </p>
     </footer>
 </body>

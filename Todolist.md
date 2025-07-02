@@ -1,13 +1,13 @@
-# MultiStreamNews.TV - Project Todo List
+# Multi Stream News .TV - Project Todo List
 
-**Last Updated:** January 2, 2025 at 12:00 UTC
+**Last Updated:** January 3, 2025 at 02:15 UTC
 
 ## 🎯 Current Project Status
 
 ### ✅ **COMPLETED (Core Features)**
 - [x] **Frontend Web Application** - Fully functional single-page app with responsive design
 - [x] **Multi-Video Dashboard** - Grid layout with macOS-style window controls
-- [x] **Drag & Drop Interface** - Seamless YouTube URL integration
+- [x] **Drag & Drop Interface** - Seamless YouTube URL integration with repositioned drag zone
 - [x] **Quick Add News Buttons** - 20+ major news outlets with one-click access
 - [x] **Touch Device Detection** - Smart responsive behavior across all devices
 - [x] **Backend Live Stream Scanner** - Multiple Python scanners for automated monitoring
@@ -15,6 +15,8 @@
 - [x] **localStorage Integration** - Persistent video sessions and user preferences
 - [x] **YouTube oEmbed API** - Automatic video title fetching
 - [x] **Network Configuration** - Unified network_list.txt for backend scanners
+- [x] **UI Refinements** - Title typography update and drag zone repositioning
+- [x] **Brand Consistency** - Updated project name to "Multi Stream News .TV" across all files including HTML title tag
 
 ### 🚧 **IN PROGRESS**
 - [ ] **Live Stream Status Integration** - Connect backend monitoring to frontend display
