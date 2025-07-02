@@ -483,6 +483,28 @@
 
         <!-- Main content area with responsive padding -->
         <div class="p-2 sm:p-4 md:p-6 lg:p-8">
+            <!-- News Channels Section - Full Width -->
+            <div class="mb-6">
+                <button id="toggleNewsChannelsBtn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                    [Hide] Quick Add News Channels
+                </button>
+                <div id="newsChannelsSection" class="bg-gray-800 rounded-lg shadow-lg">
+                    <div class="p-4">
+                        <div id="newsChannelButtons">
+                            <!-- News channel buttons will be dynamically generated here -->
+                        </div>
+                        <p class="text-xs text-gray-400 italic text-center mt-3">
+                            Sometimes the streams above expire. I'm trying to keep up ;-)
+                        </p>
+                        <div class="text-center mt-4">
+                            <button id="addAllNetworksBtn" class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                                ✨ Add All Networks
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Control Panel Grid Layout -->
             <div class="control-panel-grid mb-6">
                 <!-- Drag and Drop Zone - Left Column (Hidden only on touch/mobile devices) -->
@@ -497,28 +519,6 @@
 
                 <!-- Main Controls - Right Column -->
                 <div class="main-controls-column">
-                    <!-- News Channels Section -->
-                    <div class="mb-6">
-                        <button id="toggleNewsChannelsBtn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                            [Hide] Quick Add News Channels
-                        </button>
-                        <div id="newsChannelsSection" class="bg-gray-800 rounded-lg shadow-lg">
-                            <div class="p-4">
-                                <div id="newsChannelButtons">
-                                    <!-- News channel buttons will be dynamically generated here -->
-                                </div>
-                                <p class="text-xs text-gray-400 italic text-center mt-3">
-                                    Sometimes the streams above expire. I'm trying to keep up ;-)
-                                </p>
-                                <div class="text-center mt-4">
-                                    <button id="addAllNetworksBtn" class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-                                        ✨ Add All Networks
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Collapsible Input Section (Hidden only on touch/mobile devices) -->
                     <div class="mb-6 paste-url-section">
                         <button id="toggleInputBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
@@ -1484,7 +1484,7 @@
     <!-- Footer with Last Updated Timestamp -->
     <footer class="text-center py-4 mt-8 border-t border-gray-600">
         <p class="text-gray-400 text-sm">
-            Last Updated: <span class="text-gray-300">July 1, 2025 at 23:52 UTC</span>
+            Last Updated: <span class="text-gray-300">July 1, 2025 at 23:55 UTC</span>
         </p>
     </footer>
 </body>
