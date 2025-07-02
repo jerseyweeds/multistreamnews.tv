@@ -349,6 +349,56 @@
             }
         }
 
+        /* News Channel Button Wrapping Fix */
+        #newsChannelButtons {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        #newsChannelButtons button {
+            flex: 0 0 auto; /* Don't grow or shrink, maintain natural size */
+            min-width: fit-content;
+            max-width: calc(50% - 0.25rem); /* Ensure at least 2 buttons per row on narrow screens */
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        /* Responsive button sizing for better wrapping */
+        @media (min-width: 640px) {
+            #newsChannelButtons {
+                gap: 0.75rem;
+            }
+            
+            #newsChannelButtons button {
+                max-width: calc(33.333% - 0.5rem); /* Allow 3 buttons per row on tablets */
+            }
+        }
+
+        @media (min-width: 768px) {
+            #newsChannelButtons {
+                gap: 0.75rem;
+            }
+            
+            #newsChannelButtons button {
+                max-width: calc(25% - 0.563rem); /* Allow 4 buttons per row on desktop */
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #newsChannelButtons {
+                gap: 0.75rem;
+            }
+            
+            #newsChannelButtons button {
+                max-width: none; /* No max width constraint on large screens */
+                min-width: 120px; /* Minimum button width for consistency */
+            }
+        }
+
         @media (min-width: 1280px) {
             #videoPlayersContainer {
                 padding: 0 20px; /* Maximum margins on very large screens */
@@ -451,7 +501,7 @@
                         </button>
                         <div id="newsChannelsSection" class="bg-gray-800 rounded-lg shadow-lg">
                             <div class="p-4">
-                                <div id="newsChannelButtons" class="flex flex-wrap justify-center gap-2 sm:gap-3">
+                                <div id="newsChannelButtons">
                                     <!-- News channel buttons will be dynamically generated here -->
                                 </div>
                                 <p class="text-xs text-gray-400 italic text-center mt-3">
@@ -1220,7 +1270,7 @@
                 channelData.forEach((channel, index) => {
                     const button = document.createElement('button');
                     const colorClass = colorPalette[index % colorPalette.length];
-                    button.className = `${colorClass} text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg`;
+                    button.className = `${colorClass} text-white font-semibold py-2 px-3 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg`;
                     button.textContent = channel.label;
                     button.title = `Add ${channel.label} to video wall`;
                     
