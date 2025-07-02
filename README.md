@@ -1,221 +1,189 @@
 # MultiStreamNews.TV
 
-https://www.multistreamnews.tv/
+**🔴 Live at: https://www.multistreamnews.tv/**
 
-Welcome to MultiStreamNews.TV, a single-page web application designed for viewing multiple YouTube videos simultaneously. This tool is perfect for monitoring live news streams, following multiple events, or creating a custom video dashboard. Built with pure HTML, Tailwind CSS, and vanilla JavaScript, it's a lightweight and powerful solution for multistreaming.
+Welcome to MultiStreamNews.TV, a comprehensive news streaming platform that combines a modern single-page web application with a robust backend monitoring system. This tool is perfect for monitoring live news streams, following multiple events, or creating a custom video dashboard with automated live stream detection capabilities.
 
-## Features
+## ✨ Key Features Overview
+
+- **🎬 Multi-Video Dashboard**: View multiple YouTube news streams simultaneously in a responsive grid
+- **🔴 Live Stream Detection**: Automated backend system that monitors 21+ news networks for live streams
+- **📱 Responsive Design**: Optimized for desktop, tablet, and mobile with intelligent touch detection
+- **🚀 Multiple Input Methods**: Drag-and-drop, one-click news buttons, bulk "Add All Networks", or manual URL entry
+- **⚡ Real-time Updates**: Automated scanning and monitoring with shell script management
+- **💾 Persistent Sessions**: Auto-save video layouts with localStorage integration
+- **🎨 Modern UI**: macOS-inspired window controls with Tailwind CSS styling
+
+## 🎬 Frontend Features
 
 ### Core Video Management
-* **Multiple Input Methods**: Add videos via drag-and-drop anywhere on the page, quick-add news channel buttons, or manual URL entry
-* **Smart Drag & Drop**: Drag YouTube video links anywhere on the page to instantly add them to your video wall
-* **Direct YouTube Video Support**: Paste YouTube video URLs (watch?v= format) into the input area to dynamically load them onto the page
-* **Video Title Display**: Each video window automatically fetches and displays the actual video title in the title bar using YouTube's oEmbed API
-* **Auto-Play & Mute**: All newly added videos automatically start playing and are muted by default to provide a seamless viewing experience
-* **Smart Duplicate Prevention**: The application intelligently prevents duplicate URLs with clear user notifications
-* **Intelligent Positioning**: New videos are placed at the top-left, or below maximized videos to maintain focus
-* **Non-blocking Notifications**: Color-coded notification system provides clear feedback for all user actions:
-  - Green: Success messages
-  - Orange: Duplicate video warnings  
-  - Red: Invalid video errors
-  - Yellow: Mixed issues
+* **Smart Drag & Drop**: Drag YouTube video links from anywhere on your browser directly onto the page
+* **One-Click News Access**: Colorful quick-add buttons for 20 major news outlets:
+  - **US Networks**: NBC, ABC, LiveNOW, 6abc, CNBC  
+  - **International**: Sky News, DW, France 24, Al Jazeera, Bloomberg
+  - **Government/Science**: NASA
+* **Bulk Loading**: "✨ Add All Networks" button with smart duplicate prevention and progress feedback
+* **Manual URL Entry**: Paste multiple YouTube URLs at once (desktop/tablet only)
+* **Video Title Display**: Automatically fetches real video titles using YouTube's oEmbed API
+* **Auto-Play & Mute**: New videos start playing and muted by default for seamless experience
+### Advanced Window Management
+* **macOS-style Controls**: Each video has familiar traffic light buttons (red/yellow/green)
+  - **Red Button (Close)**: Removes video window and updates localStorage
+  - **Yellow Button (Minimize)**: Hides video content while keeping title bar visible
+  - **Green Button (Maximize)**: Expands to full width without interrupting playback
+* **Seamless Playback**: Videos continue playing without restart when maximized/restored
+* **Smart Positioning**: New videos placed strategically (top-left or below maximized videos)
+* **Bulk Actions**: "Close All Videos" with confirmation modal
 
-### Quick Add News Channels
-* **Built-in News Channels**: Curated collection of major news outlets with one-click access
-* **One-Click News Access**: Colorful quick-add buttons for major news outlets including:
-  - Sky News, NBC, ABC, LiveNOW, 6abc, DW, France 24, Bloomberg, Al Jazeera, CNBC, NASA
-* **Add All Networks Button**: Gradient purple-blue button to instantly add all available news channels at once
-  - Smart duplicate prevention and progress feedback
-  - Confirmation dialog to prevent accidental bulk loading
-  - Detailed results showing added, duplicate, and failed videos
-* **Color-Coded Buttons**: Each news channel button has a unique color from a 12-color palette for easy visual identification
-* **Expandable Interface**: The news channels section can be collapsed to save space when not needed
+### Intelligent User Interface
+* **Advanced Touch Detection**: Multi-method detection distinguishes actual touch devices from small screens
+  - Drag & drop hidden only on true mobile devices
+  - Desktop windows and tablets with mouse/trackpad retain full functionality
+* **Responsive Grid Layout**: Progressive enhancement across all screen sizes
+  - Mobile: Single column with optimized margins
+  - Tablet: Multi-column with 350px minimum width per video  
+  - Desktop: Multi-column with 400px minimum width per video
+  - Large screens: Additional spacing for optimal viewing
+* **Collapsible Sections**: News channels and manual input can be shown/hidden
+* **Color-Coded Notifications**: Non-blocking toast system with clear feedback
+  - 🟢 Green: Success messages
+  - 🟠 Orange: Duplicate warnings
+  - 🔴 Red: Error messages  
+  - 🟡 Yellow: Mixed issues
+### Data Persistence & Management
+* **Persistent Sessions**: Video layouts automatically saved to browser localStorage
+* **Auto-Restore**: Previously loaded videos restored exactly where you left them
+* **URL Management**: Dynamic "Loaded Videos" section with clickable links
+* **One-Click Copy**: Copy all active video URLs to clipboard
+* **Smart Duplicate Prevention**: Intelligent detection with clear user notifications
 
-### Window Management
-* **macOS-style Window Controls**: Each video player is housed in a clean, macOS-inspired window with familiar traffic light controls:
-  - **Red Button (Close)**: Instantly removes the video window from the player
-  - **Yellow Button (Minimize)**: Collapses the video content, leaving only the title bar visible to save space
-  - **Green Button (Maximize)**: Expands the video to the full width of the container and moves it to the top of the grid for focused viewing
-    - **Seamless Playback**: Video continues playing without interruption or restarting
-    - **No Audio Disruption**: Maintains current playback position and audio state
-    - **Smart Positioning**: When maximizing, moves to top; when restoring, maintains current position
-* **Close All Videos**: Red button with confirmation modal to close all video windows at once
-* **Responsive Grid Layout**: Video windows are arranged in a smart grid that automatically adjusts to your screen size:
-  - **Mobile**: Single column with small side margins to prevent edge-to-edge display
-  - **Tablet**: Multi-column layout with 350px minimum width per video
-  - **Desktop**: Multi-column layout with 400px minimum width per video
-  - **Large screens**: Additional spacing and margins for optimal viewing
+### Donation Support
+* **Integrated Donations**: "Buy me a coffee" dropdown with multiple payment options
+* **Payment Methods**: PayPal, Apple Pay, and Venmo with QR code modals
+* **Professional Design**: Branded SVG icons and seamless hover interactions
+* **Mobile Optimized**: QR codes for easy mobile payments
 
-### User Interface
-* **Touch Device Optimized Design**: Intelligent interface adaptation based on device capabilities:
-  - **Touch Device Detection**: Advanced detection using multiple methods (`ontouchstart`, `navigator.maxTouchPoints`, `pointer: coarse` CSS media query)
-  - **Drag & Drop**: Hidden only on actual touch/mobile devices (smartphones, tablets without mouse)
-  - **Manual URL Input**: Hidden only on actual touch/mobile devices for streamlined interface
-  - **Small Desktop Windows**: Drag & drop and manual input remain fully accessible on small desktop windows and tablets with mouse/trackpad support
-  - **Smart Responsive Logic**: Distinguishes between screen size and device capabilities for optimal UX
-* **Progressive Enhancement**: Features are selectively hidden based on device capabilities rather than just screen size
-* **Collapsible Sections**: News channels section can be shown or hidden with toggle buttons
-* **Visual Feedback**: Smooth animations and hover effects provide clear user feedback
-* **Confirmation Modals**: Important actions like "Close All Videos" require user confirmation
-* **Non-blocking Notifications**: Toast-style notifications provide feedback without interrupting workflow
-* **Clean Interface**: Input areas automatically close after successfully adding videos to keep the interface uncluttered
-* **Donation Support**: "Buy me a coffee" dropdown in the header with PayPal, Apple Pay, and Venmo options
-  - PayPal, Apple Pay, and Venmo branded SVG icons for professional appearance
-  - QR code modal displays when donation option is selected
-  - Modal remains open until user closes it for easy scanning
-  - Seamless hover-to-select dropdown with no gap issues
-  - Mobile text says "Buy me a coffee" for clarity
-  - Apple Pay currently uses PayPal fallback pending merchant account setup
-  - Last updated: June 30, 2025
+## 🔴 Backend Live Stream Detection
 
-### Data Persistence
-* **Persistent Sessions**: Your video layout is automatically saved to your browser's local storage
-* **Auto-Restore**: When you revisit the page, all your previously loaded videos will be restored exactly where you left them
-* **URL Management**: A "Loaded Videos" section dynamically lists all active video URLs with clickable links
-* **One-Click Copy**: Copy all currently loaded video URLs to your clipboard with a single button click
-* **Bulk Actions**: Close all videos at once with confirmation modal to prevent accidental data loss
+### Automated Monitoring System
+* **Multi-Script Architecture**: 6 specialized Python scanners with different detection methods
+* **Real-time Detection**: Monitors 21+ major news networks for live streams
+* **Shell Script Manager**: Easy command-line interface (`live_stream_manager.sh`)
+* **Continuous Monitoring**: Background monitoring with configurable intervals
+* **Smart Detection**: Video-by-video live status checking for accuracy
 
-## How to Use
+### Scanner Scripts
+* **`auto_refresh_scanner.py`**: Main automated scanner (recommended for regular use)
+* **`comprehensive_live_scanner.py`**: Detailed analysis with viewer counts and metadata
+* **`advanced_live_detector.py`**: Test scanner for specific channels and debugging
+* **`manual_scan_live_streams.py`**: Multi-endpoint scanning approach
+* **`precise_live_scanner.py`**: Pattern matching detection with high accuracy
+* **`enhanced_scan_live_streams.py`**: Enhanced detection methods and fallbacks
 
-### Supporting the Project
-The page includes a "Buy me a coffee" donation feature in the header:
-1. **Access Donations**: Hover over the "Like this? Buy me a coffee" button to see PayPal, Apple Pay, and Venmo options
-2. **Choose Payment Method**: Click either PayPal, Apple Pay, or Venmo to open a QR code modal
-3. **Scan QR Code**: Use your mobile device to scan the displayed QR code for easy payment
-4. **Close Modal**: Click the X button or outside the modal to close it
+### Network Coverage
+The system monitors these major news outlets:
+- **US Networks**: NBC, ABC, CBS, CNN, FOX, 6abc, CNBC
+- **International**: Sky News, BBC, DW, France 24, Al Jazeera
+- **Business**: Bloomberg, CNBC-TV18
+- **Government**: NASA ISS Live
+- **Regional**: Various international and local news sources
 
-### Adding Videos - Multiple Methods
+## 🚀 Quick Start Guide
 
-#### Method 1: Drag and Drop (Desktop & Small Desktop Windows)
-1. **Drag from anywhere**: Simply drag a YouTube video link from any browser window, email, or document
-2. **Drop anywhere on the page**: The entire page acts as a drop zone - drag the link anywhere on the page
-3. **Device Compatibility**: Available on all non-touch devices including small desktop windows and tablets with mouse/trackpad
-4. **Instant feedback**: Get immediate visual feedback and notifications about success, duplicates, or invalid links
+### Using the Web Application
+1. **Visit**: https://www.multistreamnews.tv/
+2. **Add Videos**: Choose from three methods:
+   - **Quick Add**: Click any colored news channel button
+   - **Bulk Add**: Click "✨ Add All Networks" for instant news wall
+   - **Drag & Drop**: Drag YouTube links from anywhere onto the page (desktop)
+   - **Manual Entry**: Click "[Show] Paste URLs" and enter URLs (desktop/tablet)
+3. **Manage Videos**: Use red/yellow/green buttons on each video window
+4. **Copy Setup**: Use "Copy All URLs" to save or share your configuration
 
-#### Method 2: Quick Add News Channels (All Devices)
-1. **Access News Channels**: The colorful quick-add buttons are visible by default at the top of the page
-2. **Single Channel**: Click any individual news channel button to instantly add that stream to your video wall
-3. **Add All Networks**: Click the gradient "✨ Add All Networks" button to add all available news channels at once
-   - Confirmation dialog prevents accidental bulk loading
-   - Smart duplicate detection and progress feedback
-   - Detailed results showing what was added vs. already loaded
-4. **Collapse if Needed**: Use the "[Hide] Quick Add News Channels" button to minimize this section
+### Backend Monitoring (Optional)
+```bash
+# Quick setup
+chmod +x live_stream_manager.sh
 
-#### Method 3: Manual URL Input (Desktop & Small Desktop Windows)
-1. **Show the Input**: Click the "[Show] Paste URLs" button to expand the input panel (hidden only on touch devices)
-2. **Add Videos**: Paste one or more YouTube video URLs into the text area (one URL per line)
-3. **Device Compatibility**: Available on all non-touch devices including small desktop windows and tablets with mouse/trackpad
-4. **Load Videos**: Click the "Load Video(s)" button - videos will appear in the grid and the input panel will automatically close
+# Quick scan (2-3 minutes)
+./live_stream_manager.sh quick
 
-### Managing Your Video Wall
-1. **Control Individual Videos**: Use the red, yellow, and green buttons on each video's title bar to close, minimize, or maximize windows
-2. **Close All Videos**: Use the red "Close All Videos" button with confirmation modal to clear your entire video wall
-3. **Interact with Videos**: Click directly on any video to use YouTube's native controls (play, pause, volume, etc.)
-4. **Copy Your Setup**: Scroll to the bottom and click "Copy All URLs" to save your current video list for sharing or backup
+# View results
+./live_stream_manager.sh view
 
-## Supported URL Formats
+# Continuous monitoring every 15 minutes
+./live_stream_manager.sh monitor 15
+```
 
-The application supports standard YouTube video URLs:
+## 📋 Supported URL Formats
+
 * **Full URLs**: `https://www.youtube.com/watch?v=dQw4w9WgXcQ`
 * **Short URLs**: `https://youtu.be/dQw4w9WgXcQ`
 
-**Note**: Channel URLs, playlist URLs, and live stream channel URLs are not supported. Please use direct video URLs only.
+## 🛠️ Technical Architecture
 
-## News Channels Included
+### Frontend Stack
+* **Core**: Pure HTML5, vanilla JavaScript (ES6+), and CSS3
+* **Styling**: Tailwind CSS (CDN) with custom responsive breakpoints
+* **APIs**: YouTube oEmbed API for video title fetching
+* **Storage**: Browser localStorage for session persistence  
+* **Analytics**: Google Analytics (GA4) integration
 
-The quick-add section includes buttons for these major news outlets:
-- **US Networks**: NBC, ABC, LiveNOW, 6abc, CNBC
-- **UK/Europe**: Sky News, DW, France 24
-- **International**: Al Jazeera, Bloomberg
-- **Government/Science**: NASA
+### Backend System (Optional)
+* **Languages**: Python 3.7+ with requests, BeautifulSoup4, schedule
+* **Architecture**: Modular scanner system with unified network configuration
+* **Management**: Shell script interface for easy automation
+* **Output**: Timestamped JSON results with comprehensive metadata
+* **Monitoring**: Continuous background scanning with configurable intervals
 
-## Technical Details
+### Responsive Design Philosophy
+* **Mobile-First**: Progressive enhancement from mobile to desktop
+* **Smart Detection**: Advanced touch device detection using multiple methods
+* **Device-Aware**: Features hidden based on capabilities, not screen size
+* **Breakpoints**: 640px, 768px, 1024px, 1280px with optimized layouts
 
-* **Frontend**: Built entirely with vanilla HTML, CSS, and JavaScript
-* **Styling**: Utilizes **Tailwind CSS** (via CDN) for modern, responsive design with a custom color palette
-* **Backend Scripts**: Python modules for stream parsing and network management (optional backend functionality)
-* **Data Sources**: Built-in JavaScript arrays for news channels, with optional external network configuration files
-* **Responsive Design**: Mobile-first approach with progressive enhancement:
-  - CSS Grid with responsive breakpoints (640px, 768px, 1024px, 1280px)
-  - **Touch Device Detection**: Advanced multi-method detection (CSS `@media (pointer: coarse)`, JavaScript touch capabilities)
-  - **Smart Feature Hiding**: Drag zones and URL input hidden only on actual touch devices, not based on screen size
-  - **Small Desktop Support**: Full functionality preserved on small desktop windows and tablets with mouse/trackpad
-  - Progressive multi-column layout for tablets and desktop
-  - Maintains video aspect ratios across all device sizes
-* **APIs**: Uses YouTube's oEmbed API to fetch video titles
-* **Persistence**: Leverages browser `localStorage` to save and retrieve video URLs between sessions
-* **Performance**: Lightweight single-file application with no external frameworks required
-* **Analytics**: Includes Google Analytics integration for usage tracking
-* **User Experience**: Advanced notification system, confirmation modals, intelligent video positioning, and seamless maximize/restore without video interruption
-* **Deployment**: Single HTML file deployment with GitHub Pages support
+### Performance Optimizations
+* **Single File Deployment**: Entire frontend in one HTML file
+* **Lightweight**: No external frameworks or heavy dependencies
+* **Async Operations**: Non-blocking API calls and video loading
+* **Smart Caching**: Efficient use of browser localStorage
+* **Debounced Operations**: Optimized user interactions and bulk operations
 
-## Installation & Setup
-
-Simply download and open `index.html` in any modern web browser. No additional setup required!
-
-The application is also live at: **https://www.multistreamnews.tv/**
-
-## File Structure
+## 📁 Project Structure
 
 ```
 multistreamnews.tv/
-├── index.html                      # Main web application (single file)
-├── live_stream_manager.sh          # Shell script for scanner management
-├── README.md                       # This documentation
-├── Scanners.md                     # Scanner tools documentation
-├── LLM_notes.md                    # Long-term AI development notes
-├── requirements.txt                # Python dependencies (for backend scripts)
-├── network_list.txt                # News network URLs and data (primary config)
-├── LICENSE                         # MIT License
-├── CNAME                           # GitHub Pages domain configuration
+├── 🌐 Frontend/
+│   └── index.html                      # Complete web application (single file)
 │
-├── Python Scanner Scripts/
-│   ├── auto_refresh_scanner.py           # Main automated scanner (recommended)
-│   ├── comprehensive_live_scanner.py     # Detailed analysis scanner
-│   ├── advanced_live_detector.py         # Test scanner for specific channels
-│   ├── manual_scan_live_streams.py       # Multi-endpoint scanning
-│   ├── precise_live_scanner.py           # Precise pattern matching scanner
-│   └── enhanced_scan_live_streams.py     # Enhanced detection methods
+├── 🔴 Backend Scanners/
+│   ├── auto_refresh_scanner.py         # Main automated scanner (recommended)
+│   ├── comprehensive_live_scanner.py   # Detailed analysis with viewer counts
+│   ├── advanced_live_detector.py       # Test scanner for debugging
+│   ├── manual_scan_live_streams.py     # Multi-endpoint scanning
+│   ├── precise_live_scanner.py         # Pattern matching detection
+│   └── enhanced_scan_live_streams.py   # Enhanced detection methods
 │
-└── Generated Results/
-    ├── latest_live_streams.json           # Latest scan results
-    ├── quick_live_test_results.json       # Test scan results  
-    ├── comprehensive_live_streams.json    # Detailed scan results
-    └── detailed_scan_results.json         # Manual scan results
+├── 🛠️ Management/
+│   ├── live_stream_manager.sh          # Shell script interface
+│   └── requirements.txt                # Python dependencies
+│
+├── 📊 Data & Config/
+│   ├── network_list.txt                # News network URLs (21 networks)
+│   └── *.json                          # Generated scan results
+│
+└── 📚 Documentation/
+    ├── README.md                       # This comprehensive guide
+    ├── Scanners.md                     # Detailed scanner documentation  
+    ├── prompt.md                       # Complete technical specifications
+    ├── monetization_ideas.md           # Business development ideas
+    └── LLM_notes.md                    # Development history and decisions
 ```
 
-## Backend Scanner Tools
+## 🎨 Customization
 
-This project includes advanced Python-based tools for scanning YouTube news channels for live streams:
-
-### Quick Start with Scanners
-```bash
-# Make shell script executable
-chmod +x live_stream_manager.sh
-
-# Run quick scan (2-3 minutes)
-./live_stream_manager.sh quick
-
-# View latest results
-./live_stream_manager.sh view
-
-# Get help
-./live_stream_manager.sh help
-```
-
-### Scanner Features
-- **Automated Detection**: Scans 21+ news networks for live streams
-- **Multiple Scan Types**: Quick (2-3 min), comprehensive (5-10 min), test scans
-- **Continuous Monitoring**: Background monitoring with configurable intervals
-- **Smart Detection**: Video-by-video live status checking for accuracy
-- **Result Management**: JSON output with viewer counts and network summaries
-- **Shell Script Manager**: Easy-to-use command-line interface
-
-See [`Scanners.md`](Scanners.md) for detailed scanner documentation.
-
-## Customization
-
-To add or modify news channels, simply edit the `newsChannels` array in the JavaScript section:
+### Adding News Channels
+Edit the `newsChannels` array in `index.html`:
 
 ```javascript
 const newsChannels = [
@@ -223,7 +191,44 @@ const newsChannels = [
         label: 'Your Channel Name',
         url: 'https://www.youtube.com/watch?v=VIDEO_ID'
     },
-    // Add more channels here...
+    // Color palette automatically cycles through 12 colors
+];
+```
+
+### Backend Network Configuration
+Edit `network_list.txt` for scanner system:
+```
+Network Name	https://www.youtube.com/@channelname
+```
+
+## 🚀 Deployment
+
+### Web Application
+1. **GitHub Pages**: Already configured with CNAME for multistreamnews.tv
+2. **Single File**: Upload `index.html` to any web server
+3. **CDN**: All dependencies loaded via CDN (Tailwind, fonts)
+4. **No Build Process**: Ready to deploy as-is
+
+### Backend System
+1. **Dependencies**: `pip3 install requests beautifulsoup4 schedule`
+2. **Permissions**: `chmod +x live_stream_manager.sh`
+3. **Automation**: Set up cron jobs or systemd services for monitoring
+
+## 📈 Analytics & Monitoring
+
+The platform includes comprehensive tracking:
+- **User Interactions**: Video additions, button clicks, feature usage
+- **Performance Metrics**: Load times, error rates, device compatibility
+- **Backend Monitoring**: Live stream detection accuracy, scan performance
+- **Error Tracking**: Automatic error reporting and diagnostics
+
+---
+
+**Last Updated**: July 2, 2025  
+**Version**: 2.1.0  
+**Status**: Production Ready ✅
+
+Enjoy your multistreaming experience! 🎬
 ];
 ```
 
