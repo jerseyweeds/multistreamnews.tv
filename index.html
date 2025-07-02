@@ -353,7 +353,7 @@
         #newsChannelButtons {
             display: flex !important;
             flex-wrap: wrap !important;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 0.5rem;
             width: 100%;
         }
@@ -371,6 +371,7 @@
         @media (min-width: 640px) {
             #newsChannelButtons {
                 gap: 0.75rem;
+                justify-content: flex-start;
             }
             
             #newsChannelButtons button {
@@ -381,6 +382,7 @@
         @media (min-width: 768px) {
             #newsChannelButtons {
                 gap: 0.75rem;
+                justify-content: flex-start;
             }
             
             #newsChannelButtons button {
@@ -391,10 +393,11 @@
         @media (min-width: 1024px) {
             #newsChannelButtons {
                 gap: 0.75rem;
+                justify-content: flex-start;
             }
             
             #newsChannelButtons button {
-                max-width: none; /* No max width constraint on large screens */
+                max-width: calc(16.666% - 0.625rem); /* Allow up to 6 buttons per row on large screens */
                 min-width: 120px; /* Minimum button width for consistency */
             }
         }
@@ -1481,7 +1484,7 @@
     <!-- Footer with Last Updated Timestamp -->
     <footer class="text-center py-4 mt-8 border-t border-gray-600">
         <p class="text-gray-400 text-sm">
-            Last Updated: <span class="text-gray-300">July 1, 2025 at 23:47 UTC</span>
+            Last Updated: <span class="text-gray-300">July 1, 2025 at 23:52 UTC</span>
         </p>
     </footer>
 </body>
