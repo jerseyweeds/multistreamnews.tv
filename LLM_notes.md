@@ -296,6 +296,9 @@ This file serves as long-term knowledge for AI assistants working on this projec
 - **Mobile Optimization**: Three-tier responsive design with device profile detection (Phone/Tablet/Desktop)
 - **Core Features**: Complete video management without restarts, drag-and-drop, news channels, and persistent storage
 - **UI Polish**: Smart footer with South Jersey branding, dynamic timestamps, and New Jersey SVG
+- **Auto-Close Menus**: 15-second auto-close for expanding menus with interaction reset
+- **Save/Share Feature**: Modal with QR code, bookmark, copy URL, and native share options
+- **QR Code Enhancement**: Updated text to clarify cross-device access functionality
 
 ### Scanner System Current State
 - **6 Active Scripts**: Each with different detection methods and use cases
@@ -310,4 +313,4 @@ This file serves as long-term knowledge for AI assistants working on this projec
 
 *Last Updated: July 3, 2025*
 *File Created: June 30, 2025*
-*Latest Change: Fixed video restart issue with maximize/restore functionality and completed responsive design with device profile detection*
+*Latest Change: Added auto-close menu functionality, Save/Share modal with QR code, and enhanced UX text improvements*

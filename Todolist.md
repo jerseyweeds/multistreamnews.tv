@@ -1,6 +1,6 @@
 # Multi Stream News .TV - Project Todo List
 
-**Last Updated:** July 3, 2025 at 15:30 UTC
+**Last Updated:** July 3, 2025 at 16:45 UTC
 
 ## 🎯 Current Project Status
 
@@ -24,6 +24,9 @@
 - [x] **Robust Control Panel** - Equal button distribution and proper wrapping on all devices
 - [x] **Visit Engagement System** - LocalStorage-based visit counter with milestone celebrations
 - [x] **Code Cleanup Analysis** - Comprehensive scan of unused code and phased cleanup plan
+- [x] **Auto-Close Menus** - Expanding menus automatically close after 15 seconds of inactivity
+- [x] **Save/Share Modal** - QR code, bookmark, copy URL, and share functionality
+- [x] **QR Code Text Update** - Improved clarity for cross-device access
 
 ### 🚧 **IN PROGRESS**
 - [ ] **Live Stream Status Integration** - Connect backend monitoring to frontend display

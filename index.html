@@ -526,8 +526,19 @@
             </div>
             <div aria-hidden="true" class="absolute inset-0 bg-gray-900 opacity-60"></div>
             
+            <!-- Save for Later button - Floating top right corner above donation -->
+            <div id="saveForLaterButton" class="fixed top-4 right-4 z-50 transition-all duration-300 ease-in-out mb-2">
+                <button onclick="showSaveForLaterModal()" class="inline-flex items-center px-2 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-lg transition-colors duration-300 hover:shadow-xl opacity-85 hover:opacity-100 mb-2">
+                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                    </svg>
+                    <span class="hidden md:inline">Save/Share</span>
+                    <span class="md:hidden">Save</span>
+                </button>
+            </div>
+            
             <!-- Buy me a coffee dropdown - Floating top right corner -->
-            <div id="floatingDonationButton" class="fixed top-4 right-4 z-50 max-w-xs transition-all duration-300 ease-in-out">
+            <div id="floatingDonationButton" class="fixed top-20 right-4 z-50 max-w-xs transition-all duration-300 ease-in-out">
                 <div class="coffee-dropdown">
                     <button class="inline-flex items-center px-2 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 rounded-lg shadow-lg transition-colors duration-300 hover:shadow-xl opacity-85 hover:opacity-100">
                         <span class="mr-1">☕</span>
@@ -795,6 +806,41 @@
         </div>
     </div>
 
+    <!-- Save for Later Modal -->
+    <div id="saveForLaterModal" class="qr-modal hidden">
+        <div class="qr-modal-content">
+            <button class="qr-modal-close" onclick="closeSaveForLaterModal()">&times;</button>
+            <h3 class="text-xl font-bold text-white mb-4">Save & Share Multi Stream News .TV</h3>
+            <div class="qr-code-container">
+                <img id="siteQrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://multistreamnews.tv" alt="Site QR Code" />
+            </div>
+            <p class="text-gray-300 text-sm mt-4 mb-4">Scan with your phone to quickly access this site on another device</p>
+            <div class="mt-4 space-y-3">
+                <button onclick="bookmarkSite()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                    </svg>
+                    Add Bookmark
+                </button>
+                <button onclick="copyCurrentUrl()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                    </svg>
+                    Copy URL
+                </button>
+                <button onclick="shareViaNative()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+                    </svg>
+                    Share
+                </button>
+                <button onclick="closeSaveForLaterModal()" class="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // =====================================================
         // NEWS CHANNELS CONFIGURATION
@@ -852,6 +898,12 @@
             let processedVideoIds = new Set(); // Manage processed video IDs to prevent duplicates
             const DEBUG_MODE = false; // Set to true for development debugging
             
+            // Auto-close timers for menus
+            let newsChannelsTimer = null;
+            let inputSectionTimer = null;
+            let youTubeSearchTimer = null;
+            const AUTO_CLOSE_DELAY = 15000; // 15 seconds
+            
             // --- DOM Element Selection ---
             const toggleInputBtn = document.getElementById('toggleInputBtn');
             const inputSection = document.getElementById('inputSection');
@@ -886,16 +938,28 @@
             // --- FLOATING DONATION BUTTON POSITIONING ---
             function updateFloatingButtonPosition() {
                 const floatingButton = document.getElementById('floatingDonationButton');
+                const saveButton = document.getElementById('saveForLaterButton');
                 if (!floatingButton) return;
 
-                // Always keep the button in the top-right corner
+                // Position donation button below the save button
                 Object.assign(floatingButton.style, {
-                    top: '16px',
+                    top: '64px', // Increased to account for save button above
                     right: '16px',
                     left: 'auto',
                     bottom: 'auto',
                     transform: 'none'
                 });
+                
+                // Position save button at the top
+                if (saveButton) {
+                    Object.assign(saveButton.style, {
+                        top: '16px',
+                        right: '16px',
+                        left: 'auto',
+                        bottom: 'auto',
+                        transform: 'none'
+                    });
+                }
             }
 
             // Update button position on resize only (not on scroll)
@@ -952,6 +1016,80 @@
                 loadedVideosSection.classList.remove('hidden');
             }
             
+            // --- AUTO-CLOSE MENU HELPERS ---
+            function startAutoCloseTimer(section, timer, buttonElement) {
+                // Clear existing timer
+                if (timer) {
+                    clearTimeout(timer);
+                }
+                
+                // Start new timer
+                return setTimeout(() => {
+                    if (!section.classList.contains('news-channels-collapsed') && 
+                        !section.classList.contains('input-section-collapsed') &&
+                        !section.classList.contains('youtube-search-collapsed')) {
+                        
+                        // Auto-close the section
+                        if (section === newsChannelsSection) {
+                            autoCloseNewsChannels();
+                        } else if (section === inputSection) {
+                            autoCloseInputSection();
+                        } else if (section === youTubeSearchSection) {
+                            autoCloseYouTubeSearch();
+                        }
+                    }
+                }, AUTO_CLOSE_DELAY);
+            }
+            
+            function autoCloseNewsChannels() {
+                newsChannelsSection.classList.remove('expanded');
+                newsChannelsSection.classList.add('news-channels-collapsed');
+                
+                const fullSpan = toggleNewsChannelsBtn.querySelector('.hidden.sm\\:inline');
+                const shortSpan = toggleNewsChannelsBtn.querySelector('.sm\\:hidden');
+                
+                if (fullSpan) fullSpan.textContent = '[Show] Quick Add News Channels';
+                if (shortSpan) shortSpan.textContent = '[Show] Channels';
+                
+                if (newsChannelsTimer) {
+                    clearTimeout(newsChannelsTimer);
+                    newsChannelsTimer = null;
+                }
+            }
+            
+            function autoCloseInputSection() {
+                inputSection.classList.remove('expanded');
+                inputSection.classList.add('input-section-collapsed');
+                
+                const fullSpan = toggleInputBtn.querySelector('.hidden.sm\\:inline');
+                const shortSpan = toggleInputBtn.querySelector('.sm\\:hidden');
+                
+                if (fullSpan) fullSpan.textContent = '[Show] Paste URLs';
+                if (shortSpan) shortSpan.textContent = '[Show] URLs';
+                
+                if (inputSectionTimer) {
+                    clearTimeout(inputSectionTimer);
+                    inputSectionTimer = null;
+                }
+            }
+            
+            function autoCloseYouTubeSearch() {
+                const youTubeSearchSection = document.getElementById('youTubeSearchSection');
+                youTubeSearchSection.classList.remove('youtube-search-expanded');
+                youTubeSearchSection.classList.add('youtube-search-collapsed');
+                
+                const youtubeFullSpan = document.querySelector('#youTubeSearchToggleText');
+                const youtubeShortSpan = toggleYouTubeSearchBtn.querySelector('.sm\\:hidden');
+                
+                if (youtubeFullSpan) youtubeFullSpan.textContent = '[Show] Browse Live News';
+                if (youtubeShortSpan) youtubeShortSpan.textContent = '[Show] Browse';
+                
+                if (youTubeSearchTimer) {
+                    clearTimeout(youTubeSearchTimer);
+                    youTubeSearchTimer = null;
+                }
+            }
+            
             // --- UI TOGGLES & MODAL ---
             toggleInputBtn.addEventListener('click', () => {
                 const isCollapsed = inputSection.classList.contains('input-section-collapsed');
@@ -966,6 +1104,9 @@
                     
                     if (fullSpan) fullSpan.textContent = '[Hide] Paste URLs';
                     if (shortSpan) shortSpan.textContent = '[Hide] URLs';
+                    
+                    // Start auto-close timer
+                    inputSectionTimer = startAutoCloseTimer(inputSection, inputSectionTimer, toggleInputBtn);
                 } else {
                     // Collapsing
                     inputSection.classList.remove('expanded');
@@ -976,6 +1117,31 @@
                     
                     if (fullSpan) fullSpan.textContent = '[Show] Paste URLs';
                     if (shortSpan) shortSpan.textContent = '[Show] URLs';
+                    
+                    // Clear auto-close timer
+                    if (inputSectionTimer) {
+                        clearTimeout(inputSectionTimer);
+                        inputSectionTimer = null;
+                    }
+                }
+            });
+            
+            // Add event listeners to reset timer on interaction with input section
+            inputSection.addEventListener('mouseenter', () => {
+                if (!inputSection.classList.contains('input-section-collapsed')) {
+                    inputSectionTimer = startAutoCloseTimer(inputSection, inputSectionTimer, toggleInputBtn);
+                }
+            });
+            
+            inputSection.addEventListener('click', () => {
+                if (!inputSection.classList.contains('input-section-collapsed')) {
+                    inputSectionTimer = startAutoCloseTimer(inputSection, inputSectionTimer, toggleInputBtn);
+                }
+            });
+            
+            inputSection.addEventListener('keyup', () => {
+                if (!inputSection.classList.contains('input-section-collapsed')) {
+                    inputSectionTimer = startAutoCloseTimer(inputSection, inputSectionTimer, toggleInputBtn);
                 }
             });
 
@@ -992,6 +1158,9 @@
                     
                     if (fullSpan) fullSpan.textContent = '[Hide] Quick Add News Channels';
                     if (shortSpan) shortSpan.textContent = '[Hide] Channels';
+                    
+                    // Start auto-close timer
+                    newsChannelsTimer = startAutoCloseTimer(newsChannelsSection, newsChannelsTimer, toggleNewsChannelsBtn);
                 } else {
                     // Collapsing
                     newsChannelsSection.classList.remove('expanded');
@@ -1002,6 +1171,25 @@
                     
                     if (fullSpan) fullSpan.textContent = '[Show] Quick Add News Channels';
                     if (shortSpan) shortSpan.textContent = '[Show] Channels';
+                    
+                    // Clear auto-close timer
+                    if (newsChannelsTimer) {
+                        clearTimeout(newsChannelsTimer);
+                        newsChannelsTimer = null;
+                    }
+                }
+            });
+            
+            // Add event listeners to reset timer on interaction with news channels section
+            newsChannelsSection.addEventListener('mouseenter', () => {
+                if (!newsChannelsSection.classList.contains('news-channels-collapsed')) {
+                    newsChannelsTimer = startAutoCloseTimer(newsChannelsSection, newsChannelsTimer, toggleNewsChannelsBtn);
+                }
+            });
+            
+            newsChannelsSection.addEventListener('click', () => {
+                if (!newsChannelsSection.classList.contains('news-channels-collapsed')) {
+                    newsChannelsTimer = startAutoCloseTimer(newsChannelsSection, newsChannelsTimer, toggleNewsChannelsBtn);
                 }
             });
             
@@ -1992,6 +2180,93 @@
             }
         });
 
+        // --- SAVE FOR LATER MODAL FUNCTIONS ---
+        function showSaveForLaterModal() {
+            const saveModal = document.getElementById('saveForLaterModal');
+            const siteQrCode = document.getElementById('siteQrCode');
+            
+            // Update QR code with current URL
+            const currentUrl = window.location.href;
+            siteQrCode.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(currentUrl);
+            
+            saveModal.classList.remove('hidden');
+        }
+
+        function closeSaveForLaterModal() {
+            const saveModal = document.getElementById('saveForLaterModal');
+            saveModal.classList.add('hidden');
+        }
+
+        function bookmarkSite() {
+            try {
+                // Modern browsers
+                if (window.external && window.external.AddFavorite) {
+                    window.external.AddFavorite(window.location.href, document.title);
+                } 
+                // Firefox
+                else if (window.sidebar && window.sidebar.addPanel) {
+                    window.sidebar.addPanel(document.title, window.location.href, '');
+                } 
+                // Fallback for modern browsers
+                else {
+                    // Try the newer Bookmark API if available
+                    if ('serviceWorker' in navigator && 'showNotification' in window.Notification.prototype) {
+                        showNotification('Press Ctrl+D (Cmd+D on Mac) to bookmark this page', 'info');
+                    } else {
+                        alert('Press Ctrl+D (Cmd+D on Mac) to bookmark this page');
+                    }
+                }
+            } catch (error) {
+                showNotification('Press Ctrl+D (Cmd+D on Mac) to bookmark this page', 'info');
+            }
+        }
+
+        function copyCurrentUrl() {
+            const currentUrl = window.location.href;
+            navigator.clipboard.writeText(currentUrl).then(() => {
+                showNotification('URL copied to clipboard!', 'success');
+            }).catch(err => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = currentUrl;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showNotification('URL copied to clipboard!', 'success');
+                } catch (fallbackErr) {
+                    showNotification('Failed to copy URL', 'error');
+                }
+                document.body.removeChild(textArea);
+            });
+        }
+
+        function shareViaNative() {
+            if (navigator.share) {
+                navigator.share({
+                    title: document.title,
+                    text: 'Check out Multi Stream News .TV for live news streaming!',
+                    url: window.location.href,
+                }).then(() => {
+                    showNotification('Shared successfully!', 'success');
+                }).catch((error) => {
+                    console.log('Error sharing:', error);
+                    copyCurrentUrl(); // Fallback to copying URL
+                });
+            } else {
+                // Fallback: copy URL if native sharing isn't available
+                copyCurrentUrl();
+            }
+        }
+
+        // Close Save for Later modal when clicking outside of it
+        document.addEventListener('click', function(e) {
+            const saveModal = document.getElementById('saveForLaterModal');
+            if (e.target === saveModal) {
+                closeSaveForLaterModal();
+            }
+        });
+
         // --- CONFIRMATION MODAL ---
         function showConfirmationModal(message) {
             return new Promise((resolve) => {
@@ -2061,6 +2336,24 @@
                 if (shortSpan) shortSpan.textContent = '[Hide] Browse';
                 
                 isYouTubeSearchExpanded = true;
+                
+                // Start auto-close timer
+                youTubeSearchTimer = setTimeout(() => {
+                    if (isYouTubeSearchExpanded) {
+                        // Auto-close the section
+                        section.classList.remove('youtube-search-expanded');
+                        section.classList.add('youtube-search-collapsed');
+                        
+                        const fullSpan = toggleBtn.querySelector('.hidden.sm\\:inline');
+                        const shortSpan = toggleBtn.querySelector('.sm\\:hidden');
+                        
+                        if (fullSpan) fullSpan.textContent = '[Show] Browse Live News';
+                        if (shortSpan) shortSpan.textContent = '[Show] Browse';
+                        
+                        isYouTubeSearchExpanded = false;
+                        youTubeSearchTimer = null;
+                    }
+                }, 15000); // 15 seconds
             } else {
                 // Collapse the section
                 section.classList.remove('youtube-search-expanded');
@@ -2073,6 +2366,62 @@
                 if (shortSpan) shortSpan.textContent = '[Show] Browse';
                 
                 isYouTubeSearchExpanded = false;
+                
+                // Clear auto-close timer
+                if (youTubeSearchTimer) {
+                    clearTimeout(youTubeSearchTimer);
+                    youTubeSearchTimer = null;
+                }
+            }
+        });
+        
+        // Add event listeners to reset timer on interaction with YouTube search section
+        const youTubeSearchSection = document.getElementById('youTubeSearchSection');
+        youTubeSearchSection.addEventListener('mouseenter', () => {
+            if (isYouTubeSearchExpanded && youTubeSearchTimer) {
+                clearTimeout(youTubeSearchTimer);
+                youTubeSearchTimer = setTimeout(() => {
+                    if (isYouTubeSearchExpanded) {
+                        const section = document.getElementById('youTubeSearchSection');
+                        const toggleBtn = document.getElementById('toggleYouTubeSearchBtn');
+                        
+                        section.classList.remove('youtube-search-expanded');
+                        section.classList.add('youtube-search-collapsed');
+                        
+                        const fullSpan = toggleBtn.querySelector('.hidden.sm\\:inline');
+                        const shortSpan = toggleBtn.querySelector('.sm\\:hidden');
+                        
+                        if (fullSpan) fullSpan.textContent = '[Show] Browse Live News';
+                        if (shortSpan) shortSpan.textContent = '[Show] Browse';
+                        
+                        isYouTubeSearchExpanded = false;
+                        youTubeSearchTimer = null;
+                    }
+                }, 15000);
+            }
+        });
+        
+        youTubeSearchSection.addEventListener('click', () => {
+            if (isYouTubeSearchExpanded && youTubeSearchTimer) {
+                clearTimeout(youTubeSearchTimer);
+                youTubeSearchTimer = setTimeout(() => {
+                    if (isYouTubeSearchExpanded) {
+                        const section = document.getElementById('youTubeSearchSection');
+                        const toggleBtn = document.getElementById('toggleYouTubeSearchBtn');
+                        
+                        section.classList.remove('youtube-search-expanded');
+                        section.classList.add('youtube-search-collapsed');
+                        
+                        const fullSpan = toggleBtn.querySelector('.hidden.sm\\:inline');
+                        const shortSpan = toggleBtn.querySelector('.sm\\:hidden');
+                        
+                        if (fullSpan) fullSpan.textContent = '[Show] Browse Live News';
+                        if (shortSpan) shortSpan.textContent = '[Show] Browse';
+                        
+                        isYouTubeSearchExpanded = false;
+                        youTubeSearchTimer = null;
+                    }
+                }, 15000);
             }
         });
 

@@ -23,6 +23,11 @@ The system includes:
   - Hover-activated dropdown with seamless interaction (no gap between button and menu)
   - QR code modal displays when donation option is selected
   - Modal remains open until user closes it for easy mobile scanning
+* **Save/Share Feature:** Include a "Save/Share" button above the donation button
+  - QR code for site access on other devices with text "Scan with your phone to quickly access this site on another device"
+  - Bookmark button for adding to browser favorites
+  - Copy URL button for sharing
+  - Native share API integration when available
 * **Responsive Design:** Ensure the header looks good on all screen sizes
 
 ### 2.2. Quick Add News Channels Section
@@ -32,6 +37,8 @@ The system includes:
   - When collapsed, the button should read "[Show] Quick Add News Channels"
   - Section should be expanded by default on page load
   - Smooth 0.4-second CSS transitions for expand/collapse animations
+  - Auto-close after 15 seconds of no interaction to keep UI clean
+  - Reset 15-second timer on mouse enter, click, or keyboard interaction
 
 * **Built-in News Channels:**
   - Use a built-in JavaScript array of news channels for instant loading and reliability
@@ -101,6 +108,7 @@ The system includes:
   - Preserve functionality on small desktop windows and tablets with mouse/trackpad
   - Use CSS `@media (pointer: coarse)` and JavaScript `isTouchDevice()` function
   - Smooth CSS transitions matching the news channels section
+  - Auto-close after 15 seconds of no interaction, with timer reset on interaction
 
 * **URL Input:**
   - Textarea for users to paste multiple YouTube video URLs (one per line)
@@ -775,3 +783,9 @@ multistreamnews.tv/
 - **Maintenance**: Automated cleanup and file management capabilities
 
 This comprehensive system provides both immediate usability (web app with live stream integration) and advanced monitoring capabilities (multi-scanner backend system) for a complete professional news streaming platform with real-time live stream detection and management.
+
+---
+
+**Document Version**: 2.3.0  
+**Last Updated**: July 3, 2025  
+**Current Features**: Auto-close menus, Save/Share modal, QR code enhancements, and complete responsive design

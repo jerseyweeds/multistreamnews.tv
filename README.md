@@ -65,11 +65,14 @@ Welcome to Multi Stream News .TV, a comprehensive news streaming platform that c
 * **One-Click Copy**: Copy all active video URLs to clipboard
 * **Smart Duplicate Prevention**: Intelligent detection with clear user notifications
 
-### Donation Support
+### Donation Support & Sharing
 * **Integrated Donations**: "Buy me a coffee" dropdown with multiple payment options
 * **Payment Methods**: PayPal, Apple Pay, and Venmo with QR code modals
 * **Professional Design**: Branded SVG icons and seamless hover interactions
 * **Mobile Optimized**: QR codes for easy mobile payments
+* **Save/Share Button**: Quick access to bookmark, copy URL, and share the site
+* **QR Code Access**: Scan QR code to quickly access the site on another device
+* **Auto-Close Menus**: Expanding menus automatically close after 15 seconds of inactivity
 
 ## 🔴 Backend Live Stream Detection
 
@@ -233,7 +236,7 @@ The platform includes comprehensive analytics:
 ---
 
 **Last Updated**: July 3, 2025  
-**Version**: 2.2.0  
+**Version**: 2.3.0  
 **Status**: Production Ready ✅
 
 Enjoy your multistreaming experience! 🎬
