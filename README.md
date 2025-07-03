@@ -44,6 +44,13 @@ Welcome to Multi Stream News .TV, a comprehensive news streaming platform that c
   - **Tablet**: 2-column control layout, multi-video grid, drag-and-drop hidden  
   - **Desktop**: 3-column control layout, multi-video grid, drag-and-drop always visible
 * **Device Profile Indicator**: Shows current view mode (Phone/Tablet/Desktop) with device detection
+* **Visit Engagement**: Automatically records and displays visit count with fun milestone celebrations
+  - **First Visit**: Special welcome message
+  - **Early Visits (2-5)**: Shows visit number
+  - **Regular Visits (6-10)**: Simple visit count
+  - **Active User (11-50)**: Visit count with party emoji 🎉
+  - **Power User (51-100)**: Visit count with fire emoji 🔥
+  - **Super User (100+)**: Visit count with star emoji 🌟
 * **Collapsible Sections**: News channels and manual input can be shown/hidden
 * **Smart Footer**: "Made for you in South Jersey" with New Jersey SVG and dynamic timestamp
 * **Color-Coded Notifications**: Non-blocking toast system with clear feedback
@@ -217,11 +224,11 @@ Network Name	https://www.youtube.com/@channelname
 
 ## 📈 Analytics & Monitoring
 
-The platform includes comprehensive tracking:
+The platform includes comprehensive analytics:
 - **User Interactions**: Video additions, button clicks, feature usage
 - **Performance Metrics**: Load times, error rates, device compatibility
 - **Backend Monitoring**: Live stream detection accuracy, scan performance
-- **Error Tracking**: Automatic error reporting and diagnostics
+- **Error Monitoring**: Automatic error reporting and diagnostics
 
 ---
 

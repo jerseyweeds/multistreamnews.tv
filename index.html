@@ -842,9 +842,10 @@
             }
         ];
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             // --- GLOBAL VARIABLES ---
-            let processedVideoIds = new Set(); // Track processed video IDs to prevent duplicates
+            let processedVideoIds = new Set(); // Manage processed video IDs to prevent duplicates
+            const DEBUG_MODE = false; // Set to true for development debugging
             
             // --- DOM Element Selection ---
             const toggleInputBtn = document.getElementById('toggleInputBtn');
@@ -1082,7 +1083,7 @@
 
             // --- DRAG AND DROP FUNCTIONALITY ---
             
-            let dragCounter = 0; // Track drag enter/leave events
+            let dragCounter = 0; // Count drag enter/leave events
             
             // Global drag events for visual feedback
             document.addEventListener('dragenter', (e) => {
@@ -1138,14 +1139,14 @@
                     
                     zone.classList.remove('drag-over');
                     
-                    console.log('🎬 Drop event triggered on zone:', zone.id);
+                    if (DEBUG_MODE) console.log('🎬 Drop event triggered on zone:', zone.id);
                     
                     // Handle different types of dropped data
                     const text = e.dataTransfer.getData('text/plain');
                     const html = e.dataTransfer.getData('text/html');
                     const url = e.dataTransfer.getData('text/uri-list');
                     
-                    console.log('Drop event data:', { text, html, url });
+                    if (DEBUG_MODE) console.log('Drop event data:', { text, html, url });
                     
                     let urls = [];
                     
@@ -1188,7 +1189,7 @@
                         }
                     });
                     
-                    console.log('Extracted YouTube URLs:', urls);
+                    if (DEBUG_MODE) console.log('Extracted YouTube URLs:', urls);
                     
                     if (urls.length > 0) {
                         let addedCount = 0;
@@ -1227,7 +1228,7 @@
                             showNotification(`Some videos are duplicates, others are invalid.`, 'warning');
                         }
                     } else {
-                        console.log('❌ No YouTube URLs found');
+                        if (DEBUG_MODE) console.log('❌ No YouTube URLs found');
                         showNotification('No valid YouTube URLs found in the dropped content.', 'error');
                     }
                 });
@@ -1264,24 +1265,24 @@
                         return data.title || 'YouTube Video';
                     }
                 } catch (error) {
-                    console.log('Could not fetch video title:', error);
+                    if (DEBUG_MODE) console.log('Could not fetch video title:', error);
                 }
                 return 'YouTube Video';
             }
 
             async function addVideo(url, shouldSave = true) {
-                console.log('🎥 addVideo called with URL:', url);
+                if (DEBUG_MODE) console.log('🎥 addVideo called with URL:', url);
                 
                 const videoId = getYouTubeVideoId(url);
                 if (!videoId) {
-                    console.log('❌ Invalid YouTube URL:', url);
+                    if (DEBUG_MODE) console.log('❌ Invalid YouTube URL:', url);
                     showNotification(`Not a valid YouTube video link: ${url}`, 'error');
                     return { success: false, reason: 'invalid' };
                 }
                 
-                // Check global tracking set first for fast duplicate detection
+                // Check global engagement set first for fast duplicate detection
                 if (processedVideoIds.has(videoId)) {
-                    console.log('⚠️ Video ID already processed:', videoId);
+                    if (DEBUG_MODE) console.log('⚠️ Video ID already processed:', videoId);
                     showNotification('This video is already loaded in the video wall.', 'duplicate');
                     return { success: false, reason: 'duplicate' };
                 }
@@ -1292,19 +1293,30 @@
                 const currentVideoIds = existingWindows.map(win => win.dataset.videoId).filter(id => id);
                 
                 if (currentUrls.includes(url) || currentVideoIds.includes(videoId)) {
-                    console.log('⚠️ Video already exists in DOM:', url, 'VideoID:', videoId);
-                    // Add to tracking set if it wasn't there already
+                    if (DEBUG_MODE) console.log('⚠️ Video already exists in DOM:', url, 'VideoID:', videoId);
+                    // Add to engagement set if it wasn't there already
                     processedVideoIds.add(videoId);
                     showNotification('This video is already loaded in the video wall.', 'duplicate');
                     return { success: false, reason: 'duplicate' };
                 }
                 
-                // Add to tracking set before creating video
+                // Add to engagement set before creating video
                 processedVideoIds.add(videoId);
 
                 // Get video title
                 const videoTitle = await getVideoTitle(videoId);
                 createVideoWindow(url, videoId, videoTitle);
+                
+                // Send video addition event to Google Analytics
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'video_added', {
+                        'event_category': 'video_management',
+                        'event_label': videoTitle,
+                        'video_id': videoId,
+                        'video_url': url,
+                        'total_videos': processedVideoIds.size
+                    });
+                }
                 
                 if (shouldSave) {
                     saveUrlsToStorage();
@@ -1313,7 +1325,7 @@
                 // Update floating button position after adding video
                 setTimeout(updateFloatingButtonPosition, 100);
                 
-                console.log('✅ Video added successfully:', url);
+                if (DEBUG_MODE) console.log('✅ Video added successfully:', url);
                 return { success: true, reason: 'success' };
             }
             
@@ -1390,21 +1402,54 @@
                     if (!action) return;
 
                     const content = videoWindow.querySelector('.video-content-wrapper');
+                    const videoId = videoWindow.dataset.videoId;
+                    const videoUrl = videoWindow.dataset.url;
+                    
                     if (action === 'close') {
-                        // Remove from tracking set
-                        const videoId = videoWindow.dataset.videoId;
+                        // Send analytics for video removal
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'video_removed', {
+                                'event_category': 'video_management',
+                                'event_label': 'close_button',
+                                'video_id': videoId,
+                                'remaining_videos': processedVideoIds.size - 1
+                            });
+                        }
+                        
+                        // Remove from engagement set
                         if (videoId) {
                             processedVideoIds.delete(videoId);
-                            console.log('🗑️ Removed video ID from tracking:', videoId);
+                            if (DEBUG_MODE) console.log('🗑️ Removed video ID from engagement set:', videoId);
                         }
                         videoWindow.remove();
                         saveUrlsToStorage();
                         // Update floating button position after removing video
                         setTimeout(updateFloatingButtonPosition, 100);
                     } else if (action === 'minimize') {
-                        content.classList.toggle('hidden');
+                        const isMinimized = content.classList.toggle('hidden');
+                        
+                        // Send analytics for minimize/restore
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'video_minimized', {
+                                'event_category': 'video_interaction',
+                                'event_label': isMinimized ? 'minimized' : 'restored',
+                                'video_id': videoId,
+                                'action': isMinimized ? 'minimize' : 'restore_from_minimize'
+                            });
+                        }
                     } else if (action === 'maximize') {
                         const isNowMaximized = videoWindow.classList.toggle('maximized');
+                        
+                        // Send analytics for maximize/restore
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'video_maximized', {
+                                'event_category': 'video_interaction',
+                                'event_label': isNowMaximized ? 'maximized' : 'restored',
+                                'video_id': videoId,
+                                'action': isNowMaximized ? 'maximize' : 'restore_from_maximize'
+                            });
+                        }
+                        
                         // Both maximize and restore are handled entirely via CSS
                         // - Maximize: CSS order: -1 moves video to top visually
                         // - Restore: Removing maximized class returns video to original position
@@ -1471,7 +1516,7 @@
                     newsChannelButtonsContainer.appendChild(button);
                 });
                 
-                console.log(`Generated ${channelData.length} news channel buttons`);
+                if (DEBUG_MODE) console.log(`Generated ${channelData.length} news channel buttons`);
             }
 
             // --- ADD ALL NETWORKS FUNCTIONALITY ---
@@ -1523,6 +1568,19 @@
                     saveUrlsToStorage();
                 }
                 
+                // Send analytics data for bulk add operation
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'bulk_add_networks', {
+                        'event_category': 'video_management',
+                        'event_label': 'add_all_networks',
+                        'videos_added': addedCount,
+                        'videos_duplicate': duplicateCount,
+                        'videos_failed': errorCount,
+                        'total_attempted': uniqueChannels.length,
+                        'success_rate': Math.round((addedCount / uniqueChannels.length) * 100)
+                    });
+                }
+                
                 // Show summary notification
                 let message = '';
                 if (addedCount > 0) {
@@ -1543,7 +1601,7 @@
 
             // --- Initial App Load ---
             async function initializeApp() {
-                console.log('Using built-in news channels');
+                if (DEBUG_MODE) console.log('Using built-in news channels');
                 
                 // Set initial UI states - all sections collapsed
                 newsChannelsSection.classList.add('news-channels-collapsed');
@@ -1594,9 +1652,9 @@
                 
                 const confirmed = await showConfirmationModal(`Are you sure you want to close all ${videoWindows.length} video window${videoWindows.length === 1 ? '' : 's'}?`);
                 if (confirmed) {
-                    // Clear the tracking set since we're removing all videos
+                    // Clear the engagement set since we're removing all videos
                     processedVideoIds.clear();
-                    console.log('🗑️ Cleared all video IDs from tracking set');
+                    if (DEBUG_MODE) console.log('🗑️ Cleared all video IDs from engagement set');
                     
                     videoWindows.forEach(window => window.remove());
                     saveUrlsToStorage();
@@ -1606,12 +1664,265 @@
                 }
             });
 
-            // Start the app
-            initializeApp();
-            
-            // Initialize device profile detection
+            // --- VISIT ENGAGEMENT ---
+            function initializeVisitEngagement() {
+                // Get current visit count from localStorage
+                let visitCount = localStorage.getItem('multiStreamNewsVisitCount');
+                
+                if (visitCount === null) {
+                    // First visit
+                    visitCount = 1;
+                } else {
+                    // Increment visit count
+                    visitCount = parseInt(visitCount) + 1;
+                }
+                
+                // Save updated count back to localStorage
+                localStorage.setItem('multiStreamNewsVisitCount', visitCount.toString());
+                
+                // Send visit data to Google Analytics
+                sendVisitDataToGA(visitCount);
+                
+                // Update the device profile to show visit count
+                updateDeviceProfileWithVisits(visitCount);
+                
+                if (DEBUG_MODE) console.log(`Visit #${visitCount} recorded and sent to GA`);
+                
+                return visitCount;
+            }
+
+            // Send visit engagement data to Google Analytics
+            function sendVisitDataToGA(visitCount) {
+                // Check if gtag is available
+                if (typeof gtag === 'undefined') {
+                    if (DEBUG_MODE) console.log('Google Analytics not available, skipping visit engagement');
+                    return;
+                }
+
+                // Determine visit category for better analytics segmentation
+                let visitCategory = '';
+                let userSegment = '';
+                
+                if (visitCount === 1) {
+                    visitCategory = 'first_time_visitor';
+                    userSegment = 'new_user';
+                } else if (visitCount <= 5) {
+                    visitCategory = 'early_visitor';
+                    userSegment = 'returning_user';
+                } else if (visitCount <= 10) {
+                    visitCategory = 'regular_visitor';
+                    userSegment = 'regular_user';
+                } else if (visitCount <= 50) {
+                    visitCategory = 'active_visitor';
+                    userSegment = 'active_user';
+                } else if (visitCount <= 100) {
+                    visitCategory = 'power_visitor';
+                    userSegment = 'power_user';
+                } else {
+                    visitCategory = 'super_visitor';
+                    userSegment = 'super_user';
+                }
+
+                // Send custom event with visit data
+                gtag('event', 'page_visit', {
+                    'custom_parameter_1': visitCount,
+                    'custom_parameter_2': visitCategory,
+                    'custom_parameter_3': userSegment,
+                    'visit_count': visitCount,
+                    'user_segment': userSegment,
+                    'event_category': 'user_engagement',
+                    'event_label': `visit_${visitCount}`,
+                    'value': visitCount
+                });
+
+                // Send user properties for segmentation
+                gtag('config', 'G-15PF9F9ZV8', {
+                    'custom_map': {
+                        'custom_dimension_1': 'visit_count',
+                        'custom_dimension_2': 'user_segment'
+                    }
+                });
+
+                // Set user properties
+                gtag('set', {
+                    'visit_count': visitCount,
+                    'user_segment': userSegment,
+                    'total_visits': visitCount
+                });
+
+                // Send milestone events for special visit counts
+                if (visitCount === 1) {
+                    gtag('event', 'first_visit', {
+                        'event_category': 'milestone',
+                        'event_label': 'new_user_onboarding'
+                    });
+                } else if ([5, 10, 25, 50, 100].includes(visitCount)) {
+                    gtag('event', 'visit_milestone', {
+                        'event_category': 'milestone',
+                        'event_label': `${visitCount}_visits`,
+                        'value': visitCount
+                    });
+                }
+
+                if (DEBUG_MODE) {
+                    console.log('📊 GA4 Data Sent:', {
+                        visitCount,
+                        visitCategory,
+                        userSegment,
+                        milestone: [1, 5, 10, 25, 50, 100].includes(visitCount)
+                    });
+                }
+            }
+
+            function updateDeviceProfileWithVisits(visitCount) {
+                const deviceProfileElement = document.getElementById('deviceProfile');
+                if (!deviceProfileElement) return;
+
+                let profile = '';
+                let icon = '';
+
+                // Detect actual device type instead of just window width
+                const userAgent = navigator.userAgent.toLowerCase();
+                const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+                
+                // Check for mobile phones
+                const isMobile = /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+                
+                // Check for tablets
+                const isTablet = /ipad|android(?!.*mobile)|tablet|kindle|silk/i.test(userAgent) || 
+                                (isTouchDevice && window.innerWidth >= 768 && window.innerWidth < 1024);
+                
+                // Determine profile based on device type
+                if (isMobile && !isTablet) {
+                    profile = 'Phone';
+                    icon = '📱';
+                } else if (isTablet || (isTouchDevice && !isMobile)) {
+                    profile = 'Tablet';
+                    icon = '📱';
+                } else {
+                    profile = 'Desktop';
+                    icon = '🖥️';
+                }
+
+                // Create visit count display with appropriate text for different devices
+                let visitText = '';
+                if (visitCount === 1) {
+                    visitText = 'First visit!';
+                } else if (visitCount <= 5) {
+                    visitText = `Visit #${visitCount}`;
+                } else if (visitCount <= 10) {
+                    visitText = `${visitCount} visits`;
+                } else if (visitCount <= 50) {
+                    visitText = `${visitCount} visits 🎉`;
+                } else if (visitCount <= 100) {
+                    visitText = `${visitCount} visits! 🔥`;
+                } else {
+                    visitText = `${visitCount} visits! 🌟`;
+                }
+
+                deviceProfileElement.innerHTML = `${icon} Current view: <span class="font-semibold text-gray-300">${profile}</span> • <span class="text-blue-400">${visitText}</span>`;
+                
+                // Control drag-and-drop area visibility based on device type
+                const dragDropArea = document.getElementById('dragDropArea');
+                if (dragDropArea) {
+                    if (profile === 'Desktop') {
+                        // Show drag-and-drop for desktop devices
+                        dragDropArea.classList.remove('hidden');
+                        dragDropArea.classList.add('block');
+                    } else {
+                        // Hide drag-and-drop for mobile and tablet devices
+                        dragDropArea.classList.remove('block');
+                        dragDropArea.classList.add('hidden');
+                    }
+                }
+            }
+
+            // --- DEVICE PROFILE DETECTION ---
+            function updateDeviceProfile() {
+                const deviceProfileElement = document.getElementById('deviceProfile');
+                if (!deviceProfileElement) return;
+
+                let profile = '';
+                let icon = '';
+
+                // Detect actual device type instead of just window width
+                const userAgent = navigator.userAgent.toLowerCase();
+                const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+                
+                // Check for mobile phones
+                const isMobile = /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+                
+                // Check for tablets
+                const isTablet = /ipad|android(?!.*mobile)|tablet|kindle|silk/i.test(userAgent) || 
+                                (isTouchDevice && window.innerWidth >= 768 && window.innerWidth < 1024);
+                
+                // Determine profile based on device type
+                if (isMobile && !isTablet) {
+                    profile = 'Phone';
+                    icon = '📱';
+                } else if (isTablet || (isTouchDevice && !isMobile)) {
+                    profile = 'Tablet';
+                    icon = '📱';
+                } else {
+                    profile = 'Desktop';
+                    icon = '🖥️';
+                }
+
+                // Get visit count to include in display
+                let visitCount = localStorage.getItem('multiStreamNewsVisitCount');
+                if (visitCount === null) {
+                    visitCount = 0;
+                } else {
+                    visitCount = parseInt(visitCount);
+                }
+
+                // Create visit count display with appropriate text for different devices
+                let visitText = '';
+                if (visitCount === 0) {
+                    visitText = 'Welcome!';
+                } else if (visitCount === 1) {
+                    visitText = 'First visit!';
+                } else if (visitCount <= 5) {
+                    visitText = `Visit #${visitCount}`;
+                } else if (visitCount <= 10) {
+                    visitText = `${visitCount} visits`;
+                } else if (visitCount <= 50) {
+                    visitText = `${visitCount} visits 🎉`;
+                } else if (visitCount <= 100) {
+                    visitText = `${visitCount} visits! 🔥`;
+                } else {
+                    visitText = `${visitCount} visits! 🌟`;
+                }
+
+                deviceProfileElement.innerHTML = `${icon} Current view: <span class="font-semibold text-gray-300">${profile}</span> • <span class="text-blue-400">${visitText}</span>`;
+                
+                // Control drag-and-drop area visibility based on device type
+                const dragDropArea = document.getElementById('dragDropArea');
+                if (dragDropArea) {
+                    if (profile === 'Desktop') {
+                        // Show drag-and-drop for desktop devices
+                        dragDropArea.classList.remove('hidden');
+                        dragDropArea.classList.add('block');
+                    } else {
+                        // Hide drag-and-drop for mobile and tablet devices
+                        dragDropArea.classList.remove('block');
+                        dragDropArea.classList.add('hidden');
+                    }
+                }
+            }
+
+            // Update device profile on window resize (in case of rotation or window changes)
+            window.addEventListener('resize', updateDeviceProfile);
+
+            // Initialize the application
+            await initializeApp();
+
+            // Initial device profile update
             updateDeviceProfile();
-            
+
+            // Initialize visit engagement
+            initializeVisitEngagement();
+
             // Set dynamic timestamp in footer based on file's last modified date
             const lastUpdatedElement = document.getElementById('lastUpdated');
             if (lastUpdatedElement) {
@@ -1627,14 +1938,6 @@
                 };
                 lastUpdatedElement.textContent = `Last updated: ${lastModified.toLocaleDateString('en-US', options)}`;
             }
-            
-            // Initialize floating button position after DOM is fully ready
-            setTimeout(updateFloatingButtonPosition, 500);
-            
-            // Also update position when page is fully loaded (including images)
-            window.addEventListener('load', () => {
-                setTimeout(updateFloatingButtonPosition, 200);
-            });
         });
 
         // --- QR CODE MODAL FUNCTIONS ---
@@ -1768,59 +2071,6 @@
             }
         });
 
-        // --- DEVICE PROFILE DETECTION ---
-            function updateDeviceProfile() {
-                const deviceProfileElement = document.getElementById('deviceProfile');
-                if (!deviceProfileElement) return;
-
-                let profile = '';
-                let icon = '';
-
-                // Detect actual device type instead of just window width
-                const userAgent = navigator.userAgent.toLowerCase();
-                const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
-                
-                // Check for mobile phones
-                const isMobile = /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
-                
-                // Check for tablets
-                const isTablet = /ipad|android(?!.*mobile)|tablet|kindle|silk/i.test(userAgent) || 
-                                (isTouchDevice && window.innerWidth >= 768 && window.innerWidth < 1024);
-                
-                // Determine profile based on device type
-                if (isMobile && !isTablet) {
-                    profile = 'Phone';
-                    icon = '�';
-                } else if (isTablet || (isTouchDevice && !isMobile)) {
-                    profile = 'Tablet';
-                    icon = '📱';
-                } else {
-                    profile = 'Desktop';
-                    icon = '�️';
-                }
-
-                deviceProfileElement.innerHTML = `${icon} Current view: <span class="font-semibold text-gray-300">${profile}</span>`;
-                
-                // Control drag-and-drop area visibility based on device type
-                const dragDropArea = document.getElementById('dragDropArea');
-                if (dragDropArea) {
-                    if (profile === 'Desktop') {
-                        // Show drag-and-drop for desktop devices
-                        dragDropArea.classList.remove('hidden');
-                        dragDropArea.classList.add('block');
-                    } else {
-                        // Hide drag-and-drop for mobile and tablet devices
-                        dragDropArea.classList.remove('block');
-                        dragDropArea.classList.add('hidden');
-                    }
-                }
-            }
-
-            // Update device profile on window resize (in case of rotation or window changes)
-            window.addEventListener('resize', updateDeviceProfile);
-
-            // Initial device profile update
-            updateDeviceProfile();
     </script>
 </body>
 </html>

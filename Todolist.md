@@ -22,6 +22,8 @@
 - [x] **Zero-Restart Video Management** - Maximize/restore videos without interrupting playback using CSS-only positioning
 - [x] **Smart Footer** - Dynamic timestamp, South Jersey branding, and New Jersey SVG
 - [x] **Robust Control Panel** - Equal button distribution and proper wrapping on all devices
+- [x] **Visit Engagement System** - LocalStorage-based visit counter with milestone celebrations
+- [x] **Code Cleanup Analysis** - Comprehensive scan of unused code and phased cleanup plan
 
 ### 🚧 **IN PROGRESS**
 - [ ] **Live Stream Status Integration** - Connect backend monitoring to frontend display
@@ -57,7 +59,7 @@
 
 5. **Analytics & Monitoring**
    - [ ] Enhance Google Analytics integration
-   - [ ] Add user behavior tracking (video interactions, popular channels)
+   - [ ] Add user behavior analytics (video interactions, popular channels)
    - [ ] Create dashboard usage statistics
    - [ ] Monitor backend scanner performance metrics
 

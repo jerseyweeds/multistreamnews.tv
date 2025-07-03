@@ -238,7 +238,7 @@ The platform includes a comprehensive backend system for monitoring and detectin
 
 * **Multiple Scanner Scripts:**
   - `comprehensive_live_scanner.py` - Full-featured scanner with detailed output
-  - `advanced_live_detector.py` - Advanced detection with viewer count tracking
+  - `advanced_live_detector.py` - Advanced detection with viewer count monitoring
   - `precise_live_scanner.py` - High-accuracy scanning with multiple validation methods
   - `enhanced_scan_live_streams.py` - Enhanced scanning with improved reliability
   - `manual_scan_live_streams.py` - Manual verification and testing tool
@@ -246,7 +246,7 @@ The platform includes a comprehensive backend system for monitoring and detectin
 
 * **Scanner Features:**
   - Real-time live stream detection from YouTube channels
-  - Viewer count extraction and tracking
+  - Viewer count extraction and monitoring
   - Stream duration monitoring
   - Multiple validation methods for accuracy
   - Duplicate prevention and data integrity
@@ -320,7 +320,7 @@ The platform includes a comprehensive backend system for monitoring and detectin
 * **Legacy Functionality (now distributed):**
   - Stream verification → `comprehensive_live_scanner.py`, `precise_live_scanner.py`
   - Viewer count updates → `advanced_live_detector.py`
-  - Duration tracking → All scanner scripts
+  - Duration monitoring → All scanner scripts
   - New stream discovery → `enhanced_scan_live_streams.py`
   - Automated scheduling → `auto_refresh_scanner.py`
   - Management interface → `live_stream_manager.sh`
@@ -330,7 +330,7 @@ The platform includes a comprehensive backend system for monitoring and detectin
 * **Scanner Scripts (Python):**
   - Each script specializes in different aspects of stream monitoring
   - All scripts use unified parsing logic for `network_list.txt`
-  - Results saved to timestamped JSON files for tracking
+  - Results saved to timestamped JSON files for monitoring
   - Current active streams maintained in `current_live_streams.json`
   - Comprehensive error handling and rate limiting
 
@@ -413,7 +413,7 @@ The platform includes a comprehensive backend system for monitoring and detectin
 * **Vanilla JavaScript:** No frameworks (React, Vue, etc.)
 * **Tailwind CSS:** Use CDN version for all styling
 * **Google Fonts:** Inter font family via CDN
-* **Google Analytics:** Include GA4 tracking code
+* **Google Analytics:** Include GA4 engagement code
 
 ### 3.2. Code Organization
 
@@ -561,7 +561,7 @@ const newsChannels = [
 * Clipboard API error handling with fallback messages
 * Smart CORS/file access restriction detection and user notification
 * Improved error message duration (5 seconds) for better user experience
-* Robust toggle logic with failure state tracking to prevent unnecessary retries
+* Robust toggle logic with failure state monitoring to prevent unnecessary retries
 
 ### PART B: LIVE STREAM MONITORING SYSTEM IMPLEMENTATION
 
@@ -579,7 +579,7 @@ const newsChannels = [
 * **Scanner System Architecture:**
   - Multiple specialized Python scanners for different use cases
   - Unified parsing logic for `network_list.txt` across all scanners
-  - JSON-based result storage with timestamp tracking
+  - JSON-based result storage with timestamp monitoring
   - Shared utility functions and error handling patterns
   - Rate limiting and respectful YouTube access
 
@@ -710,7 +710,7 @@ multistreamnews.tv/
 2. **Network List Parsing:** All scanners read from `network_list.txt` (skip header, ignore empty lines)
 3. **Multi-Channel Scanning:** Scripts search each channel for live streams
 4. **Stream Validation:** Multiple validation methods ensure accuracy
-5. **Result Storage:** Save to timestamped JSON files for historical tracking
+5. **Result Storage:** Save to timestamped JSON files for historical monitoring
 6. **Current Stream Update:** Update `current_live_streams.json` for frontend access
 7. **Status Reporting:** Generate comprehensive reports with statistics
 8. **Error Handling:** Graceful handling of network issues and API limitations
@@ -737,7 +737,7 @@ multistreamnews.tv/
 * **Production Ready:** Robust error handling, comprehensive logging, and flexible operation modes
 * **Multiple Scanners:** Specialized scripts for different monitoring needs and accuracy levels
 * **Unified Management:** Single shell script interface for all scanner operations
-* **Real-time Results:** JSON-based result storage with timestamp tracking and comparison
+* **Real-time Results:** JSON-based result storage with timestamp monitoring and comparison
 * **Scalable Architecture:** Easy to add new scanners and extend functionality
 * **Comprehensive Documentation:** Detailed README files with usage examples and troubleshooting
 
@@ -768,7 +768,7 @@ multistreamnews.tv/
 #### System Integration Features:
 - **Frontend Integration**: "Add All Networks" button with live stream data access
 - **Unified Parsing**: All scanners use consistent `network_list.txt` parsing logic
-- **Result Management**: JSON-based timestamped results with current stream tracking  
+- **Result Management**: JSON-based timestamped results with current stream monitoring  
 - **Management Interface**: Single shell script for all scanner operations
 - **Error Handling**: Comprehensive error handling and graceful degradation
 - **Documentation**: Up-to-date documentation reflecting current system state

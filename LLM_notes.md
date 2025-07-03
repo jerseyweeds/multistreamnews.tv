@@ -133,7 +133,7 @@ This file serves as long-term knowledge for AI assistants working on this projec
   - 21-network coverage with unified configuration approach
   - News channels array in frontend vs. network_list.txt in backend (intentional separation)
   - Advanced touch detection with multi-method approach
-  - Footer timestamp policy for tracking modifications
+  - Footer timestamp policy for monitoring modifications
 - **Current State Assessment**: Production-ready platform with both frontend and backend fully functional
 - **Next Steps**: Focus on API integration between frontend and backend, live status indicators
 
@@ -251,7 +251,7 @@ This file serves as long-term knowledge for AI assistants working on this projec
 5. **PWA Features**: Offline functionality and installation
 6. **Live Stream Detection**: Advanced YouTube live stream identification and monitoring
 7. **Backend API Integration**: Enhanced data fetching and stream management
-8. **Advanced Analytics**: User behavior tracking and video engagement metrics
+8. **Advanced Analytics**: User behavior analytics and video engagement metrics
 
 ### Architecture Decisions to Maintain
 1. **Single File**: Keep everything in one HTML file for core functionality
