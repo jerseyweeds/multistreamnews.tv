@@ -188,6 +188,7 @@
         .video-window.maximized {
             grid-column: 1 / -1; /* Span all columns */
             max-height: none; /* Remove height constraint when maximized */
+            order: -1; /* Move to top visually without DOM manipulation */
         }
 
         /* Drag and Drop Zone Styles */
@@ -695,6 +696,11 @@
                 </button>
             </div>
 
+            <!-- Footer -->
+            <div class="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400">
+                <p class="text-sm mb-2">Made for you in South Jersey</p>
+                <p class="text-xs">Last modified: July 3, 2025</p>
+            </div>
 
         </div>
     </div>
@@ -1354,11 +1360,10 @@
                     } else if (action === 'maximize') {
                         const isNowMaximized = videoWindow.classList.toggle('maximized');
                         if (isNowMaximized) {
-                            // Move maximized video to top without restarting
-                            videoPlayersContainer.prepend(videoWindow);
+                            // Video moved to top via CSS order, no DOM manipulation needed
                             saveUrlsToStorage();
                         }
-                        // Note: No longer reloading iframe to prevent video restart
+                        // Note: Using CSS order instead of DOM manipulation to prevent video restart
                     }
                 });
             }
