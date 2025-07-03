@@ -31,7 +31,7 @@ Welcome to Multi Stream News .TV, a comprehensive news streaming platform that c
   - **Red Button (Close)**: Removes video window and updates localStorage
   - **Yellow Button (Minimize)**: Hides video content while keeping title bar visible
   - **Green Button (Maximize)**: Expands to full width without interrupting playback
-* **Seamless Playback**: Videos continue playing without restart when maximized/restored
+* **Zero-Restart Playback**: Videos continue playing seamlessly when maximized/restored using CSS-only positioning
 * **Smart Positioning**: New videos placed strategically (top-left or below maximized videos)
 * **Bulk Actions**: "Close All Videos" with confirmation modal
 
@@ -39,12 +39,13 @@ Welcome to Multi Stream News .TV, a comprehensive news streaming platform that c
 * **Advanced Touch Detection**: Multi-method detection distinguishes actual touch devices from small screens
   - Drag & drop hidden only on true mobile devices
   - Desktop windows and tablets with mouse/trackpad retain full functionality
-* **Responsive Grid Layout**: Progressive enhancement across all screen sizes
-  - Mobile: Single column with optimized margins
-  - Tablet: Multi-column with 350px minimum width per video  
-  - Desktop: Multi-column with 400px minimum width per video
-  - Large screens: Additional spacing for optimal viewing
+* **Three-Tier Responsive Design**: Distinct profiles for phones, tablets, and desktops
+  - **Phone**: 2-column control layout, single video column, drag-and-drop hidden
+  - **Tablet**: 2-column control layout, multi-video grid, drag-and-drop hidden  
+  - **Desktop**: 3-column control layout, multi-video grid, drag-and-drop always visible
+* **Device Profile Indicator**: Shows current view mode (Phone/Tablet/Desktop) with device detection
 * **Collapsible Sections**: News channels and manual input can be shown/hidden
+* **Smart Footer**: "Made for you in South Jersey" with New Jersey SVG and dynamic timestamp
 * **Color-Coded Notifications**: Non-blocking toast system with clear feedback
   - 🟢 Green: Success messages
   - 🟠 Orange: Duplicate warnings
@@ -224,8 +225,8 @@ The platform includes comprehensive tracking:
 
 ---
 
-**Last Updated**: January 3, 2025  
-**Version**: 2.1.0  
+**Last Updated**: July 3, 2025  
+**Version**: 2.2.0  
 **Status**: Production Ready ✅
 
 Enjoy your multistreaming experience! 🎬

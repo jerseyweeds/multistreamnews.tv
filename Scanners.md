@@ -387,4 +387,4 @@ python3 -c "from auto_refresh_scanner import AutoRefreshLiveStreamScanner; print
 
 ---
 
-*Last updated: June 30, 2025*
+*Last updated: July 3, 2025*

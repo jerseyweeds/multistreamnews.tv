@@ -5,10 +5,10 @@
 Multi Stream News .TV is a comprehensive news streaming platform combining a modern single-page web application with a robust backend monitoring system. The platform features live stream detection, automated content discovery, and an intuitive multistreaming interface for viewing multiple YouTube news channels simultaneously.
 
 The system includes:
-- **Frontend**: Modern responsive web application with video wall, drag-and-drop functionality, and mobile optimization
+- **Frontend**: Modern responsive web application with three-tier responsive design (Phone/Tablet/Desktop)
 - **Backend**: Automated live stream monitoring system with multiple Python scanners
 - **Management**: Shell script automation and comprehensive documentation
-- **Features**: "Add All Networks" functionality, real-time stream detection, and persistent data storage
+- **Features**: Zero-restart video management, device profile detection, and persistent data storage
 
 ## 2. Core Functional Requirements
 

@@ -465,6 +465,42 @@
         #youTubeSearchIframe {
             border-radius: 8px;
         }
+
+        /* Control Panel Layout - Prevent Button Wrapping */
+        .control-panel-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        
+        @media (min-width: 768px) {
+            .control-panel-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        
+        .control-panel-button {
+            min-width: 0; /* Allow text truncation */
+            flex-shrink: 1;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        
+        /* Ensure buttons maintain proper proportions */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .control-panel-button {
+                font-size: 0.8rem;
+                padding: 0.5rem;
+            }
+            
+            .control-panel-button .hidden {
+                display: none !important;
+            }
+            
+            .control-panel-button .sm\:hidden {
+                display: inline !important;
+            }
+        }
     </style>
 </head>
 <body class="text-white">
@@ -545,15 +581,15 @@
         <div class="p-2 sm:p-4 md:p-6 lg:p-8">
             <!-- Compact Control Panel - Three Sections in One Row -->
             <div class="mb-6">
-                <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:items-start">
+                <div class="control-panel-grid grid grid-cols-2 lg:grid-cols-3 gap-3 sm:items-start">
                     <!-- YouTube News Search Section -->
                     <div class="flex flex-col h-full">
-                        <button id="toggleYouTubeSearchBtn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-3 rounded-lg transition-colors duration-300 flex items-center justify-center text-sm min-h-[44px]">
+                        <button id="toggleYouTubeSearchBtn" class="control-panel-button w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-3 rounded-lg transition-colors duration-300 flex items-center justify-center text-sm min-h-[44px]">
                             <svg class="w-4 h-4 mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                             </svg>
                             <span id="youTubeSearchToggleText" class="hidden sm:inline">[Show] Browse Live News</span>
-                            <span class="sm:hidden">[Show] Browse</span>
+                            <span class="sm:hidden">Browse</span>
                         </button>
                         <div id="youTubeSearchSection" class="youtube-search-collapsed bg-gray-800 rounded-lg shadow-lg mt-2 overflow-hidden transition-all duration-500 ease-in-out">
                             <div class="p-3 border-b border-gray-700">
@@ -620,9 +656,9 @@
 
                     <!-- News Channels Section -->
                     <div class="flex flex-col h-full">
-                        <button id="toggleNewsChannelsBtn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-3 rounded-lg transition-colors duration-300 text-sm min-h-[44px]">
+                        <button id="toggleNewsChannelsBtn" class="control-panel-button w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-3 rounded-lg transition-colors duration-300 text-sm min-h-[44px]">
                             <span class="hidden sm:inline">[Show] Quick Add News Channels</span>
-                            <span class="sm:hidden">[Show] Channels</span>
+                            <span class="sm:hidden">Channels</span>
                         </button>
                         <div id="newsChannelsSection" class="news-channels-collapsed bg-gray-800 rounded-lg shadow-lg mt-2 overflow-hidden transition-all duration-500 ease-in-out">
                             <div class="p-3">
@@ -645,9 +681,9 @@
 
                     <!-- Paste URLs Section -->
                     <div class="hidden lg:flex flex-col paste-url-section h-full">
-                        <button id="toggleInputBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-3 rounded-lg transition-colors duration-300 text-sm min-h-[44px]">
+                        <button id="toggleInputBtn" class="control-panel-button w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-3 rounded-lg transition-colors duration-300 text-sm min-h-[44px]">
                             <span class="hidden sm:inline">[Show] Paste URLs</span>
-                            <span class="sm:hidden">[Show] URLs</span>
+                            <span class="sm:hidden">Paste</span>
                         </button>
                         <div id="inputSection" class="input-section-collapsed bg-gray-800 rounded-lg shadow-lg mt-2 overflow-hidden transition-all duration-500 ease-in-out">
                             <div class="p-3">
@@ -666,8 +702,8 @@
 
             <!-- Video Players Container -->
             <div class="mt-4 mb-20">
-                <!-- Drag and Drop Area - Compact (hidden on mobile/tablet/phone) -->
-                <div id="dragDropArea" class="hidden lg:block drag-drop-area border-2 border-dashed border-gray-500 rounded-lg p-3 text-center text-gray-400 transition-all duration-300 hover:border-gray-400 hover:bg-gray-800/20 mb-4">
+                <!-- Drag and Drop Area - Always visible on desktop/laptop -->
+                <div id="dragDropArea" class="hidden drag-drop-area border-2 border-dashed border-gray-500 rounded-lg p-3 text-center text-gray-400 transition-all duration-300 hover:border-gray-400 hover:bg-gray-800/20 mb-4">
                     <div class="flex items-center justify-center space-x-2">
                         <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
@@ -698,8 +734,18 @@
 
             <!-- Footer -->
             <div class="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400">
-                <p class="text-sm mb-2">Made for you in South Jersey</p>
-                <p class="text-xs">Last modified: July 3, 2025</p>
+                <p class="text-xs mb-2" id="deviceProfile">Loading device profile...</p>
+                <p class="text-sm mb-2 flex items-center justify-center">
+                    Made for you in South Jersey
+                    <svg class="w-3.5 h-3.5 ml-1.5 fill-current" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M85 15c-8-10-18-12-28-8-5 2-9 6-12 11-3-5-7-9-12-11-10-4-20-2-28 8-8 10-6 25 5 33l35 42 35-42c11-8 13-23 5-33z"/>
+                        <path d="M50 25c-3-3-7-5-12-3s-8 7-6 12c1 3 3 5 6 6h24c3-1 5-3 6-6 2-5-1-10-6-12s-9 0-12 3z"/>
+                        <circle cx="35" cy="35" r="3"/>
+                        <circle cx="65" cy="35" r="3"/>
+                        <path d="M25 45c0 8 5 15 12 18v25c0 3 2 5 5 5s5-2 5-5V63c2-1 4-3 5-5h16c1 2 3 4 5 5v25c0 3 2 5 5 5s5-2 5-5V63c7-3 12-10 12-18V30H25v15z"/>
+                    </svg>
+                </p>
+                <p class="text-xs" id="lastUpdated">Last updated: Loading...</p>
             </div>
 
         </div>
@@ -1359,11 +1405,11 @@
                         content.classList.toggle('hidden');
                     } else if (action === 'maximize') {
                         const isNowMaximized = videoWindow.classList.toggle('maximized');
-                        if (isNowMaximized) {
-                            // Video moved to top via CSS order, no DOM manipulation needed
-                            saveUrlsToStorage();
-                        }
-                        // Note: Using CSS order instead of DOM manipulation to prevent video restart
+                        // Both maximize and restore are handled entirely via CSS
+                        // - Maximize: CSS order: -1 moves video to top visually
+                        // - Restore: Removing maximized class returns video to original position
+                        // No DOM manipulation needed, preventing video restart
+                        saveUrlsToStorage();
                     }
                 });
             }
@@ -1441,6 +1487,7 @@
                 let duplicateCount = 0;
                 let errorCount = 0;
                 
+                               
                 // Create a unique set of URLs to avoid duplicates within the news channels
                 const uniqueChannels = [];
                 const seenUrls = new Set();
@@ -1561,6 +1608,25 @@
 
             // Start the app
             initializeApp();
+            
+            // Initialize device profile detection
+            updateDeviceProfile();
+            
+            // Set dynamic timestamp in footer based on file's last modified date
+            const lastUpdatedElement = document.getElementById('lastUpdated');
+            if (lastUpdatedElement) {
+                // Get the last modified date of the current document
+                const lastModified = new Date(document.lastModified);
+                const options = { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    timeZoneName: 'short'
+                };
+                lastUpdatedElement.textContent = `Last updated: ${lastModified.toLocaleDateString('en-US', options)}`;
+            }
             
             // Initialize floating button position after DOM is fully ready
             setTimeout(updateFloatingButtonPosition, 500);
@@ -1701,13 +1767,60 @@
                 isYouTubeSearchExpanded = false;
             }
         });
-    </script>
 
-    <!-- Footer with Last Updated Timestamp -->
-    <footer class="text-center py-4 mt-8 border-t border-gray-600">
-        <p class="text-gray-400 text-sm">
-            Last Updated: <span class="text-gray-300">January 3, 2025 at 03:25 UTC</span>
-        </p>
-    </footer>
+        // --- DEVICE PROFILE DETECTION ---
+            function updateDeviceProfile() {
+                const deviceProfileElement = document.getElementById('deviceProfile');
+                if (!deviceProfileElement) return;
+
+                let profile = '';
+                let icon = '';
+
+                // Detect actual device type instead of just window width
+                const userAgent = navigator.userAgent.toLowerCase();
+                const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+                
+                // Check for mobile phones
+                const isMobile = /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+                
+                // Check for tablets
+                const isTablet = /ipad|android(?!.*mobile)|tablet|kindle|silk/i.test(userAgent) || 
+                                (isTouchDevice && window.innerWidth >= 768 && window.innerWidth < 1024);
+                
+                // Determine profile based on device type
+                if (isMobile && !isTablet) {
+                    profile = 'Phone';
+                    icon = '�';
+                } else if (isTablet || (isTouchDevice && !isMobile)) {
+                    profile = 'Tablet';
+                    icon = '📱';
+                } else {
+                    profile = 'Desktop';
+                    icon = '�️';
+                }
+
+                deviceProfileElement.innerHTML = `${icon} Current view: <span class="font-semibold text-gray-300">${profile}</span>`;
+                
+                // Control drag-and-drop area visibility based on device type
+                const dragDropArea = document.getElementById('dragDropArea');
+                if (dragDropArea) {
+                    if (profile === 'Desktop') {
+                        // Show drag-and-drop for desktop devices
+                        dragDropArea.classList.remove('hidden');
+                        dragDropArea.classList.add('block');
+                    } else {
+                        // Hide drag-and-drop for mobile and tablet devices
+                        dragDropArea.classList.remove('block');
+                        dragDropArea.classList.add('hidden');
+                    }
+                }
+            }
+
+            // Update device profile on window resize (in case of rotation or window changes)
+            window.addEventListener('resize', updateDeviceProfile);
+
+            // Initial device profile update
+            updateDeviceProfile();
+    </script>
 </body>
 </html>
