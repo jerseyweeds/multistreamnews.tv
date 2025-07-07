@@ -868,13 +868,17 @@
         // Backup method: Add or modify news channels here for easy management
         const newsChannels = [
             {
-                label: 'CNBC',
-                url: 'https://www.youtube.com/watch?v=9NyxcX3rhQs'
+                label: 'Bloomberg',
+                url: 'https://www.youtube.com/watch?v=iEpJwprxDdk'
             },
             {
                 label: 'Sky News',
                 url: 'https://www.youtube.com/watch?v=YDvsBbKfLPA'
             },
+            {
+                label: 'CNBC',
+                url: 'https://www.youtube.com/watch?v=9NyxcX3rhQs'
+            },            
             {
                 label: 'ABC News',
                 url: 'https://www.youtube.com/watch?v=iipR5yUp36o'
@@ -900,10 +904,6 @@
                 url: 'https://www.youtube.com/watch?v=Ap-UM1O9RBU'
             },
             {
-                label: 'Bloomberg Quicktake',
-                url: 'https://www.youtube.com/watch?v=iEpJwprxDdk'
-            },
-            {
                 label: 'Al Jazeera English',
                 url: 'https://www.youtube.com/watch?v=gCNeDWCI0vo'
             },
@@ -914,7 +914,11 @@
             {
                 label: 'United Nations',
                 url: 'https://www.youtube.com/watch?v=wfAa1GiNdgM'
-            }
+            },
+            {
+                label: 'Yahoo Finance',
+                url: 'https://www.youtube.com/watch?v=KQp-e_XQnDE'
+            },
         ];
 
         document.addEventListener('DOMContentLoaded', async () => {
@@ -1005,8 +1009,8 @@
                 if (savedUrls.length === 0) {
                     // If local storage is empty, load default videos from news channels list
                     savedUrls = [
-                        newsChannels[0].url,  // Sky News
-                        newsChannels[1].url   // NBC News
+                        newsChannels[0].url,  // Bloomberg
+                        newsChannels[1].url   // Sky News
                     ];
                     // Save these defaults for the next session
                     localStorage.setItem('youtubeVideoUrls', JSON.stringify(savedUrls));
